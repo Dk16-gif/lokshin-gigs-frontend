@@ -110,7 +110,7 @@ async function init() {
     try {
       var user = await requireLogin();
       if (!user || user.role !== 'Admin') {
-        window.location.href = '/login';
+        window.location.href = '/pages/login.html';
         return;
       }
     } catch (e) {

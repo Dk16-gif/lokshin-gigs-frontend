@@ -31,7 +31,7 @@ async function getCurrentUser() {
     }
 }
 // FIX: use relative paths so they work regardless of how server is run
-async function requireLogin(redirect = '/login') {
+async function requireLogin(redirect = '/pages/login.html') {
     const u = await getCurrentUser();
     if (!u) {
         window.location.href = redirect;
@@ -86,7 +86,7 @@ async function apiDelete(url) {
 // FIX: relative redirect path
 async function logout() {
     await fetch(`${API}/auth/logout`, { method: 'POST', credentials: 'include' });
-    window.location.href = '/login';
+    window.location.href = '/pages/login.html';
 }
 async function loadCategories(selectId, allOption = false) {
     const r = await fetch(`${API}/categories`, { credentials: 'include' });

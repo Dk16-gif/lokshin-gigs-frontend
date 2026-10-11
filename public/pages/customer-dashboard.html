@@ -574,7 +574,7 @@ h1,h2,h3,p{margin:0}
   </style>
   <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
-    window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
+    window.API_BASE = '';
   </script>
 </head>
 <body>
@@ -583,31 +583,31 @@ h1,h2,h3,p{margin:0}
 <!-- ============ NAVIGATION ============ -->
 <header class="lk-nav">
   <div class="lk-wrap lk-nav__inner">
-    <a class="lk-brand" href="/" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
     <nav aria-label="Main">
       <ul class="lk-nav__links">
         <li><a class="lk-nav__link" href="#services">Browse services</a></li>
         <li><a class="lk-nav__link" href="#jobs" aria-current="page">My jobs</a></li>
         <li><a class="lk-nav__link" aria-disabled="true" title="Messaging is coming soon">Messages <span class="lk-soon">Soon</span></a></li>
-        <li><a class="lk-nav__link" href="/profile">Profile</a></li>
+        <li><a class="lk-nav__link" href="/pages/profile.html">Profile</a></li>
       </ul>
     </nav>
     <div class="lk-nav__end">
-      <a href="/post-job" class="lk-btn lk-btn--primary lk-btn--sm" aria-label="Post a job"><i class="ph-bold ph-plus" aria-hidden="true"></i><span class="lk-post-label">Post a job</span></a>
+      <a href="/pages/post-job.html" class="lk-btn lk-btn--primary lk-btn--sm" aria-label="Post a job"><i class="ph-bold ph-plus" aria-hidden="true"></i><span class="lk-post-label">Post a job</span></a>
       <details class="lk-menu lk-nav__burger">
         <summary class="lk-icon-btn" aria-label="Open menu"><i class="ph ph-list" aria-hidden="true"></i></summary>
         <div class="lk-menu__panel">
           <a class="lk-menu__item" href="#services"><i class="ph ph-storefront" aria-hidden="true"></i>Browse services</a>
           <a class="lk-menu__item" href="#jobs"><i class="ph ph-briefcase" aria-hidden="true"></i>My jobs</a>
           <a class="lk-menu__item" aria-disabled="true"><i class="ph ph-chat-circle" aria-hidden="true"></i>Messages <span class="lk-soon">Soon</span></a>
-          <a class="lk-menu__item" href="/profile"><i class="ph ph-user-circle" aria-hidden="true"></i>Profile</a>
+          <a class="lk-menu__item" href="/pages/profile.html"><i class="ph ph-user-circle" aria-hidden="true"></i>Profile</a>
         </div>
       </details>
       <details class="lk-menu">
         <summary class="lk-account" aria-label="Account menu"><span class="lk-avatar" id="accountInitials" aria-hidden="true"><i class="ph ph-user"></i></span><i class="ph ph-caret-down" aria-hidden="true"></i></summary>
         <div class="lk-menu__panel">
           <div class="lk-menu__who"><strong id="accountName">Your account</strong><span>Customer</span></div>
-          <a class="lk-menu__item" href="/profile"><i class="ph ph-user-circle" aria-hidden="true"></i>My profile</a>
+          <a class="lk-menu__item" href="/pages/profile.html"><i class="ph ph-user-circle" aria-hidden="true"></i>My profile</a>
           <button class="lk-menu__item" type="button" onclick="logout()"><i class="ph ph-sign-out" aria-hidden="true"></i>Log out</button>
         </div>
       </details>
@@ -624,7 +624,7 @@ h1,h2,h3,p{margin:0}
         <h1 id="heroTitle">Get the right work done.</h1>
         <p class="lk-hero__lead">Find skilled people nearby for the work that needs doing, from a leaking geyser to Saturday braids.</p>
         <div class="lk-hero__actions">
-          <a href="/post-job" class="lk-btn lk-btn--primary"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a>
+          <a href="/pages/post-job.html" class="lk-btn lk-btn--primary"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a>
           <a href="#services" class="lk-btn lk-btn--ghost">Browse services</a>
         </div>
       </div>
@@ -671,7 +671,7 @@ h1,h2,h3,p{margin:0}
           <h2 class="lk-panel__title" id="jobsTitle">My jobs</h2>
           <p class="lk-panel__sub" id="jobsSub">Everything you have posted on Lokshin.</p>
         </div>
-        <a href="/post-job" class="lk-btn lk-btn--ghost lk-btn--sm"><i class="ph-bold ph-plus" aria-hidden="true"></i>New job</a>
+        <a href="/pages/post-job.html" class="lk-btn lk-btn--ghost lk-btn--sm"><i class="ph-bold ph-plus" aria-hidden="true"></i>New job</a>
       </div>
 
       <div class="lk-seg" id="statusFilter" role="group" aria-label="Filter jobs by status">
@@ -715,11 +715,11 @@ h1,h2,h3,p{margin:0}
         <h2 class="lk-discover__title" id="servicesTitle">Find help for almost anything</h2>
         <p class="lk-discover__lead">Post a job in any of these services and skilled people in your area can apply.</p>
       </div>
-      <a href="/post-job" class="lk-btn lk-btn--ghost"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a>
+      <a href="/pages/post-job.html" class="lk-btn lk-btn--ghost"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a>
     </div>
 
     <div class="lk-tiles">
-      <a class="lk-tile" href="/post-job" aria-label="Post a rubble removal job">
+      <a class="lk-tile" href="/pages/post-job.html" aria-label="Post a rubble removal job">
         <div class="lk-tile__img"><img src="../images/dashboard/rubble.jpg" alt="Pile of building rubble outside a house, ready to be cleared" loading="lazy" decoding="async" width="640" height="800"></div>
         <span class="lk-tile__name">Rubble removal<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Building rubble, clear-outs</span>
       </a>
@@ -727,24 +727,24 @@ h1,h2,h3,p{margin:0}
         <div class="lk-tile__img"><img src="../images/dashboard/electric.jpg" alt="Circuit breaker panel with wiring" loading="lazy" decoding="async" width="512" height="512"></div>
         <span class="lk-tile__name">Electrical<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Wiring, plugs, breakers</span>
       </a>
-      <a class="lk-tile" href="/post-job" aria-label="Post a carpentry or furniture assembly job">
+      <a class="lk-tile" href="/pages/post-job.html" aria-label="Post a carpentry or furniture assembly job">
         <div class="lk-tile__img"><img src="../images/dashboard/carpentry.jpg" alt="Two carpenters assembling a wooden table frame in a workshop" loading="lazy" decoding="async" width="640" height="800"></div>
         <span class="lk-tile__name">Carpentry &amp; furniture<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Assembly, repairs, built-ins</span>
       </a>
-      <a class="lk-tile" href="/post-job" aria-label="Post a DJ or event organiser job">
+      <a class="lk-tile" href="/pages/post-job.html" aria-label="Post a DJ or event organiser job">
         <div class="lk-tile__img"><span class="lk-tile__slot" aria-hidden="true"><i class="ph ph-speaker-hifi"></i></span><img src="../images/dashboard/dj-events.jpg" alt="Stacked event speakers and a stage light set up for an event" loading="lazy" decoding="async" width="640" height="800" onerror="this.remove()"></div>
         <span class="lk-tile__name">DJ &amp; event organiser<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Sound, music, event setup</span>
       </a>
-      <a class="lk-tile" href="/post-job" aria-label="Post a salon chair rental job">
+      <a class="lk-tile" href="/pages/post-job.html" aria-label="Post a salon chair rental job">
         <div class="lk-tile__img"><span class="lk-tile__slot" aria-hidden="true"><i class="ph ph-armchair"></i></span><img src="../images/dashboard/salon-chairs.jpg" alt="Two barber chairs at mirror stations, ready to rent" loading="lazy" decoding="async" width="640" height="800" onerror="this.remove()"></div>
         <span class="lk-tile__name">Salon chair rental<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Chairs and stations to hire</span>
       </a>
     </div>
 
     <div class="lk-services">
-      <a class="lk-service" href="/post-job"><i class="ph ph-television-simple" aria-hidden="true"></i><span><b>DStv installation</b><small>Dishes, decoders, signal</small></span></a>
-      <a class="lk-service" href="/post-job"><i class="ph ph-wall" aria-hidden="true"></i><span><b>Paving</b><small>Driveways, walkways, repairs</small></span></a>
-      <a class="lk-service" href="/post-job"><i class="ph ph-tent" aria-hidden="true"></i><span><b>Event &amp; funeral tents</b><small>Stretch tents, chairs, setup</small></span></a>
+      <a class="lk-service" href="/pages/post-job.html"><i class="ph ph-television-simple" aria-hidden="true"></i><span><b>DStv installation</b><small>Dishes, decoders, signal</small></span></a>
+      <a class="lk-service" href="/pages/post-job.html"><i class="ph ph-wall" aria-hidden="true"></i><span><b>Paving</b><small>Driveways, walkways, repairs</small></span></a>
+      <a class="lk-service" href="/pages/post-job.html"><i class="ph ph-tent" aria-hidden="true"></i><span><b>Event &amp; funeral tents</b><small>Stretch tents, chairs, setup</small></span></a>
       <a class="lk-service" href="/post-job?category=Computer%20Repairs"><i class="ph ph-device-mobile" aria-hidden="true"></i><span><b>Phone &amp; computer</b><small>Screens, laptops, software</small></span></a>
       <a class="lk-service" href="/post-job?category=Plumbing"><i class="ph ph-drop" aria-hidden="true"></i><span><b>Plumbing</b><small>Leaks, geysers, taps</small></span></a>
       <a class="lk-service" href="/post-job?category=Gardening"><i class="ph ph-plant" aria-hidden="true"></i><span><b>Gardening</b><small>Lawns, trimming, yards</small></span></a>
@@ -761,7 +761,7 @@ h1,h2,h3,p{margin:0}
 <footer class="lk-foot">
   <div class="lk-wrap lk-foot__inner">
     <span><strong>LokshinGigs</strong> &nbsp;Local work, done right.</span>
-    <nav aria-label="Footer"><a href="/post-job">Post a job</a><a href="/profile">Profile</a><a href="#services">Services</a></nav>
+    <nav aria-label="Footer"><a href="/pages/post-job.html">Post a job</a><a href="/pages/profile.html">Profile</a><a href="#services">Services</a></nav>
   </div>
 </footer>
 
@@ -974,7 +974,7 @@ h1,h2,h3,p{margin:0}
       tbody.innerHTML = `<tr class="lk-empty-row" data-state="no-jobs"><td colspan="5"><div class="lk-empty">
         <i class="ph ph-briefcase" aria-hidden="true"></i><strong>No jobs yet.</strong>
         <span>Post your first job and skilled people nearby can apply.</span>
-        <a class="lk-btn lk-btn--primary lk-btn--sm" href="/post-job"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post your first job</a>
+        <a class="lk-btn lk-btn--primary lk-btn--sm" href="/pages/post-job.html"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post your first job</a>
       </div></td></tr>`;
       ['sTotal','sOpen','sProgress','sDone'].forEach(id => document.getElementById(id).textContent = '0');
       return;
@@ -1243,7 +1243,7 @@ h1,h2,h3,p{margin:0}
       if (!html) {
         html = '<div class="lk-calm"><i class="ph ph-check-circle" aria-hidden="true"></i><strong>Nothing needs you right now.</strong>'
              + '<span>New applications and finished jobs will show up here.</span>'
-             + '<a href="/post-job" class="lk-btn lk-btn--primary lk-btn--sm"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a></div>';
+             + '<a href="/pages/post-job.html" class="lk-btn lk-btn--primary lk-btn--sm"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a></div>';
       }
       $('#attnBody').innerHTML = html;
       $('#attnCount').textContent = total ? total + (total === 1 ? ' item' : ' items') : '';

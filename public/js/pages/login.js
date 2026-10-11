@@ -21,9 +21,9 @@
 //  - URL param ?token=xxx → reset view
 // -----------------------------------------------------------------------------
 const ROLE_REDIRECT = {
-    Customer: '/customer-dashboard',
-    Freelancer: '/freelancer-dashboard',
-    Admin: '/admin-dashboard'
+    Customer: '/pages/customer-dashboard.html',
+    Freelancer: '/pages/freelancer-dashboard.html',
+    Admin: '/pages/admin-dashboard.html'
 };
 // ------- password strength validator ----------------------------------------
 function validatePassword(pw) {
@@ -254,7 +254,7 @@ function initLoginPage() {
                 const r = await apiPost('/auth/reset-password', { token: resetToken, newPassword: newPw });
                 if (r.success) {
                     resetAlert.innerHTML = '<div class="alert-banner alert-banner-ok">' + (r.message || 'Password reset successfully. Redirecting to sign in…') + '</div>';
-                    setTimeout(() => { window.location.href = '/login'; }, 1800);
+                    setTimeout(() => { window.location.href = '/pages/login.html'; }, 1800);
                 } else {
                     resetAlert.innerHTML = '<div class="alert-banner alert-banner-err">' + (r.message || 'Unable to reset password. The link may have expired.') + '</div>';
                     resetSubmit.disabled = false;

@@ -162,7 +162,7 @@
 
       if (data.success) {
         alertBox.innerHTML = '<div class="alert-ok">' + data.message + ' Redirecting to login…</div>';
-        setTimeout(function () { window.location.href = '/login'; }, 1800);
+        setTimeout(function () { window.location.href = '/pages/login.html'; }, 1800);
       } else {
         alertBox.innerHTML = '<div class="alert-err">' + data.message + '</div>';
         submitBtn.disabled = false;

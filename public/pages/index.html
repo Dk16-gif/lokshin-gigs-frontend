@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="/css/design-system.css" />
   <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
-    window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
+    window.API_BASE = '';
   </script>
 </head>
 <body>
@@ -28,7 +28,7 @@
      ========================================================== -->
 <header class="site-nav" id="siteNav">
   <div class="container site-nav__inner">
-    <a class="brand" href="/">
+    <a class="brand" href="/pages/index.html">
       <span class="brand__dot" aria-hidden="true"></span>
       <span class="brand__mark">Lokshin<span class="brand__mark--accent">Gigs</span></span>
     </a>
@@ -55,8 +55,8 @@
         <li><a href="/register?role=Freelancer">For pros</a></li>
       </ul>
       <div class="nav-actions">
-        <a class="btn btn--tertiary btn--sm" href="/login">Sign in</a>
-        <a class="btn btn--primary btn--sm" href="/register">Get started</a>
+        <a class="btn btn--tertiary btn--sm" href="/pages/login.html">Sign in</a>
+        <a class="btn btn--primary btn--sm" href="/pages/register.html">Get started</a>
       </div>
     </div>
   </div>
@@ -82,7 +82,7 @@
           </p>
           <div class="hero__actions" style="margin-bottom: var(--s-6);">
             <a class="btn btn--primary btn--lg" href="#feed">Find a service</a>
-            <a class="btn btn--secondary btn--lg" href="/register">Post a job</a>
+            <a class="btn btn--secondary btn--lg" href="/pages/register.html">Post a job</a>
           </div>
           <p class="caption t-muted">Free to browse · No commission on your first job</p>
         </div>
@@ -555,7 +555,7 @@
             </div>
           </div>
 
-          <a class="btn btn--primary split-card__cta" href="/register">Post a job</a>
+          <a class="btn btn--primary split-card__cta" href="/pages/register.html">Post a job</a>
         </div>
 
         <!-- Freelancer side -->
@@ -612,9 +612,9 @@
       <div class="collage__card">
         <h2 id="collage-heading">Your next job is closer than you think.</h2>
         <p>Join thousands of local pros and customers already on Lokshin Gigs. Free to join, no card required.</p>
-        <a class="btn btn--primary btn--lg" href="/register">Get started</a>
+        <a class="btn btn--primary btn--lg" href="/pages/register.html">Get started</a>
         <p class="caption t-muted" style="margin: 0;">
-          Already have an account? <a class="link-inline" href="/login">Sign in</a>
+          Already have an account? <a class="link-inline" href="/pages/login.html">Sign in</a>
         </p>
       </div>
     </div>
@@ -629,7 +629,7 @@
   <div class="container">
     <div class="site-footer__grid">
       <div class="site-footer__brand-block">
-        <a class="brand" href="/">
+        <a class="brand" href="/pages/index.html">
           <span class="brand__dot" aria-hidden="true"></span>
           <span class="brand__mark">Lokshin<span class="brand__mark--accent">Gigs</span></span>
         </a>
@@ -641,8 +641,8 @@
       <div>
         <h6>Quick links</h6>
         <ul>
-          <li><a href="/login">Sign in</a></li>
-          <li><a href="/register">Register</a></li>
+          <li><a href="/pages/login.html">Sign in</a></li>
+          <li><a href="/pages/register.html">Register</a></li>
           <li><a href="#feed">Browse</a></li>
           <li><a href="#how">How it works</a></li>
         </ul>
@@ -653,7 +653,7 @@
         <ul>
           <li><a href="mailto:info@lokshingigs.co.za">info@lokshingigs.co.za</a></li>
           <li><a href="tel:0800565744">0800 LOKSHIN</a></li>
-          <li><a href="/terms" class="lk-terms-link">Terms &amp; Conditions</a></li>
+          <li><a href="/pages/terms.html" class="lk-terms-link">Terms &amp; Conditions</a></li>
         </ul>
       </div>
     </div>

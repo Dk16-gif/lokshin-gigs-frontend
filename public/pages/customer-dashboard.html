@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>My Jobs – Lokshin Gigs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+  <style>
+/* =====================================================================
+   LOKSHIN GIGS — CUSTOMER DASHBOARD
+   One authoritative design system for this page. Bootstrap's JavaScript
+   still powers the modals and the shared toast, but none of its CSS is
+   loaded: every visual below is Lokshin's own.
+   ===================================================================== */
+
+/* ---- Tokens ---- */
+:root{
+  --cream:#FCF8F0;      /* surfaces */
+  --sand:#E8DFCE;       /* rules, fields */
+  --sand-2:#D8CCB5;     /* stronger rules */
+  --sand-soft:#F0E8DC;  /* quiet fills, separators */
+  --ink:#1F1B16; --ink-soft:#4C463D; --muted:#7F7669;
+  --terra:#B65A3C; --terra-dk:#9E4A2F; --terra-tint:rgba(182,90,60,.11);
+  --espresso:#230F08;
+  --amber:#9A6E1C; --amber-dot:#C4922A; --amber-tint:rgba(196,146,42,.15);
+  --sage:#46624A;  --sage-dot:#5B7A5F;  --sage-tint:rgba(91,122,95,.14);
+  --danger:#B84233; --danger-tint:rgba(184,66,51,.10);
+  --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+  --f:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --wrap:1240px; --gutter:24px; --cpad:32px;   /* --cpad: ivory canvas inset around the content */
+  --lift:0 18px 40px -22px rgba(35,15,8,.45);
+  --success:#4F6E53; --success-dk:#435E47;
+  /* material: light, warm neumorphism (shared language with the Admin Dashboard) */
+  --rim:rgba(214,200,176,.78);
+  --shade:60,42,30;         /* warm shade used for moulding (shared with the Admin Dashboard) */
+  --n-raise:-6px -6px 16px rgba(255,255,255,.66),12px 16px 32px -16px rgba(68,36,22,.38),0 1px 2px rgba(68,36,22,.08),inset 0 1px 0 rgba(255,255,255,.9);
+  --n-raise-sm:-3px -3px 8px rgba(255,255,255,.7),5px 8px 16px -8px rgba(68,36,22,.34),inset 0 1px 0 rgba(255,255,255,.9);
+  --n-inset:inset 2px 2px 5px rgba(120,88,52,.15),inset -2px -2px 5px rgba(255,255,255,.85);
+  /* environment */
+  --env:#3B2317;            /* chocolate ground */
+  --env-deep:#24120A;       /* espresso recess */
+  --canvas:#F1EADF;         /* warm ivory canvas */
+  /* status accents */
+  --st-all:#6F6253; --st-open:var(--terra); --st-progress:#B0832A; --st-done:var(--sage-dot); --st-cancel:#8C4E40;
+  --n-press:inset 0 2px 5px rgba(120,88,52,.2);
+}
+
+/* ---- Base ---- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;font-family:var(--f);font-size:15px;line-height:1.55;font-weight:500;color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+img{display:block;max-width:100%}
+/* Environment: an espresso / chocolate material lit by a broad clay field. The light sits where
+   the hero meets the ivory canvas and leaks around the canvas edges; the page edges fall away into
+   espresso. Very wide, feathered fields only, so no light reads as a shape. Painted on the root so it
+   scrolls with the page like a physical surface. */
+html{background-color:var(--env);background-repeat:no-repeat;
+  background-image:
+    linear-gradient(180deg,rgba(20,9,4,.62) 0,rgba(20,9,4,.3) 120px,rgba(20,9,4,0) 300px),
+    linear-gradient(90deg,rgba(24,11,5,.62) 0,rgba(24,11,5,.34) 5%,rgba(24,11,5,.1) 12%,rgba(24,11,5,0) 20%,rgba(24,11,5,0) 80%,rgba(24,11,5,.1) 88%,rgba(24,11,5,.34) 95%,rgba(24,11,5,.62) 100%),
+    radial-gradient(ellipse 72% 560px at 50% 700px,rgba(201,180,158,.66) 0,rgba(190,166,141,.54) 18%,rgba(170,142,116,.38) 36%,rgba(145,114,90,.22) 56%,rgba(118,88,66,.09) 76%,rgba(118,88,66,0) 100%),
+    radial-gradient(ellipse 58% 520px at 16% 220px,rgba(139,106,82,.46) 0,rgba(139,106,82,.3) 30%,rgba(139,106,82,.12) 62%,rgba(139,106,82,0) 100%),
+    radial-gradient(ellipse 60% 640px at 86% 300px,rgba(122,90,68,.34) 0,rgba(122,90,68,.18) 40%,rgba(122,90,68,0) 100%),
+    radial-gradient(ellipse 90% 900px at 50% 1900px,rgba(150,118,92,.34) 0,rgba(150,118,92,.18) 40%,rgba(150,118,92,0) 100%),
+    linear-gradient(180deg,#2E1A10 0,#442416 520px,#47291B 1200px,#3E2418 2200px,#2C190F 100%)}
+/* fine material grain over everything except the modules */
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px;border-radius:6px}
+.lk-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.lk-wrap{width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto}
+.lk-skip{position:absolute;left:16px;top:-48px;z-index:300;padding:10px 14px;border-radius:10px;background:var(--espresso);color:var(--cream);font-weight:700;text-decoration:none}
+.lk-skip:focus{top:12px}
+
+/* ---- Buttons ---- */
+/* Moulded controls: a solid surface, a lit top edge, a pressed-in lower lip and a
+   soft tinted cast shadow. Hover lifts by 1px, press sinks and recesses. No gradients, no glow. */
+.lk-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;border:1px solid transparent;
+  font-size:14.5px;font-weight:700;letter-spacing:-.005em;line-height:1;text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+  transition:background-color .18s,border-color .18s,color .18s,box-shadow .18s,transform .12s}
+.lk-btn i{font-size:16px}
+.lk-btn:hover{transform:translateY(-1px)}
+.lk-btn:active{transform:translateY(1px)}
+/* primary: terracotta */
+.lk-btn--primary{background:var(--terra);border-color:#A04D31;color:#FFF8F1;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.34),inset 0 -2px 0 rgba(92,36,18,.24),0 1px 1px rgba(92,36,18,.16),0 8px 16px -10px rgba(158,74,47,.8)}
+.lk-btn--primary:hover{background:#AC5336;box-shadow:inset 0 1px 0 rgba(255,226,206,.34),inset 0 -2px 0 rgba(92,36,18,.26),0 1px 1px rgba(92,36,18,.18),0 12px 20px -12px rgba(158,74,47,.9)}
+.lk-btn--primary:active{background:var(--terra-dk);box-shadow:inset 0 2px 5px rgba(70,26,12,.38)}
+/* secondary: ivory / sand */
+.lk-btn--ghost,.lk-btn--soft,.lk-btn--danger-soft{background:#FBF6EE;border-color:#DCCFB8;color:var(--ink);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(150,118,78,.10),0 1px 1px rgba(105,72,40,.07),0 6px 12px -9px rgba(105,72,40,.38)}
+.lk-btn--soft{background:#F3EBDE}
+.lk-btn--ghost i,.lk-btn--soft i{color:var(--terra)}
+.lk-btn--ghost:hover,.lk-btn--soft:hover{background:#F5EDE1;border-color:#D1C2A8}
+.lk-btn--ghost:active,.lk-btn--soft:active,.lk-btn--danger-soft:active{background:#EEE4D4;box-shadow:var(--n-press)}
+/* success: sage */
+.lk-btn--success{background:var(--success);border-color:var(--success-dk);color:#F6F9F2;
+  box-shadow:inset 0 1px 0 rgba(226,240,222,.26),inset 0 -2px 0 rgba(28,44,30,.24),0 1px 1px rgba(28,44,30,.14),0 8px 16px -10px rgba(67,94,71,.8)}
+.lk-btn--success:hover{background:#486650}
+.lk-btn--success:active{background:var(--success-dk);box-shadow:inset 0 2px 5px rgba(20,34,22,.36)}
+/* destructive: restrained red, solid for the final confirm, quiet for inline decisions */
+.lk-btn--danger{background:#A8473A;border-color:#923B2F;color:#FFF7F3;
+  box-shadow:inset 0 1px 0 rgba(255,220,210,.26),inset 0 -2px 0 rgba(80,22,14,.24),0 1px 1px rgba(80,22,14,.14),0 8px 16px -10px rgba(146,59,47,.8)}
+.lk-btn--danger:hover{background:#9C4034}
+.lk-btn--danger:active{background:#8A372C;box-shadow:inset 0 2px 5px rgba(60,16,10,.38)}
+.lk-btn--danger-soft{color:#9C3F33}
+.lk-btn--danger-soft:hover{background:#F8ECE6;border-color:rgba(168,71,58,.34)}
+/* small */
+.lk-btn--sm{height:34px;padding:0 12px;border-radius:10px;font-size:13px;gap:6px}
+.lk-btn--sm i{font-size:14.5px}
+.lk-btn--sm.lk-btn--primary,.lk-btn--sm.lk-btn--success{box-shadow:inset 0 1px 0 rgba(255,236,220,.3),inset 0 -2px 0 rgba(40,20,10,.2),0 6px 12px -8px rgba(110,60,35,.7)}
+.lk-btn:disabled{opacity:.55;cursor:default;transform:none}
+.lk-icon-btn{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;border:1px solid #E0D4C0;background:#FBF6EE;
+  color:var(--ink-soft);font-size:16px;text-decoration:none;-webkit-tap-highlight-color:transparent;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(150,118,78,.09),0 5px 10px -8px rgba(105,72,40,.42);
+  transition:background-color .18s,border-color .18s,color .18s,box-shadow .18s,transform .12s}
+.lk-icon-btn:hover{background:#F5EDE1;border-color:#D1C2A8;color:var(--ink);transform:translateY(-1px)}
+.lk-icon-btn:active{background:#EEE4D4;box-shadow:var(--n-press);transform:translateY(1px)}
+.lk-icon-btn--danger:hover{background:#F8ECE6;border-color:rgba(168,71,58,.34);color:#9C3F33}
+
+/* ---- Navigation ---- */
+.lk-nav{position:sticky;top:0;z-index:100;background:rgba(243,236,225,.86);backdrop-filter:saturate(1.15) blur(14px);-webkit-backdrop-filter:saturate(1.15) blur(14px);
+  border-bottom:1px solid rgba(106,75,57,.16);box-shadow:inset 0 -1px 0 rgba(255,255,255,.4),0 10px 24px -20px rgba(68,36,22,.5)}
+.lk-nav__inner{display:flex;align-items:center;gap:28px;height:68px}
+.lk-brand{display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:500;letter-spacing:-.02em;text-decoration:none;color:var(--ink-soft)}
+.lk-brand strong{font-weight:800;color:var(--ink)}
+.lk-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--terra);color:#fff;font-size:15px;font-weight:800}
+.lk-nav__links{display:flex;align-items:center;gap:2px;margin:0;padding:0;list-style:none}
+.lk-nav__link{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 13px;border-radius:10px;font-size:14px;font-weight:600;color:var(--ink-soft);text-decoration:none;transition:background-color .18s,color .18s}
+.lk-nav__link:hover{background:rgba(232,223,206,.6);color:var(--ink)}
+.lk-nav__link[aria-current="page"]{background:var(--sand);color:var(--ink)}
+.lk-nav__link[aria-disabled="true"]{color:var(--muted);cursor:default}
+.lk-nav__link[aria-disabled="true"]:hover{background:transparent;color:var(--muted)}
+.lk-soon{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--sand);color:var(--ink-soft)}
+.lk-nav__end{margin-left:auto;display:flex;align-items:center;gap:12px}
+.lk-menu{position:relative}
+.lk-menu>summary{list-style:none;cursor:pointer}
+.lk-menu>summary::-webkit-details-marker{display:none}
+.lk-account{display:flex;align-items:center;gap:6px;padding:3px 6px 3px 3px;border-radius:999px;border:1px solid var(--sand);background:var(--cream);color:var(--ink-soft)}
+.lk-account:hover{border-color:var(--sand-2)}
+.lk-avatar{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--espresso);color:var(--cream);font-size:12px;font-weight:800;letter-spacing:.02em}
+.lk-menu__panel{position:absolute;right:0;top:calc(100% + 10px);min-width:230px;padding:8px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--sand);box-shadow:var(--lift)}
+.lk-menu__who{padding:10px 12px 12px;border-bottom:1px solid var(--sand-soft);margin-bottom:6px}
+.lk-menu__who strong{display:block;font-size:14px}
+.lk-menu__who span{font-size:12.5px;color:var(--muted)}
+.lk-menu__item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border:0;border-radius:10px;background:none;font-size:14px;font-weight:600;color:var(--ink-soft);text-decoration:none;text-align:left}
+.lk-menu__item:hover{background:var(--sand-soft);color:var(--ink)}
+.lk-menu__item i{font-size:17px}
+.lk-nav__burger{display:none}
+
+/* ---- Hero: the one bold moment ---- */
+.lk-hero{position:relative;z-index:1;width:min(var(--wrap),100% - 2*var(--gutter) - 2*var(--cpad));margin-top:24px;border-radius:var(--r-xl);overflow:hidden;color:var(--cream);isolation:isolate;
+  box-shadow:0 0 0 1px rgba(241,234,223,.07),0 2px 0 rgba(241,234,223,.05),0 34px 60px -30px rgba(10,4,1,.85);
+  background:
+    radial-gradient(ellipse 60% 85% at 8% 115%,rgba(182,90,60,.42),rgba(182,90,60,0) 70%),
+    radial-gradient(ellipse 55% 70% at 92% 0%,rgba(216,204,181,.13),rgba(216,204,181,0) 72%),
+    linear-gradient(160deg,#2C150A 0%,#230F08 55%,#1B0B05 100%)}
+.lk-hero::after{content:'';position:absolute;inset:0;z-index:-1;opacity:.05;mix-blend-mode:overlay;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.lk-hero__grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:48px;align-items:center;padding:60px 60px 108px}
+.lk-hero__hello{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#DCCFB8}
+.lk-hero__hello::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--terra);box-shadow:0 0 0 4px rgba(182,90,60,.22)}
+#welcomeUser:empty::before{content:'Welcome back'}
+.lk-hero h1{margin-top:22px;font-size:clamp(40px,5.4vw,76px);line-height:.94;font-weight:800;letter-spacing:-.025em;text-transform:uppercase;color:#FCF8F0;text-wrap:balance}
+.lk-hero__lead{margin-top:22px;max-width:34ch;font-size:17.5px;line-height:1.55;color:rgba(252,248,240,.72)}
+.lk-hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.lk-hero .lk-btn{height:50px;padding:0 22px;font-size:15px;border-radius:14px;gap:9px}
+.lk-hero .lk-btn i{font-size:17px}
+.lk-hero .lk-btn--primary{border-color:#C46A4B;box-shadow:inset 0 1px 0 rgba(255,226,206,.36),inset 0 -2px 0 rgba(70,26,12,.3),0 14px 26px -14px rgba(0,0,0,.75)}
+/* ivory secondary on espresso */
+.lk-hero .lk-btn--ghost{background:#F4ECDF;border-color:#F4ECDF;color:var(--ink);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(120,88,52,.18),0 14px 26px -14px rgba(0,0,0,.7)}
+.lk-hero .lk-btn--ghost:hover{background:#FCF7EF;border-color:#FCF7EF}
+.lk-hero .lk-btn--ghost:active{background:#E9DFCE;box-shadow:inset 0 2px 5px rgba(80,55,30,.3)}
+/* local work strip */
+.lk-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.lk-frame{position:relative;margin:0;aspect-ratio:3/4;border-radius:18px;overflow:hidden;background:#3A2418;
+  box-shadow:0 24px 44px -18px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06)}
+.lk-frame:nth-child(2){margin-top:44px}
+.lk-frame:nth-child(3){margin-top:-22px}
+.lk-frame img{width:100%;height:100%;object-fit:cover}
+.lk-frame--dstv img{object-position:0% 50%}    /* dish and technician */
+.lk-frame--paving img{object-position:46% 40%} /* hands and pavers */
+.lk-frame--tents img{object-position:50% 34%}  /* tent canopy and chairs */
+.lk-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(35,15,8,0) 55%,rgba(35,15,8,.55) 100%)}
+.lk-frame figcaption{position:absolute;left:12px;bottom:12px;z-index:1;font-size:12.5px;font-weight:700;color:#FCF8F0}
+@media (prefers-reduced-motion:no-preference){
+  .lk-frame{animation:lkRise .7s cubic-bezier(.2,.7,.2,1) both}
+  .lk-frame:nth-child(2){animation-delay:.08s}
+  .lk-frame:nth-child(3){animation-delay:.16s}
+}
+@keyframes lkRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---- Ivory canvas: the large moulded surface the customer works on ---- */
+/* It tucks under the hero (the hero overlaps its top edge), carries the snapshot rail across
+   the seam, and holds the workspace and discovery. Rim shading follows the Admin Dashboard's
+   moulding at a lighter weight. No z-index here, so the snapshot can still rise above the hero. */
+.lk-canvas{position:relative;display:flow-root;width:min(calc(var(--wrap) + 2*var(--cpad)),calc(100% - 2*var(--gutter)));margin:-40px auto 0;
+  padding:0 var(--cpad) calc(var(--cpad) + 24px);border-radius:36px;background-color:var(--canvas);
+  background-image:
+    radial-gradient(ellipse 62% 340px at 50% 0,rgba(255,251,244,.85) 0,rgba(255,251,244,.4) 45%,rgba(255,251,244,0) 100%),
+    radial-gradient(ellipse 90% 96% at 46% 42%,rgba(var(--shade),0) 62%,rgba(var(--shade),.05) 84%,rgba(var(--shade),.1) 100%),
+    linear-gradient(to left,rgba(var(--shade),.16) 0,rgba(var(--shade),.08) 10px,rgba(var(--shade),.03) 28px,rgba(var(--shade),0) 56px),
+    linear-gradient(to right,rgba(var(--shade),.1) 0,rgba(var(--shade),.04) 16px,rgba(var(--shade),0) 44px),
+    linear-gradient(to top,rgba(var(--shade),.14) 0,rgba(var(--shade),.06) 14px,rgba(var(--shade),0) 52px);
+  box-shadow:-6px -8px 22px rgba(201,180,158,.2),10px 16px 28px -10px rgba(14,6,2,.6),0 50px 90px -36px rgba(10,4,1,.7),inset 0 1px 0 rgba(255,255,255,.75)}
+
+/* ---- Snapshot: an instrument rail, not four cards ---- */
+/* sand shell → recessed Total well → three raised status keys */
+.lk-snapshot{position:relative;z-index:2;margin:-24px auto 0;width:calc(100% - 64px);
+  display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:10px;padding:10px;border-radius:26px;background-color:#ECE3D5;
+  background-image:
+    linear-gradient(to bottom,rgba(255,255,255,.55) 0,rgba(255,255,255,0) 14px),
+    linear-gradient(to top,rgba(var(--shade),.12) 0,rgba(var(--shade),0) 16px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -2px 0 rgba(var(--shade),.1),0 0 0 1px rgba(196,178,152,.55),
+    0 3px 4px rgba(30,14,6,.12),0 30px 54px -26px rgba(16,7,2,.72)}
+.lk-stat{position:relative;padding:20px 22px 18px;min-width:0;border-radius:17px}
+/* status keys: raised, lit along the top edge */
+.lk-stat+.lk-stat{background:#FBF7F0;
+  box-shadow:-3px -3px 8px rgba(255,255,255,.7),4px 7px 12px -6px rgba(68,36,22,.4),inset 0 1px 0 #fff,inset 0 -2px 0 rgba(var(--shade),.07)}
+/* total: a recessed well cut into the shell */
+.lk-stat:first-child{background:#E4D9C8;
+  box-shadow:inset 3px 3px 7px rgba(var(--shade),.24),inset -2px -2px 5px rgba(255,255,255,.72),inset 0 0 0 1px rgba(var(--shade),.06)}
+.lk-stat__top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.lk-stat__num{margin-top:12px;font-size:46px;line-height:1;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.lk-stat:first-child .lk-stat__num{font-size:52px}
+.lk-stat__cap{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.lk-stat__cap::before{content:'';width:14px;height:3px;border-radius:2px;background:var(--acc,var(--sand-2))}
+.lk-stat--open{--acc:var(--st-open);--ring:rgba(182,90,60,.1)}
+.lk-stat--progress{--acc:var(--st-progress);--ring:rgba(176,131,42,.12)}
+.lk-stat--done{--acc:var(--st-done);--ring:rgba(91,122,95,.12)}
+/* status lamp: a recessed socket holding the status glyph */
+.lk-stat__icon{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;font-size:14px;color:var(--acc);background:#F1E9DC;
+  box-shadow:inset 1.5px 1.5px 3px rgba(var(--shade),.22),inset -1.5px -1.5px 3px rgba(255,255,255,.9),0 0 0 3px var(--ring,transparent)}
+.lk-dist{display:flex;gap:3px;height:9px;margin-top:18px;padding:2px;border-radius:999px;overflow:hidden;background:#D9CCB8;box-shadow:inset 1px 1px 2px rgba(var(--shade),.3),inset -1px -1px 1px rgba(255,255,255,.6)}
+.lk-dist span{height:100%;border-radius:999px;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.lk-dist [data-s="Open"]{background:var(--st-open)}
+.lk-dist [data-s="In Progress"]{background:var(--st-progress)}
+.lk-dist [data-s="Completed"]{background:var(--st-done)}
+.lk-dist [data-s="Cancelled"]{background:var(--st-cancel)}
+
+/* ---- Workspace ---- */
+.lk-work{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start;margin-top:44px}
+.lk-panel{border-radius:24px;background:var(--cream);border:1px solid var(--rim);box-shadow:var(--n-raise);overflow:hidden}
+.lk-panel__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:26px 26px 0}
+.lk-panel__title{font-size:23px;font-weight:800;letter-spacing:-.025em}
+.lk-panel__sub{margin-top:3px;font-size:13.5px;color:var(--muted)}
+.lk-textlink{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--terra);text-decoration:none}
+.lk-textlink:hover{color:var(--terra-dk);text-decoration:underline;text-underline-offset:3px}
+/* status filter rail: one recessed track; every state shares the same key, distinguished by its
+   glyph and accent. The selected state rises out of the track with an accent lip and a tinted count. */
+.lk-seg{display:flex;gap:3px;margin:20px 26px 0;padding:5px;width:max-content;max-width:calc(100% - 52px);overflow-x:auto;border-radius:15px;background:#EAE0D1;
+  box-shadow:inset 2px 2px 5px rgba(var(--shade),.2),inset -2px -2px 5px rgba(255,255,255,.8);scrollbar-width:none}
+.lk-seg::-webkit-scrollbar{display:none}
+.lk-seg button{--acc:var(--st-all);--tint:rgba(111,98,83,.12);display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px 0 11px;border:0;border-radius:11px;background:transparent;
+  font-size:13.5px;font-weight:700;color:var(--ink-soft);white-space:nowrap;transition:background-color .18s,color .18s,box-shadow .18s,transform .12s}
+.lk-seg button[data-filter="Open"]{--acc:var(--st-open);--tint:rgba(182,90,60,.13)}
+.lk-seg button[data-filter="In Progress"]{--acc:var(--st-progress);--tint:rgba(176,131,42,.15)}
+.lk-seg button[data-filter="Completed"]{--acc:var(--st-done);--tint:rgba(91,122,95,.15)}
+.lk-seg button[data-filter="Cancelled"]{--acc:var(--st-cancel);--tint:rgba(140,78,64,.13)}
+.lk-seg button i{font-size:16px;color:var(--acc);opacity:.62;transition:opacity .18s}
+.lk-seg button:hover{color:var(--ink);background:rgba(255,251,244,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.lk-seg button:hover i{opacity:1}
+.lk-seg button:active{transform:translateY(1px)}
+.lk-seg button[aria-pressed="true"]{background:#FFFBF4;color:var(--ink);font-weight:800;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 var(--acc),0 0 0 1px rgba(214,200,176,.75),-2px -2px 5px rgba(255,255,255,.6),3px 5px 9px -4px rgba(68,36,22,.42)}
+.lk-seg button[aria-pressed="true"] i{opacity:1}
+.lk-seg__n{display:inline-grid;place-items:center;min-width:22px;height:20px;padding:0 6px;border-radius:6px;font-size:11.5px;font-weight:800;color:var(--muted);
+  background:rgba(var(--shade),.07);font-variant-numeric:tabular-nums;transition:background-color .18s,color .18s}
+.lk-seg__n:empty{display:none}
+.lk-seg button[aria-pressed="true"] .lk-seg__n{background:var(--tint);color:var(--acc)}
+.lk-seg button[data-filter="In Progress"][aria-pressed="true"] .lk-seg__n{color:#8E6A1E}
+
+/* jobs table: list/table hybrid */
+.lk-table-wrap{margin-top:18px;overflow-x:auto}
+.lk-table{width:100%;border-collapse:collapse}
+.lk-table th{padding:10px 16px;text-align:left;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  background:#F7F0E5;border-top:1px solid #EFE6D8;border-bottom:1px solid #EAE0CF;white-space:nowrap}
+.lk-table th:first-child,.lk-table td:first-child{padding-left:26px}
+.lk-table th:last-child,.lk-table td:last-child{padding-right:26px}
+.lk-table td{padding:17px 16px;border-bottom:1px solid #F0E8DB;font-size:14px;vertical-align:middle}
+.lk-table tbody tr:last-child td{border-bottom:0}
+.lk-job{transition:background-color .18s}
+.lk-job:hover{background:#FBF5EC}
+.lk-job:hover td:first-child{box-shadow:inset 3px 0 0 var(--terra)}
+.lk-job__main{min-width:230px}
+.lk-job__title{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.012em;line-height:1.35;color:var(--ink)}
+.lk-job__meta{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:5px;font-size:12.8px;color:var(--muted)}
+.lk-job__budget{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.01em}
+.lk-job__loc{display:inline-flex;align-items:center;gap:4px;color:var(--ink-soft)}
+.lk-job__loc i{color:var(--muted)}
+.lk-job__date{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.lk-actions{display:flex;justify-content:flex-end;align-items:center;gap:6px}
+.lk-person{display:inline-flex;align-items:center;gap:9px;font-weight:600;line-height:1.3;max-width:170px}
+.lk-person__avatar{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:50%;background:#EDE3D3;color:var(--ink-soft);font-size:11px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 0 0 1px rgba(214,200,176,.7)}
+.lk-muted{color:var(--muted)}
+/* status system (statusBadge() from main.js): one shape, a distinct marker per state
+   open = hollow ring (waiting) · in progress = half-filled · completed = solid · cancelled = dash */
+.badge-open,.badge-progress,.badge-completed,.badge-cancelled,.lk-decision{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px 0 9px;border-radius:8px;
+  border:1px solid transparent;font-size:12.5px;font-weight:700;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.badge-open::before,.badge-progress::before,.badge-completed::before,.badge-cancelled::before{content:'';flex:none;width:8px;height:8px;border-radius:50%;box-sizing:border-box}
+.badge-open{background:rgba(182,90,60,.08);border-color:rgba(182,90,60,.2);color:var(--terra-dk)}
+.badge-open::before{border:2px solid currentColor}
+.badge-progress{background:rgba(196,146,42,.11);border-color:rgba(196,146,42,.26);color:var(--amber)}
+.badge-progress::before{border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.badge-completed{background:rgba(91,122,95,.1);border-color:rgba(91,122,95,.24);color:var(--sage)}
+.badge-completed::before{background:currentColor}
+.badge-cancelled{background:#F3ECE1;border-color:#E4D9C7;color:var(--muted)}
+.badge-cancelled::before{width:8px;height:2px;border-radius:1px;background:currentColor}
+/* empty + loading */
+.lk-empty-row td{padding:0!important}
+.lk-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:52px 24px 56px}
+.lk-empty i{font-size:26px;color:var(--terra);margin-bottom:6px}
+.lk-empty strong{font-size:16px}
+.lk-empty span{font-size:14px;color:var(--muted);max-width:40ch}
+.lk-empty .lk-btn{margin-top:12px}
+.lk-loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:52px 24px;color:var(--muted);font-size:14px}
+.lk-loading::before{content:'';width:14px;height:14px;border-radius:50%;border:2px solid var(--sand-2);border-top-color:var(--terra);animation:lkSpin .8s linear infinite}
+@keyframes lkSpin{to{transform:rotate(360deg)}}
+
+/* ---- Needs attention: a different material from the jobs list ---- */
+.lk-attn{position:sticky;top:92px;padding:24px 22px 22px;border-radius:24px;background:#F1E8DA;border:1px solid #E2D5BF;box-shadow:var(--n-raise)}
+.lk-attn__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lk-attn__title{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;letter-spacing:-.02em}
+.lk-attn__title::before{content:'';width:4px;height:18px;border-radius:2px;background:var(--terra)}
+.lk-attn__count:not(:empty){padding:4px 10px;border-radius:8px;background:#FBF6EE;border:1px solid rgba(214,200,176,.8);font-size:12px;font-weight:800;color:var(--terra-dk);
+  box-shadow:inset 0 1px 0 #fff,0 3px 6px -4px rgba(105,72,40,.4)}
+.lk-attn__sub{margin-top:4px;padding-left:14px;font-size:13.5px;color:var(--ink-soft)}
+.lk-group{margin-top:20px}
+.lk-group__label{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px}
+.lk-group__label i{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;font-size:12px;border:1px solid transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.lk-group--apps .lk-group__label i{background:var(--terra-tint);border-color:rgba(182,90,60,.18);color:var(--terra)}
+.lk-group--progress .lk-group__label i{background:var(--amber-tint);border-color:rgba(196,146,42,.22);color:var(--amber)}
+.lk-group--rate .lk-group__label i{background:var(--sage-tint);border-color:rgba(91,122,95,.22);color:var(--sage)}
+/* each next step is a raised slip with its group's accent along the leading edge */
+.lk-item{--accent:var(--sand-2);display:flex;align-items:center;gap:12px;padding:12px 12px 12px 16px;border-radius:var(--r-md);background:#FFFBF4;border:1px solid rgba(214,200,176,.6);
+  box-shadow:inset 3px 0 0 var(--accent),var(--n-raise-sm)}
+.lk-group--apps .lk-item{--accent:var(--terra)}
+.lk-group--progress .lk-item{--accent:var(--amber-dot)}
+.lk-group--rate .lk-item{--accent:var(--sage-dot)}
+.lk-item+.lk-item{margin-top:9px}
+.lk-item__body{flex:1;min-width:0}
+.lk-item__title{display:block;font-size:14px;font-weight:700;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lk-item__meta{display:block;margin-top:2px;font-size:12.5px;color:var(--muted)}
+.lk-item__meta b{color:var(--terra-dk);font-weight:700}
+.lk-item__acts{display:flex;align-items:center;gap:6px;flex:none}
+.lk-item--stack{flex-wrap:wrap}
+.lk-item--stack .lk-item__acts{width:100%;justify-content:flex-start}
+.lk-item--stack .lk-item__acts .lk-btn{margin-left:auto}
+.lk-more{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:0;border:0;background:none;font-size:13px;font-weight:700;color:var(--terra)}
+.lk-more::after{content:'\2192';font-weight:700}
+.lk-more:hover{text-decoration:underline;text-underline-offset:3px}
+.lk-calm{margin-top:20px;padding:22px 20px;border-radius:var(--r-md);background:#FFFBF4;border:1px solid rgba(214,200,176,.6);box-shadow:var(--n-raise-sm);text-align:center}
+.lk-calm i{font-size:24px;color:var(--sage)}
+.lk-calm strong{display:block;margin-top:6px;font-size:15px}
+.lk-calm span{display:block;margin-top:4px;font-size:13.5px;color:var(--muted)}
+.lk-calm .lk-btn{margin-top:14px}
+.lk-attn__wait{margin-top:18px;font-size:13.5px;color:var(--ink-soft)}
+
+/* ---- Local discovery ---- */
+.lk-discover{margin-top:76px;padding-top:44px;border-top:1px solid rgba(var(--shade),.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.lk-discover__head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
+.lk-discover__title{font-size:clamp(26px,2.6vw,34px);font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.lk-discover__lead{margin-top:8px;max-width:52ch;font-size:15.5px;color:var(--ink-soft)}
+.lk-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.lk-tile{display:block;text-decoration:none;color:inherit}
+/* a warm mat around each photograph; the image does the work */
+.lk-tile__img{position:relative;aspect-ratio:4/5;padding:6px;border-radius:20px;background:#FBF6EE;border:1px solid var(--rim);box-shadow:var(--n-raise-sm);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.lk-tile__img img{position:relative;z-index:1;width:100%;height:100%;border-radius:14px;object-fit:cover;background:var(--sand)}
+/* drop-in slot: shown only until the service photograph exists (the img removes itself on error) */
+.lk-tile__slot{position:absolute;inset:6px;display:grid;place-items:center;border-radius:14px;background:#E9DFCF;color:var(--terra-dk);
+  box-shadow:inset 3px 3px 8px rgba(var(--shade),.2),inset -3px -3px 8px rgba(255,255,255,.6)}
+.lk-tile__slot i{font-size:52px;opacity:.55}
+.lk-tile:hover .lk-tile__img{transform:translateY(-3px);box-shadow:-3px -3px 8px rgba(255,255,255,.7),9px 16px 26px -12px rgba(68,36,22,.45),inset 0 1px 0 rgba(255,255,255,.9)}
+.lk-tile__name{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px;padding:0 4px;font-size:15px;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.lk-tile__name i{flex:none;font-size:15px;color:var(--muted);transition:color .18s,transform .18s}
+.lk-tile:hover .lk-tile__name i{color:var(--terra-dk);transform:translate(2px,-2px)}
+.lk-tile__desc{display:block;margin-top:2px;padding:0 4px;font-size:13px;color:var(--muted)}
+.lk-services{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:32px}
+.lk-service{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 12px;border-radius:var(--r-md);background:#FBF6EE;border:1px solid var(--rim);box-shadow:var(--n-raise-sm);
+  text-decoration:none;color:inherit;transition:transform .18s,background-color .18s}
+.lk-service:hover{background:#FFFBF4;transform:translateY(-1px)}
+.lk-service:active{transform:translateY(1px)}
+.lk-service i{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:11px;background:#F1E8DA;box-shadow:var(--n-inset);color:var(--terra);font-size:19px}
+.lk-service b{display:block;font-size:14px;font-weight:700;line-height:1.25}
+.lk-service small{display:block;font-size:12.5px;color:var(--muted);line-height:1.35}
+
+/* ---- Footer ---- */
+/* the footer sits on the espresso environment, below the canvas */
+.lk-foot{margin-top:8px}
+.lk-foot__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:30px 0 40px;font-size:13.5px;color:rgba(241,234,223,.6)}
+.lk-foot__inner strong,.lk-foot__inner b{color:var(--canvas)}
+.lk-foot__inner nav{display:flex;gap:18px}
+.lk-foot__inner a{text-decoration:none;font-weight:600}
+.lk-foot__inner a:hover{color:var(--canvas)}
+
+/* ---- Modals (Bootstrap JS behaviour, Lokshin presentation) ---- */
+.modal{position:fixed;inset:0;z-index:1055;display:none;overflow-x:hidden;overflow-y:auto;outline:0}
+.modal-dialog{position:relative;display:flex;align-items:center;width:auto;max-width:520px;min-height:calc(100% - 48px);margin:24px auto;padding:0 16px;pointer-events:none}
+.modal-lg{max-width:760px}
+.modal.fade{transition:opacity .22s ease}
+.modal.fade:not(.show){opacity:0}
+.modal.fade .modal-dialog{transition:transform .28s cubic-bezier(.2,.7,.2,1);transform:translateY(14px) scale(.985)}
+.modal.show .modal-dialog{transform:none}
+.modal-content{position:relative;display:flex;flex-direction:column;width:100%;pointer-events:auto;border-radius:24px;background:var(--cream);
+  border:1px solid var(--rim);box-shadow:inset 0 1px 0 #fff,inset 0 -3px 0 rgba(150,118,78,.06),0 2px 6px rgba(35,15,8,.08),0 40px 80px -30px rgba(35,15,8,.62);outline:0;overflow:hidden}
+.modal-backdrop{position:fixed;inset:0;z-index:1050;background:rgba(35,15,8,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.modal-backdrop.fade{opacity:0;transition:opacity .22s ease}
+.modal-backdrop.show{opacity:1}
+.lk-modal__head{display:flex;align-items:flex-start;gap:14px;padding:24px 24px 18px;border-bottom:1px solid var(--sand-soft)}
+.lk-modal__head h2{font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.lk-modal__head p{margin-top:4px;font-size:13.5px;color:var(--muted)}
+.lk-modal__close{margin-left:auto;flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;border:1px solid #E0D4C0;background:#FBF6EE;color:var(--ink-soft);font-size:16px;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(150,118,78,.09),0 5px 10px -8px rgba(105,72,40,.42);transition:background-color .18s,color .18s,box-shadow .18s}
+.lk-modal__close:hover{background:#F5EDE1;color:var(--ink)}
+.lk-modal__close:active{box-shadow:var(--n-press)}
+.lk-modal__body{padding:20px 24px 24px}
+.lk-modal__foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px 18px;background:#F7F0E5;border-top:1px solid #EAE0CF}
+.lk-modal__icon{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:12px;font-size:21px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.lk-modal__icon--danger{background:var(--danger-tint);color:var(--danger)}
+.lk-modal__icon--sage{background:var(--sage-tint);color:var(--sage)}
+#appModalBody{max-height:min(62vh,640px);overflow-y:auto}
+.lk-modal-loading{display:flex;align-items:center;gap:10px;padding:28px 4px;color:var(--muted);font-size:14px}
+.lk-modal-loading::before{content:'';width:14px;height:14px;border-radius:50%;border:2px solid var(--sand-2);border-top-color:var(--terra);animation:lkSpin .8s linear infinite}
+/* applicants */
+.lk-applicant{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;padding:16px;border-radius:16px;border:1px solid rgba(214,200,176,.7);background:#FFFBF4;box-shadow:var(--n-raise-sm)}
+.lk-applicant+.lk-applicant{margin-top:12px}
+.lk-applicant.is-decided{background:#F7F0E5;box-shadow:none}
+.lk-applicant__avatar{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--espresso);color:var(--cream);font-size:14px;font-weight:800}
+.lk-applicant__head{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.lk-applicant__name{font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+.lk-chip{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:var(--sand-soft);font-size:12px;font-weight:700;color:var(--ink-soft)}
+.lk-applicant__rating{margin-top:3px;font-size:14px;line-height:1}
+.stars{color:var(--terra)}
+.stars-empty{color:var(--sand-2)}
+.lk-applicant__rating small{margin-left:4px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+.lk-applicant__contact{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.lk-contact{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:9px;border:1px solid #E0D4C0;background:#FBF6EE;font-size:13px;font-weight:700;text-decoration:none;color:var(--ink-soft);
+  box-shadow:inset 0 1px 0 #fff,0 4px 8px -7px rgba(105,72,40,.45);transition:background-color .18s,color .18s,transform .12s}
+.lk-contact:hover{background:#F5EDE1;color:var(--ink);transform:translateY(-1px)}
+.lk-contact:active{box-shadow:var(--n-press);transform:translateY(1px)}
+.lk-contact .ph-whatsapp-logo{color:#25A35A;font-size:15px}
+.lk-applicant__note{margin-top:10px;padding-left:12px;border-left:2px solid var(--sand);font-size:14px;color:var(--ink-soft)}
+.lk-applicant__date{display:block;margin-top:8px;font-size:12.5px;color:var(--muted)}
+.lk-applicant__actions{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.lk-decision--accepted{background:rgba(91,122,95,.1);border-color:rgba(91,122,95,.24);color:var(--sage)}
+.lk-decision--other{background:#F3ECE1;border-color:#E4D9C7;color:var(--muted)}
+/* review */
+.lk-review-who{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:#F2E9DC;box-shadow:var(--n-inset)}
+.lk-review-who__label{display:block;font-size:12.5px;color:var(--muted)}
+.lk-review-who strong{display:block;font-size:15px}
+.lk-field{margin-top:20px}
+.lk-field__label{display:block;margin-bottom:8px;font-size:13.5px;font-weight:700;color:var(--ink-soft)}
+.lk-stars{display:flex;align-items:center;gap:4px}
+.lk-stars button{display:grid;place-items:center;width:42px;height:42px;padding:0;border:0;border-radius:10px;background:transparent;color:var(--sand-2);transition:color .15s,transform .15s}
+.lk-stars button:hover{transform:translateY(-1px)}
+.lk-stars button.is-on{color:var(--terra)}
+.lk-stars svg{width:30px;height:30px;fill:currentColor}
+.lk-stars__label{margin-left:10px;font-size:14px;font-weight:700;color:var(--ink)}
+.lk-textarea{display:block;width:100%;min-height:104px;padding:12px 14px;border-radius:var(--r-md);border:1px solid #DCCFB8;background:#FAF5EC;box-shadow:var(--n-inset);font-size:14.5px;line-height:1.5;resize:vertical;transition:border-color .18s,box-shadow .18s}
+.lk-textarea::placeholder{color:#A39B8E}
+.lk-textarea:focus{outline:0;border-color:var(--terra);box-shadow:var(--n-inset),0 0 0 3px rgba(182,90,60,.15)}
+.lk-cancel-text{font-size:15px;color:var(--ink-soft)}
+.lk-cancel-text strong{color:var(--ink)}
+.lk-cancel-note{margin-top:8px;font-size:13.5px;color:var(--muted)}
+
+/* ---- Toast (showAlert() from main.js) ---- */
+.alert-float{position:fixed;top:84px;right:24px;z-index:9999;min-width:300px;max-width:min(420px,calc(100% - 48px));padding:14px 46px 14px 18px;border-radius:var(--r-md);
+  background:var(--cream);border:1px solid var(--rim);box-shadow:inset 0 1px 0 #fff,var(--lift);font-size:14px;font-weight:600;color:var(--ink);
+  border-left:4px solid var(--sage-dot);animation:lkRise .25s ease both}
+.alert-float.alert-danger{border-left-color:var(--danger)}
+.alert-float.alert-warning{border-left-color:var(--amber-dot)}
+.alert-float .btn-close{position:absolute;top:50%;right:10px;width:28px;height:28px;margin-top:-14px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted)}
+.alert-float .btn-close::before{content:'\00D7';font-size:20px;line-height:28px}
+.alert-float .btn-close:hover{background:var(--sand-soft);color:var(--ink)}
+.fade:not(.show){opacity:0}
+
+/* ---- Preview badge ---- */
+.lk-preview{position:fixed;left:20px;bottom:20px;z-index:200;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;
+  background:var(--espresso);color:var(--cream);font-size:12.5px;font-weight:700;box-shadow:0 10px 24px -12px rgba(35,15,8,.6)}
+.lk-preview::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--amber-dot)}
+
+/* ---- Responsive ---- */
+@media (max-width:1260px){
+  /* the jobs table no longer fits beside the column: stack, attention first, groups side by side */
+  .lk-work{grid-template-columns:minmax(0,1fr)}
+  .lk-attn{position:static;order:-1}
+  #attnBody{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 20px;align-items:start}
+}
+@media (max-width:1180px){
+  .lk-hero__grid{padding:52px 44px 100px;gap:36px}
+}
+@media (max-width:980px){
+  :root{--cpad:20px}
+  .lk-nav__links{display:none}
+  .lk-nav__burger{display:block}
+  .lk-hero__grid{grid-template-columns:1fr;padding:44px 36px 100px}
+  .lk-strip{max-width:560px}
+  .lk-snapshot{grid-template-columns:repeat(2,1fr);width:calc(100% - 40px)}
+  .lk-canvas{border-radius:30px}
+  .lk-tiles{grid-template-columns:repeat(5,minmax(170px,1fr));overflow-x:auto;scroll-snap-type:x mandatory;margin:-12px;padding:12px 12px 16px;scroll-padding:12px;scrollbar-width:thin}
+  .lk-tile{scroll-snap-align:start}
+  .lk-discover__head{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:760px){
+  :root{--gutter:16px}
+  .lk-nav__inner{gap:12px;height:62px}
+  .lk-nav .lk-post-label{display:none}
+  .lk-nav .lk-btn--primary{width:40px;padding:0}
+  .lk-account .ph-caret-down{display:none}
+  .lk-hero{width:calc(100% - 2*var(--gutter));margin-top:16px;border-radius:22px}
+  :root{--cpad:8px}
+  .lk-canvas{width:calc(100% - 16px);margin-top:-36px;border-radius:24px;padding-bottom:28px}
+  .lk-hero__grid{padding:34px 22px 92px}
+  .lk-hero__lead{font-size:16px}
+  .lk-hero .lk-btn{flex:1}
+  .lk-strip{gap:10px}
+  .lk-frame{border-radius:14px}
+  .lk-frame:nth-child(2){margin-top:24px}
+  .lk-frame:nth-child(3){margin-top:-12px}
+  .lk-snapshot{width:calc(100% - 16px);margin-top:-24px;gap:8px;padding:8px;border-radius:22px}
+  .lk-stat{padding:14px 14px 13px;border-radius:15px}
+  .lk-stat__num,.lk-stat:first-child .lk-stat__num{font-size:32px;margin-top:8px}
+  .lk-stat__top{font-size:10.5px;letter-spacing:.06em}
+  .lk-stat__icon{width:26px;height:26px;font-size:12px}
+  .lk-stat__cap{font-size:12px}
+  .lk-discover{margin-top:48px;padding-top:32px}
+  .lk-panel__head{padding:20px 18px 0}
+  .lk-seg{margin:16px 18px 0;max-width:calc(100% - 36px)}
+  .lk-seg button{height:36px;padding:0 10px;gap:7px}
+  .lk-table thead + tbody{border-top:1px solid #EAE0CF}
+  /* rows become cards */
+  .lk-table thead{display:none}
+  .lk-table,.lk-table tbody{display:block}
+  .lk-job{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:16px 18px;border-bottom:1px solid var(--sand-soft)}
+  .lk-table tbody tr:last-child{border-bottom:0}
+  .lk-job td{display:block;padding:0!important;border:0!important}
+  .lk-job .lk-job__main{grid-column:1}
+  .lk-job .lk-job__status{grid-column:2;grid-row:1;justify-self:end}
+  .lk-job .lk-job__budget{grid-column:1;font-size:14px}
+  .lk-job .lk-job__hired{grid-column:1;font-size:13.5px}
+  .lk-job .lk-job__main{min-width:0}
+  .lk-job .lk-job__actions{grid-column:1 / -1;margin-top:6px}
+  .lk-job .lk-actions{justify-content:flex-start}
+  .lk-job:hover td:first-child{box-shadow:none}
+  .lk-tiles{grid-template-columns:repeat(5,minmax(150px,1fr))}
+  .lk-services{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .lk-service{gap:10px;padding:10px}
+  .lk-service i{width:34px;height:34px;font-size:17px}
+  .lk-applicant{grid-template-columns:40px minmax(0,1fr)}
+  .lk-applicant__avatar{width:40px;height:40px}
+  .lk-applicant__actions{grid-column:1 / -1;flex-direction:row}
+  .lk-applicant__actions .lk-btn{flex:1}
+  .lk-foot__inner{flex-direction:column;align-items:flex-start}
+  .alert-float{right:16px;top:74px}
+  .lk-preview{left:12px;bottom:12px;padding:6px 11px;font-size:11.5px}
+}
+@media (max-width:420px){
+  .lk-service small{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+  </style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = '';
+  </script>
+</head>
+<body>
+<a class="lk-skip" href="#jobs">Skip to my jobs</a>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="lk-nav">
+  <div class="lk-wrap lk-nav__inner">
+    <a class="lk-brand" href="/" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <nav aria-label="Main">
+      <ul class="lk-nav__links">
+        <li><a class="lk-nav__link" href="#services">Browse services</a></li>
+        <li><a class="lk-nav__link" href="#jobs" aria-current="page">My jobs</a></li>
+        <li><a class="lk-nav__link" aria-disabled="true" title="Messaging is coming soon">Messages <span class="lk-soon">Soon</span></a></li>
+        <li><a class="lk-nav__link" href="/profile">Profile</a></li>
+      </ul>
+    </nav>
+    <div class="lk-nav__end">
+      <a href="/post-job" class="lk-btn lk-btn--primary lk-btn--sm" aria-label="Post a job"><i class="ph-bold ph-plus" aria-hidden="true"></i><span class="lk-post-label">Post a job</span></a>
+      <details class="lk-menu lk-nav__burger">
+        <summary class="lk-icon-btn" aria-label="Open menu"><i class="ph ph-list" aria-hidden="true"></i></summary>
+        <div class="lk-menu__panel">
+          <a class="lk-menu__item" href="#services"><i class="ph ph-storefront" aria-hidden="true"></i>Browse services</a>
+          <a class="lk-menu__item" href="#jobs"><i class="ph ph-briefcase" aria-hidden="true"></i>My jobs</a>
+          <a class="lk-menu__item" aria-disabled="true"><i class="ph ph-chat-circle" aria-hidden="true"></i>Messages <span class="lk-soon">Soon</span></a>
+          <a class="lk-menu__item" href="/profile"><i class="ph ph-user-circle" aria-hidden="true"></i>Profile</a>
+        </div>
+      </details>
+      <details class="lk-menu">
+        <summary class="lk-account" aria-label="Account menu"><span class="lk-avatar" id="accountInitials" aria-hidden="true"><i class="ph ph-user"></i></span><i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+        <div class="lk-menu__panel">
+          <div class="lk-menu__who"><strong id="accountName">Your account</strong><span>Customer</span></div>
+          <a class="lk-menu__item" href="/profile"><i class="ph ph-user-circle" aria-hidden="true"></i>My profile</a>
+          <button class="lk-menu__item" type="button" onclick="logout()"><i class="ph ph-sign-out" aria-hidden="true"></i>Log out</button>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="lk-wrap lk-hero" aria-labelledby="heroTitle">
+    <div class="lk-hero__grid">
+      <div>
+        <p class="lk-hero__hello"><span id="welcomeUser"></span></p>
+        <h1 id="heroTitle">Get the right work done.</h1>
+        <p class="lk-hero__lead">Find skilled people nearby for the work that needs doing, from a leaking geyser to Saturday braids.</p>
+        <div class="lk-hero__actions">
+          <a href="/post-job" class="lk-btn lk-btn--primary"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a>
+          <a href="#services" class="lk-btn lk-btn--ghost">Browse services</a>
+        </div>
+      </div>
+      <div class="lk-strip" aria-hidden="true">
+        <figure class="lk-frame lk-frame--dstv"><img src="../images/dashboard/dstv.jpeg" alt="" width="640" height="800" decoding="async"><figcaption>DStv installation</figcaption></figure>
+        <figure class="lk-frame lk-frame--paving"><img src="../images/dashboard/paving.jpg" alt="" width="640" height="800" decoding="async"><figcaption>Paving &amp; pavements</figcaption></figure>
+        <figure class="lk-frame lk-frame--tents"><img src="../images/dashboard/tents.jpg" alt="" width="640" height="800" decoding="async"><figcaption>Funeral &amp; event tents</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IVORY CANVAS: snapshot, workspace, discovery ============ -->
+  <div class="lk-canvas">
+
+  <!-- ============ SNAPSHOT ============ -->
+  <section class="lk-snapshot" aria-label="Your jobs at a glance">
+    <div class="lk-stat">
+      <div class="lk-stat__top">Total jobs</div>
+      <div class="lk-stat__num" id="sTotal">—</div>
+      <div class="lk-dist" id="statusDist" role="img" aria-label="Jobs by status"></div>
+    </div>
+    <div class="lk-stat lk-stat--open">
+      <div class="lk-stat__top">Open<span class="lk-stat__icon"><i class="ph-bold ph-users" aria-hidden="true"></i></span></div>
+      <div class="lk-stat__num" id="sOpen">—</div>
+      <div class="lk-stat__cap">Waiting to hire</div>
+    </div>
+    <div class="lk-stat lk-stat--progress">
+      <div class="lk-stat__top">In progress<span class="lk-stat__icon"><i class="ph-bold ph-hourglass-medium" aria-hidden="true"></i></span></div>
+      <div class="lk-stat__num" id="sProgress">—</div>
+      <div class="lk-stat__cap">With a freelancer</div>
+    </div>
+    <div class="lk-stat lk-stat--done">
+      <div class="lk-stat__top">Completed<span class="lk-stat__icon"><i class="ph-bold ph-check" aria-hidden="true"></i></span></div>
+      <div class="lk-stat__num" id="sDone">—</div>
+      <div class="lk-stat__cap">Finished</div>
+    </div>
+  </section>
+
+  <!-- ============ WORKSPACE ============ -->
+  <div class="lk-work">
+    <section class="lk-panel" id="jobs" aria-labelledby="jobsTitle">
+      <div class="lk-panel__head">
+        <div>
+          <h2 class="lk-panel__title" id="jobsTitle">My jobs</h2>
+          <p class="lk-panel__sub" id="jobsSub">Everything you have posted on Lokshin.</p>
+        </div>
+        <a href="/post-job" class="lk-btn lk-btn--ghost lk-btn--sm"><i class="ph-bold ph-plus" aria-hidden="true"></i>New job</a>
+      </div>
+
+      <div class="lk-seg" id="statusFilter" role="group" aria-label="Filter jobs by status">
+        <button type="button" data-filter="" aria-pressed="true"><i class="ph-bold ph-squares-four" aria-hidden="true"></i>All <span class="lk-seg__n" data-n=""></span></button>
+        <button type="button" data-filter="Open" aria-pressed="false"><i class="ph-bold ph-circle-dashed" aria-hidden="true"></i>Open <span class="lk-seg__n" data-n="Open"></span></button>
+        <button type="button" data-filter="In Progress" aria-pressed="false"><i class="ph-bold ph-hourglass-medium" aria-hidden="true"></i>In progress <span class="lk-seg__n" data-n="In Progress"></span></button>
+        <button type="button" data-filter="Completed" aria-pressed="false"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Completed <span class="lk-seg__n" data-n="Completed"></span></button>
+        <button type="button" data-filter="Cancelled" aria-pressed="false"><i class="ph-bold ph-prohibit" aria-hidden="true"></i>Cancelled <span class="lk-seg__n" data-n="Cancelled"></span></button>
+      </div>
+      <!-- Original filter control: still the single source of truth for loadJobs(); driven by the buttons above -->
+      <select id="filterStatus" class="lk-sr" tabindex="-1" aria-hidden="true" onchange="loadJobs()">
+        <option value="">All Statuses</option>
+        <option value="Open">Open</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+
+      <div class="lk-table-wrap"><table class="lk-table">
+        <thead>
+          <tr><th scope="col">Job</th><th scope="col">Budget</th><th scope="col">Status</th><th scope="col">Hired</th><th scope="col"><span class="lk-sr">Actions</span></th></tr>
+        </thead>
+        <tbody id="jobsBody"><tr class="lk-empty-row"><td colspan="5"><div class="lk-loading">Loading your jobs…</div></td></tr></tbody>
+      </table></div>
+    </section>
+
+    <aside class="lk-attn" id="attention" aria-labelledby="attnTitle" aria-live="polite">
+      <div class="lk-attn__head">
+        <h2 class="lk-attn__title" id="attnTitle">Needs attention</h2>
+        <span class="lk-attn__count" id="attnCount"></span>
+      </div>
+      <p class="lk-attn__sub">Your next steps, based on your jobs.</p>
+      <div id="attnBody"><p class="lk-attn__wait">Checking your jobs…</p></div>
+    </aside>
+  </div>
+
+  <!-- ============ LOCAL DISCOVERY ============ -->
+  <section class="lk-discover" id="services" aria-labelledby="servicesTitle">
+    <div class="lk-discover__head">
+      <div>
+        <h2 class="lk-discover__title" id="servicesTitle">Find help for almost anything</h2>
+        <p class="lk-discover__lead">Post a job in any of these services and skilled people in your area can apply.</p>
+      </div>
+      <a href="/post-job" class="lk-btn lk-btn--ghost"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a>
+    </div>
+
+    <div class="lk-tiles">
+      <a class="lk-tile" href="/post-job" aria-label="Post a rubble removal job">
+        <div class="lk-tile__img"><img src="../images/dashboard/rubble.jpg" alt="Pile of building rubble outside a house, ready to be cleared" loading="lazy" decoding="async" width="640" height="800"></div>
+        <span class="lk-tile__name">Rubble removal<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Building rubble, clear-outs</span>
+      </a>
+      <a class="lk-tile" href="/post-job?category=Electrical" aria-label="Post an electrical job">
+        <div class="lk-tile__img"><img src="../images/dashboard/electric.jpg" alt="Circuit breaker panel with wiring" loading="lazy" decoding="async" width="512" height="512"></div>
+        <span class="lk-tile__name">Electrical<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Wiring, plugs, breakers</span>
+      </a>
+      <a class="lk-tile" href="/post-job" aria-label="Post a carpentry or furniture assembly job">
+        <div class="lk-tile__img"><img src="../images/dashboard/carpentry.jpg" alt="Two carpenters assembling a wooden table frame in a workshop" loading="lazy" decoding="async" width="640" height="800"></div>
+        <span class="lk-tile__name">Carpentry &amp; furniture<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Assembly, repairs, built-ins</span>
+      </a>
+      <a class="lk-tile" href="/post-job" aria-label="Post a DJ or event organiser job">
+        <div class="lk-tile__img"><span class="lk-tile__slot" aria-hidden="true"><i class="ph ph-speaker-hifi"></i></span><img src="../images/dashboard/dj-events.jpg" alt="Stacked event speakers and a stage light set up for an event" loading="lazy" decoding="async" width="640" height="800" onerror="this.remove()"></div>
+        <span class="lk-tile__name">DJ &amp; event organiser<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Sound, music, event setup</span>
+      </a>
+      <a class="lk-tile" href="/post-job" aria-label="Post a salon chair rental job">
+        <div class="lk-tile__img"><span class="lk-tile__slot" aria-hidden="true"><i class="ph ph-armchair"></i></span><img src="../images/dashboard/salon-chairs.jpg" alt="Two barber chairs at mirror stations, ready to rent" loading="lazy" decoding="async" width="640" height="800" onerror="this.remove()"></div>
+        <span class="lk-tile__name">Salon chair rental<i class="ph ph-arrow-up-right" aria-hidden="true"></i></span><span class="lk-tile__desc">Chairs and stations to hire</span>
+      </a>
+    </div>
+
+    <div class="lk-services">
+      <a class="lk-service" href="/post-job"><i class="ph ph-television-simple" aria-hidden="true"></i><span><b>DStv installation</b><small>Dishes, decoders, signal</small></span></a>
+      <a class="lk-service" href="/post-job"><i class="ph ph-wall" aria-hidden="true"></i><span><b>Paving</b><small>Driveways, walkways, repairs</small></span></a>
+      <a class="lk-service" href="/post-job"><i class="ph ph-tent" aria-hidden="true"></i><span><b>Event &amp; funeral tents</b><small>Stretch tents, chairs, setup</small></span></a>
+      <a class="lk-service" href="/post-job?category=Computer%20Repairs"><i class="ph ph-device-mobile" aria-hidden="true"></i><span><b>Phone &amp; computer</b><small>Screens, laptops, software</small></span></a>
+      <a class="lk-service" href="/post-job?category=Plumbing"><i class="ph ph-drop" aria-hidden="true"></i><span><b>Plumbing</b><small>Leaks, geysers, taps</small></span></a>
+      <a class="lk-service" href="/post-job?category=Gardening"><i class="ph ph-plant" aria-hidden="true"></i><span><b>Gardening</b><small>Lawns, trimming, yards</small></span></a>
+      <a class="lk-service" href="/post-job?category=Beauty%20Services"><i class="ph ph-scissors" aria-hidden="true"></i><span><b>Braids &amp; beauty</b><small>Braids, hair, nails</small></span></a>
+      <a class="lk-service" href="/post-job?category=House%20Cleaning"><i class="ph ph-broom" aria-hidden="true"></i><span><b>Cleaning</b><small>Domestic and deep cleans</small></span></a>
+      <a class="lk-service" href="/post-job?category=Painting"><i class="ph ph-paint-roller" aria-hidden="true"></i><span><b>Painting</b><small>Interior and exterior</small></span></a>
+      <a class="lk-service" href="/post-job?category=Tutoring"><i class="ph ph-book-open" aria-hidden="true"></i><span><b>Tutoring</b><small>All grades and subjects</small></span></a>
+    </div>
+  </section>
+
+  </div><!-- /.lk-canvas -->
+</main>
+
+<footer class="lk-foot">
+  <div class="lk-wrap lk-foot__inner">
+    <span><strong>LokshinGigs</strong> &nbsp;Local work, done right.</span>
+    <nav aria-label="Footer"><a href="/post-job">Post a job</a><a href="/profile">Profile</a><a href="#services">Services</a></nav>
+  </div>
+</footer>
+
+<!-- ============ APPLICATIONS MODAL ============ -->
+<div class="modal fade" id="appModal" tabindex="-1" aria-labelledby="appModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="lk-modal__head">
+        <div>
+          <h2 id="appModalTitle">Applications</h2>
+          <p>Compare applicants and hire one person. Accepting someone closes the job to other applicants.</p>
+        </div>
+        <button type="button" class="lk-modal__close" data-bs-dismiss="modal" aria-label="Close"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="lk-modal__body" id="appModalBody"><div class="lk-modal-loading">Loading applications…</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REVIEW MODAL ============ -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="lk-modal__head">
+        <span class="lk-modal__icon lk-modal__icon--sage" aria-hidden="true"><i class="ph ph-star"></i></span>
+        <div>
+          <h2 id="reviewModalTitle">Rate your freelancer</h2>
+          <p>Your review helps other customers hire with confidence.</p>
+        </div>
+        <button type="button" class="lk-modal__close" data-bs-dismiss="modal" aria-label="Close"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="lk-modal__body">
+        <input type="hidden" id="reviewJobId"/>
+        <input type="hidden" id="reviewFreelancerId"/>
+        <div id="reviewFreelancerInfo" class="lk-review-who"></div>
+        <div class="lk-field">
+          <span class="lk-field__label" id="ratingLabel">Rating</span>
+          <div class="lk-stars" id="reviewStars" role="radiogroup" aria-labelledby="ratingLabel">
+            <button type="button" role="radio" data-v="1" aria-label="1 star, poor"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg></button>
+            <button type="button" role="radio" data-v="2" aria-label="2 stars, below average"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg></button>
+            <button type="button" role="radio" data-v="3" aria-label="3 stars, average"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg></button>
+            <button type="button" role="radio" data-v="4" aria-label="4 stars, good"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg></button>
+            <button type="button" role="radio" data-v="5" aria-label="5 stars, excellent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg></button>
+            <span class="lk-stars__label" id="reviewRatingLabel" aria-hidden="true">Excellent</span>
+          </div>
+          <!-- Original rating control: still the value submitReviewBtn reads; driven by the stars above -->
+          <select id="reviewRating" class="lk-sr" tabindex="-1" aria-hidden="true">
+            <option value="5">★★★★★ — Excellent</option>
+            <option value="4">★★★★☆ — Good</option>
+            <option value="3">★★★☆☆ — Average</option>
+            <option value="2">★★☆☆☆ — Below Average</option>
+            <option value="1">★☆☆☆☆ — Poor</option>
+          </select>
+        </div>
+        <div class="lk-field">
+          <label class="lk-field__label" for="reviewComment">Comment</label>
+          <textarea id="reviewComment" class="lk-textarea" rows="3" placeholder="How was the service? Would you recommend this freelancer?"></textarea>
+        </div>
+      </div>
+      <div class="lk-modal__foot">
+        <button class="lk-btn lk-btn--ghost" data-bs-dismiss="modal">Cancel</button>
+        <button class="lk-btn lk-btn--primary" id="submitReviewBtn">Submit Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CANCEL JOB MODAL ============ -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="lk-modal__head">
+        <span class="lk-modal__icon lk-modal__icon--danger" aria-hidden="true"><i class="ph ph-warning-circle"></i></span>
+        <div>
+          <h2 id="cancelModalTitle">Cancel this job?</h2>
+          <p>Freelancers will no longer be able to apply.</p>
+        </div>
+        <button type="button" class="lk-modal__close" data-bs-dismiss="modal" aria-label="Close"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="lk-modal__body">
+        <p class="lk-cancel-text">Are you sure you want to cancel <strong id="cancelJobTitle"></strong>?</p>
+        <p class="lk-cancel-note">This will remove it from the open listings and cannot be undone.</p>
+      </div>
+      <div class="lk-modal__foot">
+        <button class="lk-btn lk-btn--ghost" data-bs-dismiss="modal">No, keep it</button>
+        <button class="lk-btn lk-btn--danger" id="confirmCancelBtn">Yes, cancel job</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+
+<!-- ============ PREVIEW MODE (isolated) ==============================
+     Active ONLY on file:// or with ?preview=1. Serves clearly-labelled
+     sample data through the same fetch calls the dashboard already makes,
+     so every flow can be exercised without a backend. In normal use this
+     block returns immediately and the live API path is untouched.
+     ================================================================== -->
+<script>
+(function () {
+  var isPreview = location.protocol === 'file:' ||
+    (function () { try { return new URLSearchParams(location.search).get('preview') === '1'; } catch (e) { return false; } })();
+  if (!isPreview) return;
+
+  var day = 864e5, now = Date.now();
+  var ago = function (n) { return new Date(now - n * day).toISOString(); };
+  var jobs = [
+    { JobID: 101, Title: 'Fix a leaking geyser valve', CategoryName: 'Plumbing', Budget: 850, Location: 'Orlando West, Soweto', Status: 'Open', PostedAt: ago(1) },
+    { JobID: 102, Title: "Knotless braids for my sister's wedding", CategoryName: 'Beauty Services', Budget: 650, Location: 'Diepkloof, Soweto', Status: 'Open', PostedAt: ago(2) },
+    { JobID: 103, Title: 'Rewire kitchen plugs', CategoryName: 'Electrical', Budget: 1400, Location: 'Kagiso, Mogale City', Status: 'In Progress', PostedAt: ago(5),
+      AcceptedFreelancer: 'Sipho Dlamini', AcceptedFreelancerId: 31, AcceptedFreelancerPhone: '0721234567' },
+    { JobID: 104, Title: 'Grade 10 maths tutoring', CategoryName: 'Tutoring', Budget: 300, Location: 'Alexandra', Status: 'Open', PostedAt: ago(6) },
+    { JobID: 105, Title: 'Weekly garden clean-up', CategoryName: 'Gardening', Budget: 380, Location: 'Mamelodi East', Status: 'Completed', PostedAt: ago(12),
+      AcceptedFreelancer: 'Themba Ngcobo', AcceptedFreelancerId: 32, AcceptedFreelancerPhone: '0835550142' },
+    { JobID: 106, Title: 'Repaint lounge walls', CategoryName: 'Painting', Budget: 2200, Location: 'Tembisa', Status: 'Completed', PostedAt: ago(20),
+      AcceptedFreelancer: 'Lerato Mahlangu', AcceptedFreelancerId: 33, AcceptedFreelancerPhone: '0764441290' },
+    { JobID: 107, Title: "Laptop won't start", CategoryName: 'Computer Repairs', Budget: 450, Location: 'Braamfontein', Status: 'Cancelled', PostedAt: ago(26) }
+  ];
+  var apps = {
+    101: [
+      { ApplicationID: 9001, FreelancerID: 41, FreelancerName: 'Bongani Zulu', SkillCategory: 'Plumbing', Rating: 4.7, PhoneNumber: '0712345678', CoverNote: 'I can come tomorrow morning with a replacement valve. Nine years fixing geysers around Soweto.', DateApplied: ago(0), Status: 'Pending' },
+      { ApplicationID: 9002, FreelancerID: 42, FreelancerName: 'Kagiso Molefe', SkillCategory: 'Plumbing', Rating: 4.2, PhoneNumber: '0823456789', CoverNote: 'Available this weekend. I bring my own tools and can check the pressure valve too.', DateApplied: ago(1), Status: 'Pending' }
+    ],
+    102: [
+      { ApplicationID: 9003, FreelancerID: 43, FreelancerName: 'Nomvula Khumalo', SkillCategory: 'Beauty Services', Rating: 4.9, PhoneNumber: '0734567890', CoverNote: 'Knotless braids are my speciality. I can do a trial on Thursday.', DateApplied: ago(1), Status: 'Pending' },
+      { ApplicationID: 9004, FreelancerID: 44, FreelancerName: 'Ayanda Mthembu', SkillCategory: 'Beauty Services', Rating: 4.4, PhoneNumber: '', CoverNote: '', DateApplied: ago(2), Status: 'Rejected' }
+    ],
+    103: [
+      { ApplicationID: 9005, FreelancerID: 31, FreelancerName: 'Sipho Dlamini', SkillCategory: 'Electrical', Rating: 4.8, PhoneNumber: '0721234567', CoverNote: 'Registered electrician. Certificate of compliance included.', DateApplied: ago(4), Status: 'Accepted' },
+      { ApplicationID: 9006, FreelancerID: 45, FreelancerName: 'Thabo Mokoena', SkillCategory: 'Electrical', Rating: 4.1, PhoneNumber: '0741112223', CoverNote: 'Can start on Monday.', DateApplied: ago(4), Status: 'Rejected' }
+    ],
+    104: [],
+    105: [ { ApplicationID: 9007, FreelancerID: 32, FreelancerName: 'Themba Ngcobo', SkillCategory: 'Gardening', Rating: 4.6, PhoneNumber: '0835550142', CoverNote: 'I do weekly clean-ups in Mamelodi.', DateApplied: ago(11), Status: 'Accepted' } ],
+    106: [ { ApplicationID: 9008, FreelancerID: 33, FreelancerName: 'Lerato Mahlangu', SkillCategory: 'Painting', Rating: 4.5, PhoneNumber: '0764441290', CoverNote: 'Two coats, and I supply the rollers.', DateApplied: ago(19), Status: 'Accepted' } ],
+    107: []
+  };
+  var reviewed = {};
+  var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
+  var reply = function (body, status) {
+    return new Promise(function (res) {
+      setTimeout(function () { res(new Response(JSON.stringify(body), { status: status || 200, headers: { 'Content-Type': 'application/json' } })); }, 220);
+    });
+  };
+
+  window.requireLogin = async function () { return { id: 0, name: 'Thandi Mokoena', role: 'Customer' }; };
+  window.logout = function () { showAlert('Logging out is turned off in preview mode.', 'warning'); };
+
+  var realFetch = window.fetch.bind(window);
+  window.fetch = function (input, opts) {
+    var url = String(input), method = ((opts && opts.method) || 'GET').toUpperCase(), m;
+    var body = {}; try { body = JSON.parse((opts && opts.body) || '{}'); } catch (e) {}
+    if (method === 'GET' && url === '/api/jobs/my') return reply({ success: true, jobs: clone(jobs) });
+    if (method === 'GET' && (m = url.match(/^\/api\/jobs\/(\d+)\/applications$/))) return reply({ success: true, applications: clone(apps[m[1]] || []) });
+    if (method === 'PUT' && (m = url.match(/^\/api\/jobs\/(\d+)\/applications\/(\d+)$/))) {
+      var list = apps[m[1]] || [], app = list.find(function (a) { return a.ApplicationID === +m[2]; }), job = jobs.find(function (j) { return j.JobID === +m[1]; });
+      if (!app || !job || ['Accepted', 'Rejected'].indexOf(body.status) < 0) return reply({ success: false, message: 'Invalid status.' }, 400);
+      app.Status = body.status;
+      if (body.status === 'Accepted') {
+        list.forEach(function (a) { if (a !== app && a.Status === 'Pending') a.Status = 'Rejected'; });
+        job.Status = 'In Progress'; job.AcceptedFreelancer = app.FreelancerName; job.AcceptedFreelancerId = app.FreelancerID; job.AcceptedFreelancerPhone = app.PhoneNumber || null;
+      }
+      return reply({ success: true, message: 'Application ' + body.status.toLowerCase() + ' successfully.' });
+    }
+    if (method === 'PUT' && (m = url.match(/^\/api\/jobs\/(\d+)\/status$/))) {
+      var j = jobs.find(function (x) { return x.JobID === +m[1]; });
+      if (!j || ['Open', 'In Progress', 'Completed', 'Cancelled'].indexOf(body.status) < 0) return reply({ success: false, message: 'Invalid status.' }, 400);
+      j.Status = body.status;
+      return reply({ success: true, message: 'Job marked as ' + body.status + '.' });
+    }
+    if (method === 'POST' && url === '/api/reviews') {
+      if (!body.jobId || !body.freelancerId || !body.rating) return reply({ success: false, message: 'Job, freelancer, and rating are required.' }, 400);
+      if (reviewed[body.jobId]) return reply({ success: false, message: 'You have already reviewed this job.' }, 409);
+      reviewed[body.jobId] = true;
+      return reply({ success: true, message: 'Review submitted successfully!' }, 201);
+    }
+    return realFetch(input, opts);
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var b = document.createElement('div');
+    b.className = 'lk-preview'; b.textContent = 'Preview with sample data';
+    document.body.appendChild(b);
+  });
+})();
+</script>
+
+<!-- ============ CUSTOMER DASHBOARD LOGIC ==============================
+     Same functions, calls, endpoints and conditions as before. Only the
+     HTML strings these functions render were restyled for the new design.
+     ================================================================== -->
+<script>
+  let allJobs = [];
+  let cancelJobId = null;
+
+  async function init() {
+    const user = await requireLogin();
+    if (!user || user.role !== 'Customer') return window.location.href = '/login';
+    document.getElementById('welcomeUser').textContent = `Hello, ${user.name}`;
+    loadJobs();
+  }
+
+  async function loadJobs() {
+    const res  = await fetch('/api/jobs/my');
+    const data = await res.json();
+    const tbody = document.getElementById('jobsBody');
+
+    if (!data.success || !data.jobs.length) {
+      tbody.innerHTML = `<tr class="lk-empty-row" data-state="no-jobs"><td colspan="5"><div class="lk-empty">
+        <i class="ph ph-briefcase" aria-hidden="true"></i><strong>No jobs yet.</strong>
+        <span>Post your first job and skilled people nearby can apply.</span>
+        <a class="lk-btn lk-btn--primary lk-btn--sm" href="/post-job"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post your first job</a>
+      </div></td></tr>`;
+      ['sTotal','sOpen','sProgress','sDone'].forEach(id => document.getElementById(id).textContent = '0');
+      return;
+    }
+
+    allJobs = data.jobs;
+    updateStats(allJobs);
+
+    const filter = document.getElementById('filterStatus').value;
+    const filtered = filter ? allJobs.filter(j => j.Status === filter) : allJobs;
+
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr class="lk-empty-row"><td colspan="5"><div class="lk-empty">
+        <strong>No jobs with status “${filter}”.</strong><span>Choose another status to see the rest of your jobs.</span>
+      </div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(j => {
+      const hiredInfo = j.AcceptedFreelancer
+        ? `<span class="lk-person"><span class="lk-person__avatar" aria-hidden="true">${j.AcceptedFreelancer.split(' ').map(p => p[0] || '').join('').slice(0,2).toUpperCase()}</span>${j.AcceptedFreelancer}</span>`
+        : `<span class="lk-muted">${j.Status === 'Open' ? 'Not hired yet' : '—'}</span>`;
+
+      const actions = [];
+      if (j.Status === 'Open') {
+        actions.push(`<button class="lk-btn lk-btn--sm lk-btn--primary" onclick="viewApps(${j.JobID},'${j.Title.replace(/'/g,"\\'")}')"><i class="ph ph-users" aria-hidden="true"></i>Applications</button>`);
+        actions.push(`<button class="lk-icon-btn lk-icon-btn--danger" onclick="openCancel(${j.JobID},'${j.Title.replace(/'/g,"\\'")}')" aria-label="Cancel job" title="Cancel job"><i class="ph ph-x" aria-hidden="true"></i></button>`);
+      }
+      if (j.Status === 'In Progress') {
+        actions.push(`<button class="lk-icon-btn" onclick="viewApps(${j.JobID},'${j.Title.replace(/'/g,"\\'")}')" aria-label="View applications" title="View applications"><i class="ph ph-users" aria-hidden="true"></i></button>`);
+        actions.push(`<button class="lk-btn lk-btn--sm lk-btn--success" onclick="confirmComplete(${j.JobID})"><i class="ph-bold ph-check" aria-hidden="true"></i>Mark complete</button>`);
+      }
+      if (j.Status === 'Completed') {
+        actions.push(`<button class="lk-btn lk-btn--sm lk-btn--soft" onclick="openReview(${j.JobID}, ${j.AcceptedFreelancerId || 0}, '${(j.AcceptedFreelancer||'').replace(/'/g,"\\'")}')"><i class="ph ph-star" aria-hidden="true"></i>Rate</button>`);
+      }
+
+      return `<tr class="lk-job" data-status="${j.Status}">
+        <td class="lk-job__main"><span class="lk-job__title">${j.Title}</span>
+          <span class="lk-job__meta"><span class="lk-job__cat">${j.CategoryName || '—'}</span><span class="lk-job__loc"><i class="ph ph-map-pin" aria-hidden="true"></i>${j.Location}</span><span class="lk-job__date"><i class="ph ph-calendar-blank" aria-hidden="true"></i>${formatDate(j.PostedAt)}</span></span></td>
+        <td class="lk-job__budget">${formatZAR(j.Budget)}</td>
+        <td class="lk-job__status">${statusBadge(j.Status)}</td>
+        <td class="lk-job__hired">${hiredInfo}</td>
+        <td class="lk-job__actions"><div class="lk-actions">${actions.join('')}</div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function updateStats(jobs) {
+    document.getElementById('sTotal').textContent    = jobs.length;
+    document.getElementById('sOpen').textContent     = jobs.filter(j => j.Status === 'Open').length;
+    document.getElementById('sProgress').textContent = jobs.filter(j => j.Status === 'In Progress').length;
+    document.getElementById('sDone').textContent     = jobs.filter(j => j.Status === 'Completed').length;
+  }
+
+  async function viewApps(jobId, title) {
+    document.getElementById('appModalTitle').textContent = `Applications: ${title}`;
+    document.getElementById('appModalBody').innerHTML = '<div class="lk-modal-loading">Loading applications…</div>';
+    new bootstrap.Modal(document.getElementById('appModal')).show();
+
+    const res  = await fetch(`/api/jobs/${jobId}/applications`);
+    const data = await res.json();
+
+    if (!data.success || !data.applications.length) {
+      document.getElementById('appModalBody').innerHTML = `<div class="lk-empty">
+        <i class="ph ph-hourglass-medium" aria-hidden="true"></i><strong>No applications yet.</strong>
+        <span>Freelancers can still apply while the job is open. Check back soon.</span></div>`;
+      return;
+    }
+
+    document.getElementById('appModalBody').innerHTML = data.applications.map(a => `
+      <article class="lk-applicant${a.Status === 'Pending' ? '' : ' is-decided'}">
+        <div class="lk-applicant__avatar" aria-hidden="true">${(a.FreelancerName || '').split(' ').map(p => p[0] || '').join('').slice(0,2).toUpperCase()}</div>
+        <div>
+          <div class="lk-applicant__head">
+            <strong class="lk-applicant__name">${a.FreelancerName}</strong>
+            <span class="lk-chip">${a.SkillCategory || 'General'}</span>
+          </div>
+          <div class="lk-applicant__rating">${renderStars(a.Rating || 0)}</div>
+          ${a.PhoneNumber ? `<div class="lk-applicant__contact">
+            <a class="lk-contact" href="tel:${a.PhoneNumber}"><i class="ph ph-phone" aria-hidden="true"></i>${a.PhoneNumber}</a>
+            <a class="lk-contact" href="https://wa.me/27${a.PhoneNumber.replace(/^0/,'')}" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp</a>
+          </div>` : ''}
+          <p class="lk-applicant__note">${a.CoverNote || '<em>No cover note provided.</em>'}</p>
+          <span class="lk-applicant__date">Applied ${formatDate(a.DateApplied)}</span>
+        </div>
+        <div class="lk-applicant__actions">
+          ${a.Status === 'Pending'
+            ? `<button class="lk-btn lk-btn--sm lk-btn--success" onclick="respondApp(${a.ApplicationID},'Accepted',${jobId})"><i class="ph-bold ph-check" aria-hidden="true"></i>Accept</button>
+               <button class="lk-btn lk-btn--sm lk-btn--danger-soft" onclick="respondApp(${a.ApplicationID},'Rejected',${jobId})"><i class="ph ph-x" aria-hidden="true"></i>Reject</button>`
+            : `<span class="lk-decision lk-decision--${a.Status === 'Accepted' ? 'accepted' : 'other'}">${a.Status}</span>`
+          }
+        </div>
+      </article>`).join('');
+  }
+
+  async function respondApp(appId, status, jobId) {
+    const data = await apiPut(`/jobs/${jobId}/applications/${appId}`, { status });
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    if (data.success) {
+      bootstrap.Modal.getInstance(document.getElementById('appModal')).hide();
+      loadJobs();
+    }
+  }
+
+  async function confirmComplete(jobId) {
+    if (!confirm('Mark this job as Completed? This means the work has been done and you are satisfied.')) return;
+    const data = await apiPut(`/jobs/${jobId}/status`, { status: 'Completed' });
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    if (data.success) loadJobs();
+  }
+
+  function openCancel(jobId, title) {
+    cancelJobId = jobId;
+    document.getElementById('cancelJobTitle').textContent = title;
+    new bootstrap.Modal(document.getElementById('cancelModal')).show();
+  }
+
+  document.getElementById('confirmCancelBtn').addEventListener('click', async () => {
+    const data = await apiPut(`/jobs/${cancelJobId}/status`, { status: 'Cancelled' });
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    bootstrap.Modal.getInstance(document.getElementById('cancelModal')).hide();
+    if (data.success) loadJobs();
+  });
+
+  function openReview(jobId, freelancerId, freelancerName) {
+    document.getElementById('reviewJobId').value        = jobId;
+    document.getElementById('reviewFreelancerId').value = freelancerId;
+    document.getElementById('reviewFreelancerInfo').innerHTML =
+      `<span class="lk-avatar" aria-hidden="true">${(freelancerName || '').split(' ').map(p => p[0] || '').join('').slice(0,2).toUpperCase()}</span><span><span class="lk-review-who__label">Reviewing</span><strong>${freelancerName}</strong></span>`;
+    new bootstrap.Modal(document.getElementById('reviewModal')).show();
+  }
+
+  document.getElementById('submitReviewBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('submitReviewBtn');
+    btn.disabled = true; btn.textContent = 'Submitting...';
+    const data = await apiPost('/reviews', {
+      jobId:        document.getElementById('reviewJobId').value,
+      freelancerId: document.getElementById('reviewFreelancerId').value,
+      rating:       document.getElementById('reviewRating').value,
+      comment:      document.getElementById('reviewComment').value
+    });
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    btn.disabled = false; btn.textContent = 'Submit Review';
+    if (data.success) bootstrap.Modal.getInstance(document.getElementById('reviewModal')).hide();
+  });
+
+  window.addEventListener('load', init);
+</script>
+
+<!-- ============ PRESENTATION WIRING ===================================
+     Reads the data the logic above already loaded (allJobs) and drives
+     the new UI pieces. It never changes jobs, applications or reviews
+     itself; every action calls the existing functions above.
+     ================================================================== -->
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var initials = function (n) { return String(n || '').trim().split(/\s+/).map(function (p) { return p[0] || ''; }).join('').slice(0, 2).toUpperCase(); };
+  var waLink = function (phone) { return 'https://wa.me/27' + String(phone).replace(/^0/, ''); };
+
+  /* 1 · Status segmented control → the original #filterStatus select */
+  var sel = $('#filterStatus'), seg = $('#statusFilter');
+  function syncSeg() { seg.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.filter === sel.value)); }); }
+  function setFilter(v) {
+    if (sel.value !== v) { sel.value = v; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+    syncSeg();
+  }
+  seg.addEventListener('click', function (e) { var b = e.target.closest('button[data-filter]'); if (b) setFilter(b.dataset.filter); });
+  syncSeg();
+
+  /* 2 · Account chip mirrors the greeting the logic writes into #welcomeUser */
+  var who = $('#welcomeUser');
+  new MutationObserver(function () {
+    var name = who.textContent.replace(/^Hello,\s*/, '').trim();
+    if (!name) return;
+    $('#accountInitials').textContent = initials(name);
+    $('#accountName').textContent = name;
+  }).observe(who, { childList: true, characterData: true, subtree: true });
+
+  /* 3 · Whenever the job list renders: counts, distribution, attention */
+  function jobsNow() { return $('#jobsBody [data-state="no-jobs"]') ? [] : (typeof allJobs !== 'undefined' ? allJobs : []); }
+  var STATUSES = ['Open', 'In Progress', 'Completed', 'Cancelled'];
+
+  function renderCounts(jobs) {
+    seg.querySelectorAll('[data-n]').forEach(function (el) {
+      var s = el.getAttribute('data-n');
+      el.textContent = String(s ? jobs.filter(function (j) { return j.Status === s; }).length : jobs.length);
+    });
+    $('#jobsSub').textContent = jobs.length
+      ? jobs.length + (jobs.length === 1 ? ' job' : ' jobs') + ' posted on Lokshin.'
+      : 'Everything you post on Lokshin appears here.';
+  }
+
+  function renderDistribution(jobs) {
+    var dist = $('#statusDist'), total = jobs.length;
+    if (!total) { dist.innerHTML = ''; dist.setAttribute('aria-label', 'No jobs yet'); return; }
+    var parts = STATUSES.map(function (s) { return [s, jobs.filter(function (j) { return j.Status === s; }).length]; }).filter(function (p) { return p[1]; });
+    dist.innerHTML = parts.map(function (p) {
+      return '<span data-s="' + p[0] + '" style="width:' + (p[1] / total * 100).toFixed(2) + '%" title="' + p[0] + ': ' + p[1] + '"></span>';
+    }).join('');
+    dist.setAttribute('aria-label', 'Jobs by status: ' + parts.map(function (p) { return p[1] + ' ' + p[0].toLowerCase(); }).join(', '));
+  }
+
+  /* Pending applications come from the existing applications endpoint */
+  var appCache = new Map();
+  function pendingFor(job) {
+    var hit = appCache.get(job.JobID);
+    if (hit && Date.now() - hit.t < 60000) return Promise.resolve(hit);
+    return fetch('/api/jobs/' + job.JobID + '/applications')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var list = d && d.success ? d.applications : [];
+        var v = { pending: list.filter(function (a) { return a.Status === 'Pending'; }).length, t: Date.now() };
+        appCache.set(job.JobID, v); return v;
+      })
+      .catch(function () { return null; });
+  }
+  $('#appModal').addEventListener('hidden.bs.modal', function () { appCache.clear(); render(); });
+
+  var token = 0;
+  function render() {
+    var jobs = jobsNow(), my = ++token;
+    renderCounts(jobs); renderDistribution(jobs);
+
+    var open = jobs.filter(function (j) { return j.Status === 'Open'; });
+    var prog = jobs.filter(function (j) { return j.Status === 'In Progress'; });
+    var done = jobs.filter(function (j) { return j.Status === 'Completed' && j.AcceptedFreelancer; });
+
+    Promise.all(open.slice(0, 4).map(pendingFor)).then(function (counts) {
+      if (my !== token) return;
+      var html = '', total = 0;
+
+      if (open.length) {
+        var withApps = open.slice(0, 4).map(function (j, i) { return { j: j, c: counts[i] }; });
+        var waiting = withApps.filter(function (x) { return x.c && x.c.pending; });
+        total += waiting.length;
+        html += group('apps', 'ph-users', waiting.length ? 'Applicants to review' : 'Waiting for applicants',
+          withApps.map(function (x) {
+            var n = x.c ? x.c.pending : null;
+            var meta = n == null ? 'Open for applications' : (n ? '<b>' + n + ' waiting</b> for your decision' : 'No applicants yet');
+            var act = n ? '<button class="lk-btn lk-btn--sm lk-btn--primary" data-act="apps" data-id="' + x.j.JobID + '">Review</button>' : '';
+            return item(x.j.Title, meta, act);
+          }).join(''), open.length - 4, 'Open');
+      }
+      if (prog.length) {
+        total += prog.length;
+        html += group('progress', 'ph-hourglass-medium', 'Work in progress',
+          prog.slice(0, 3).map(function (j) {
+            var phone = j.AcceptedFreelancerPhone;
+            var acts = (phone ? '<a class="lk-icon-btn" href="tel:' + esc(phone) + '" aria-label="Call ' + esc(j.AcceptedFreelancer) + '" title="Call"><i class="ph ph-phone" aria-hidden="true"></i></a>'
+                              + '<a class="lk-icon-btn" href="' + waLink(phone) + '" target="_blank" rel="noopener" aria-label="WhatsApp ' + esc(j.AcceptedFreelancer) + '" title="WhatsApp"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i></a>' : '')
+                     + '<button class="lk-btn lk-btn--sm lk-btn--success" data-act="complete" data-id="' + j.JobID + '">Mark complete</button>';
+            return item(j.Title, 'With ' + esc(j.AcceptedFreelancer || 'your freelancer'), acts, true);
+          }).join(''), prog.length - 3, 'In Progress');
+      }
+      if (done.length) {
+        total += Math.min(done.length, 3);
+        html += group('rate', 'ph-star', 'Ready for a review',
+          done.slice(0, 3).map(function (j) {
+            return item(j.Title, 'Done by ' + esc(j.AcceptedFreelancer),
+              '<button class="lk-btn lk-btn--sm lk-btn--soft" data-act="rate" data-id="' + j.JobID + '"><i class="ph ph-star" aria-hidden="true"></i>Rate</button>');
+          }).join(''), done.length - 3, 'Completed');
+      }
+
+      if (!html) {
+        html = '<div class="lk-calm"><i class="ph ph-check-circle" aria-hidden="true"></i><strong>Nothing needs you right now.</strong>'
+             + '<span>New applications and finished jobs will show up here.</span>'
+             + '<a href="/post-job" class="lk-btn lk-btn--primary lk-btn--sm"><i class="ph-bold ph-plus" aria-hidden="true"></i>Post a job</a></div>';
+      }
+      $('#attnBody').innerHTML = html;
+      $('#attnCount').textContent = total ? total + (total === 1 ? ' item' : ' items') : '';
+    });
+  }
+
+  function group(kind, icon, label, items, more, status) {
+    return '<div class="lk-group lk-group--' + kind + '"><div class="lk-group__label"><i class="ph-bold ' + icon + '" aria-hidden="true"></i>' + label + '</div>'
+      + items + (more > 0 ? '<button class="lk-more" data-act="filter" data-status="' + status + '">' + more + ' more in My jobs</button>' : '') + '</div>';
+  }
+  function item(title, meta, acts, stack) {
+    return '<div class="lk-item' + (stack ? ' lk-item--stack' : '') + '"><div class="lk-item__body"><span class="lk-item__title" title="' + esc(title) + '">' + esc(title) + '</span>'
+      + '<span class="lk-item__meta">' + meta + '</span></div><div class="lk-item__acts">' + acts + '</div></div>';
+  }
+
+  /* Attention actions call the existing functions */
+  $('#attnBody').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var jobs = jobsNow(), j = jobs.find(function (x) { return String(x.JobID) === b.dataset.id; });
+    switch (b.dataset.act) {
+      case 'apps':     if (j) viewApps(j.JobID, j.Title); break;
+      case 'complete': if (j) confirmComplete(j.JobID); break;
+      case 'rate':     if (j) openReview(j.JobID, j.AcceptedFreelancerId || 0, j.AcceptedFreelancer || ''); break;
+      case 'filter':   setFilter(b.dataset.status); document.getElementById('jobs').scrollIntoView({ behavior: 'smooth', block: 'start' }); break;
+    }
+  });
+
+  new MutationObserver(render).observe($('#jobsBody'), { childList: true });
+
+  /* 4 · Star picker → the original #reviewRating select */
+  var rating = $('#reviewRating'), stars = $('#reviewStars');
+  function paint(v) {
+    stars.querySelectorAll('button').forEach(function (b) {
+      var n = +b.dataset.v;
+      b.classList.toggle('is-on', n <= v);
+      b.setAttribute('aria-checked', String(n === +rating.value));
+      b.tabIndex = n === +rating.value ? 0 : -1;
+    });
+    var opt = Array.prototype.find.call(rating.options, function (o) { return +o.value === v; });
+    $('#reviewRatingLabel').textContent = opt ? opt.text.split('—').pop().trim() : '';
+  }
+  stars.addEventListener('click', function (e) { var b = e.target.closest('button[data-v]'); if (!b) return; rating.value = b.dataset.v; paint(+rating.value); });
+  stars.addEventListener('mouseover', function (e) { var b = e.target.closest('button[data-v]'); if (b) paint(+b.dataset.v); });
+  stars.addEventListener('mouseleave', function () { paint(+rating.value); });
+  stars.addEventListener('keydown', function (e) {
+    var d = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[e.key]; if (!d) return;
+    e.preventDefault(); rating.value = String(Math.min(5, Math.max(1, +rating.value + d))); paint(+rating.value);
+    stars.querySelector('[data-v="' + rating.value + '"]').focus();
+  });
+  $('#reviewModal').addEventListener('show.bs.modal', function () { paint(+rating.value); });
+  paint(+rating.value);
+
+  /* 5 · Close the small menus after choosing an item or clicking away */
+  document.querySelectorAll('.lk-menu').forEach(function (m) {
+    m.addEventListener('click', function (e) { if (e.target.closest('a[href], button')) m.removeAttribute('open'); });
+  });
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.lk-menu[open]').forEach(function (m) { if (!m.contains(e.target)) m.removeAttribute('open'); });
+  });
+})();
+</script>
+</body>
+</html>

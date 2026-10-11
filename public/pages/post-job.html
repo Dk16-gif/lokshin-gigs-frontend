@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Post a Job – Lokshin Gigs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+  <style>
+/* =====================================================================
+   LOKSHIN GIGS — POST A JOB
+   One ivory sheet set into an espresso environment: an editorial
+   introduction on the left, the job being defined on the right.
+   One self-contained stylesheet; no Bootstrap CSS is loaded.
+   ===================================================================== */
+
+/* ---- Tokens ---- */
+:root{
+  --esp:#230F08; --esp-2:#2B150B; --esp-3:#3A2216; --esp-4:#46291B;
+  --ivory:#F1EADF; --cream:#FCF8F0; --field:#F3ECE0; --sand:#E8DFCE; --sand-2:#D8CCB5;
+  /* mineral sheet: warm ivory stone lit by champagne and clay light */
+  --stone:#EEE5D7; --champagne:#F7EFE3; --warm-sand:#D7C5AC; --clay:#B89779;
+  --ease:cubic-bezier(.22,.61,.24,1);
+  --ink:#1F1B16; --ink-soft:#4C463D; --muted:#7F7669;
+  --terra:#B65A3C; --terra-dk:#9E4A2F; --terra-lt:#D98B69;
+  --sage:#5B7A5F; --sage-dk:#46624A; --rust:#8C4E40;
+  --on-dark:#F1EADF; --on-dark-2:rgba(241,234,223,.68); --on-dark-3:rgba(241,234,223,.42);
+  --shade:60,42,30;
+  --f:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --wrap:1200px; --gutter:24px;
+}
+
+/* ---- Base ---- */
+*,*::before,*::after{box-sizing:border-box}
+/* Environment: espresso under a broad clay light that falls across the upper sheet
+   and fades to darker chocolate at the edges. Feathered and low contrast. */
+html{-webkit-text-size-adjust:100%;min-height:100%;background-color:var(--esp);background-repeat:no-repeat;
+  background-image:
+    linear-gradient(180deg,rgba(10,4,1,.55) 0,rgba(10,4,1,.2) 110px,rgba(10,4,1,0) 260px),
+    linear-gradient(90deg,rgba(12,5,2,.6) 0,rgba(12,5,2,.3) 5%,rgba(12,5,2,.08) 14%,rgba(12,5,2,0) 24%,rgba(12,5,2,0) 76%,rgba(12,5,2,.08) 86%,rgba(12,5,2,.3) 95%,rgba(12,5,2,.6) 100%),
+    radial-gradient(ellipse 80% 440px at 38% 130px,rgba(176,146,118,.48) 0,rgba(160,130,104,.36) 20%,rgba(140,110,86,.22) 42%,rgba(118,88,66,.08) 68%,rgba(118,88,66,0) 100%),
+    radial-gradient(ellipse 58% 640px at 94% 620px,rgba(150,118,92,.24) 0,rgba(138,106,82,.12) 42%,rgba(120,88,64,0) 100%),
+    radial-gradient(ellipse 70% 240px at 50% calc(100% - 60px),rgba(160,128,100,.26) 0,rgba(140,110,86,.12) 45%,rgba(120,88,64,0) 100%),
+    linear-gradient(180deg,#1F0D06 0,#2A140A 420px,#2B150B 60%,#1C0B05 100%)}
+body{margin:0;font-family:var(--f);font-size:15px;line-height:1.55;font-weight:500;color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,p,ol{margin:0}
+ol{padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:8px}
+.lk-wrap{width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto}
+.lk-skip{position:absolute;left:16px;top:-48px;z-index:300;padding:10px 14px;border-radius:10px;background:var(--cream);color:var(--ink);font-weight:700;text-decoration:none}
+.lk-skip:focus{top:12px}
+
+/* ---- Header ---- */
+.lk-top{position:sticky;top:0;z-index:100;background:rgba(28,12,5,.86);backdrop-filter:saturate(1.1) blur(14px);-webkit-backdrop-filter:saturate(1.1) blur(14px);
+  box-shadow:inset 0 -1px 0 rgba(241,234,223,.06),0 14px 30px -20px rgba(0,0,0,.85)}
+.lk-top__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.lk-top{animation:lkDrop .6s var(--ease) both}
+.lk-brand{display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:500;letter-spacing:-.02em;text-decoration:none;color:var(--on-dark-2)}
+.lk-brand strong{font-weight:800;color:var(--on-dark)}
+.lk-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--terra);color:#fff;font-size:15px;font-weight:800;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.35),inset 0 -2px 0 rgba(70,26,12,.3)}
+.lk-top__end{display:flex;align-items:center;gap:6px}
+.lk-quiet{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:700;color:var(--on-dark-2);text-decoration:none;
+  transition:color .18s,background-color .18s}
+.lk-quiet i{font-size:17px}
+.lk-quiet:hover{color:var(--on-dark);background:rgba(241,234,223,.05)}
+.lk-logout{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:10px;border:1px solid #1A0B05;background:var(--esp-3);
+  font-size:13.5px;font-weight:700;color:#F6EEE3;-webkit-tap-highlight-color:transparent;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.13),inset 0 -2px 0 rgba(0,0,0,.28),0 8px 16px -10px rgba(20,8,3,.9);transition:background-color .18s,box-shadow .18s,transform .12s}
+.lk-logout i{font-size:16px;color:var(--terra-lt)}
+.lk-logout:hover{background:var(--esp-4);transform:translateY(-1px)}
+.lk-logout:active{background:#2E1A10;box-shadow:inset 0 2px 5px rgba(0,0,0,.45);transform:translateY(1px)}
+
+/* ---- The sheet: a warm mineral surface under soft studio light ----
+   Level 1 espresso room · Level 2 this sheet · Level 3 recessed controls · Level 4 the raised action.
+   Static layers set the stone; two drifting layers (::before, ::after) and one reflection (.lk-sheet__glow)
+   move the light across it very slowly. All light is feathered across most of the sheet, never a spot. */
+.lk-sheet{position:relative;isolation:isolate;overflow:hidden;overflow:clip;display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);margin-top:30px;border-radius:32px;
+  background-color:var(--stone);
+  background-image:
+    /* fine mineral grain: texture for the stone, and it dithers the broad light so it never bands */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .25 0 0 0 0 .16 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    /* champagne light from the upper left */
+    radial-gradient(ellipse 85% 75% at 8% -6%,rgba(247,239,227,.98) 0,rgba(247,239,227,.72) 26%,rgba(247,239,227,.28) 52%,rgba(247,239,227,0) 78%),
+    /* diffuse tan light crossing the middle and right */
+    radial-gradient(ellipse 80% 70% at 78% 58%,rgba(215,197,172,.42) 0,rgba(215,197,172,.24) 34%,rgba(215,197,172,.08) 62%,rgba(215,197,172,0) 86%),
+    /* a breath of terracotta warmth low on the right */
+    radial-gradient(ellipse 60% 52% at 100% 104%,rgba(182,90,60,.11) 0,rgba(182,90,60,.05) 40%,rgba(182,90,60,0) 76%),
+    /* clay reflected up from the room along the lower left */
+    radial-gradient(ellipse 62% 48% at -4% 100%,rgba(184,151,121,.24) 0,rgba(184,151,121,.1) 45%,rgba(184,151,121,0) 80%),
+    /* the stone falls away slightly at its edges */
+    radial-gradient(ellipse 96% 98% at 46% 42%,rgba(var(--shade),0) 64%,rgba(var(--shade),.05) 85%,rgba(var(--shade),.11) 100%),
+    linear-gradient(to left,rgba(var(--shade),.15) 0,rgba(var(--shade),.06) 12px,rgba(var(--shade),0) 48px),
+    linear-gradient(to right,rgba(var(--shade),.1) 0,rgba(var(--shade),.04) 14px,rgba(var(--shade),0) 40px),
+    linear-gradient(to top,rgba(var(--shade),.16) 0,rgba(var(--shade),.06) 16px,rgba(var(--shade),0) 54px);
+  background-size:220px 220px,auto,auto,auto,auto,auto,auto,auto,auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255,252,246,.85),                 /* lit top edge */
+    inset 0 -18px 40px -26px rgba(150,96,62,.28),         /* warm reflected light along the base */
+    0 0 90px -20px rgba(176,140,108,.32),                /* room light wrapping the object */
+    -6px -8px 24px rgba(164,134,108,.14),
+    12px 18px 30px -12px rgba(5,2,0,.72),
+    0 56px 96px -40px rgba(0,0,0,.85);
+  animation:lkRise .8s var(--ease) .08s both}
+.lk-sheet::before,.lk-sheet::after,.lk-sheet__glow{content:'';position:absolute;z-index:0;pointer-events:none}
+/* drifting champagne light: a very wide field that slides a few percent and breathes */
+.lk-sheet::before{inset:-30% -20% -20% -30%;opacity:.4;
+  background:radial-gradient(ellipse 52% 46% at 34% 30%,rgba(255,250,240,.9) 0,rgba(255,250,240,.5) 30%,rgba(255,250,240,.16) 58%,rgba(255,250,240,0) 82%)}
+/* drifting clay/tan light passing across the right, on a longer, offset cycle */
+.lk-sheet::after{inset:-25% -35% -30% -10%;opacity:.3;
+  background:radial-gradient(ellipse 50% 44% at 64% 60%,rgba(201,166,130,.55) 0,rgba(201,166,130,.28) 32%,rgba(201,166,130,.08) 60%,rgba(201,166,130,0) 84%)}
+/* warm reflection from the espresso room, low along one edge */
+.lk-sheet__glow{left:-10%;right:30%;bottom:-38%;height:62%;opacity:.26;
+  background:radial-gradient(ellipse 60% 50% at 40% 60%,rgba(182,104,68,.42) 0,rgba(182,104,68,.18) 40%,rgba(182,104,68,0) 78%)}
+@media (prefers-reduced-motion:no-preference){
+  .lk-sheet::before{animation:lkDriftA 19s ease-in-out infinite alternate}
+  .lk-sheet::after{animation:lkDriftB 27s ease-in-out -9s infinite alternate}
+  .lk-sheet__glow{animation:lkDriftC 23s ease-in-out -5s infinite alternate}
+}
+@keyframes lkDriftA{0%{transform:translate3d(0,0,0) scale(1);opacity:.32}50%{opacity:.45}100%{transform:translate3d(5%,3%,0) scale(1.05);opacity:.36}}
+@keyframes lkDriftB{0%{transform:translate3d(0,0,0) scale(1.04);opacity:.2}60%{opacity:.34}100%{transform:translate3d(-6%,-3%,0) scale(1);opacity:.26}}
+@keyframes lkDriftC{0%{transform:translate3d(0,0,0);opacity:.18}100%{transform:translate3d(8%,-4%,0);opacity:.3}}
+.lk-intro,.lk-form{position:relative;z-index:1}
+
+/* introduction */
+.lk-intro{padding:58px 48px 54px 56px;animation:lkRise .75s var(--ease) .22s both}
+.lk-intro__inner{position:sticky;top:122px;isolation:isolate}
+/* a faint warm halo behind the heading, breathing very slowly */
+.lk-intro__inner::before{content:'';position:absolute;z-index:-1;left:-18%;top:-6%;width:120%;height:72%;pointer-events:none;opacity:.5;
+  background:radial-gradient(ellipse 58% 52% at 42% 46%,rgba(255,246,232,.85) 0,rgba(247,233,214,.45) 40%,rgba(236,216,190,.12) 68%,rgba(236,216,190,0) 86%)}
+@media (prefers-reduced-motion:no-preference){ .lk-intro__inner::before{animation:lkHalo 16s ease-in-out infinite alternate} }
+@keyframes lkHalo{0%{opacity:.38;transform:translate3d(0,0,0) scale(1)}100%{opacity:.62;transform:translate3d(3%,2%,0) scale(1.04)}}
+/* engraved seam between the introduction and the form, with light slowly catching it */
+.lk-intro::after{content:'';position:absolute;right:0;top:48px;bottom:48px;width:1px;
+  background:linear-gradient(180deg,rgba(120,90,60,0),rgba(120,90,60,.2) 12%,rgba(120,90,60,.2) 88%,rgba(120,90,60,0));box-shadow:1px 0 0 rgba(255,252,246,.85)}
+.lk-intro::before{content:'';position:absolute;right:0;top:48px;width:1px;height:140px;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,rgba(255,250,240,0),rgba(255,250,240,.95) 50%,rgba(255,250,240,0))}
+@media (prefers-reduced-motion:no-preference) and (min-width:981px){ .lk-intro::before{animation:lkSeam 14s ease-in-out 2s infinite} }
+@keyframes lkSeam{0%{transform:translateY(0);opacity:0}15%{opacity:.9}70%{opacity:.6}100%{transform:translateY(560px);opacity:0}}
+.lk-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);text-shadow:0 1px 0 rgba(255,252,246,.7)}
+.lk-eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--terra);box-shadow:0 0 0 4px rgba(182,90,60,.16)}
+.lk-h1{margin-top:20px;font-size:clamp(40px,4.6vw,68px);line-height:.93;font-weight:800;letter-spacing:-.034em;text-transform:uppercase;color:var(--ink);text-wrap:balance}
+.lk-lead{margin-top:20px;max-width:30ch;font-size:17px;line-height:1.55;color:var(--ink-soft)}
+.lk-next{margin-top:48px}
+.lk-next__title{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-shadow:0 1px 0 rgba(255,252,246,.7)}
+.lk-next ol{margin-top:14px;counter-reset:step}
+.lk-next li{position:relative;counter-increment:step;display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:baseline;padding:13px 0 12px;
+  font-size:14.5px;color:var(--ink-soft)}
+.lk-next li::after{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(120,90,60,.26),rgba(120,90,60,.06));box-shadow:0 1px 0 rgba(255,252,246,.8)}
+.lk-next li::before{content:counter(step,decimal-leading-zero);font-size:12.5px;font-weight:800;letter-spacing:.04em;color:var(--terra-dk);font-variant-numeric:tabular-nums;text-shadow:0 1px 0 rgba(255,252,246,.7)}
+
+/* ---- Form ---- */
+.lk-form{padding:52px 56px 48px 52px;min-width:0;animation:lkRise .75s var(--ease) .34s both}
+.lk-section{min-width:0;margin:0;padding:0;border:0;animation:lkRise .7s var(--ease) both}
+.lk-section:nth-of-type(1){animation-delay:.42s}
+.lk-section:nth-of-type(2){animation-delay:.5s}
+.lk-section:nth-of-type(3){animation-delay:.58s}
+.lk-submit{animation:lkRise .7s var(--ease) .66s both}
+.lk-section+.lk-section{margin-top:36px}
+/* the legend floats so it lays out like a normal heading row */
+.lk-section__head{float:left;width:100%;padding:0;display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  text-shadow:0 1px 0 rgba(255,252,246,.75)}
+/* the number is pressed into the stone */
+.lk-section__head b{display:inline-grid;place-items:center;min-width:30px;height:22px;padding:0 6px;border-radius:6px;font-size:12px;letter-spacing:.04em;color:var(--terra-dk);font-variant-numeric:tabular-nums;
+  background:rgba(182,90,60,.07);box-shadow:inset 1px 1px 2px rgba(120,70,40,.18),inset -1px -1px 1px rgba(255,252,246,.7)}
+/* engraved rule: a cut line that fades as it runs, with light catching its lower lip */
+.lk-section__head::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(120,90,60,.3),rgba(120,90,60,.06));box-shadow:0 1px 0 rgba(255,252,246,.85)}
+.lk-section__head + *{clear:both}
+.lk-field+.lk-field{margin-top:20px}
+.lk-label{display:block;margin-bottom:8px;font-size:14px;font-weight:800;letter-spacing:-.005em;color:var(--ink)}
+.lk-req{margin-left:3px;color:var(--terra)}
+/* fields: individual recessed objects cut into the stone — a warm edge, shade under the upper lip,
+   light along the lower lip, and a faint lift across the face */
+.lk-input{display:block;width:100%;height:54px;padding:0 16px;border-radius:12px;border:1px solid rgba(150,118,84,.3);
+  background-color:#ECE3D4;background-image:linear-gradient(180deg,rgba(var(--shade),.035) 0,rgba(255,252,246,.3) 100%);
+  font-size:15.5px;font-weight:600;color:var(--ink);
+  box-shadow:inset 0 2px 3px rgba(110,80,50,.14),inset 0 -1px 0 rgba(255,252,246,.65),0 1px 0 rgba(255,252,246,.85);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease),background-color .25s var(--ease)}
+.lk-input::placeholder{color:#9C9184;font-weight:500}
+.lk-input:hover{border-color:rgba(150,118,84,.48);background-color:#EFE7D9;
+  box-shadow:inset 0 2px 3px rgba(110,80,50,.12),inset 0 -1px 0 rgba(255,252,246,.7),0 1px 0 rgba(255,252,246,.9),0 0 0 4px rgba(247,239,227,.55)}
+.lk-input:focus{outline:0;border-color:rgba(182,90,60,.85);background-color:#FAF5EC;
+  box-shadow:inset 0 1px 2px rgba(110,80,50,.08),0 0 0 3px rgba(182,90,60,.16),0 0 26px -6px rgba(214,150,110,.55)}
+/* the first thing the customer defines: deeper, with champagne light across its face */
+.lk-input--title{height:68px;padding:0 22px;border-radius:14px;font-size:21px;font-weight:700;letter-spacing:-.015em;
+  background-image:radial-gradient(ellipse 70% 140% at 0 0,rgba(255,250,240,.75) 0,rgba(255,250,240,0) 70%),linear-gradient(180deg,rgba(var(--shade),.05) 0,rgba(255,252,246,.25) 100%);
+  box-shadow:inset 0 3px 5px rgba(110,80,50,.15),inset 0 -1px 0 rgba(255,252,246,.7),0 1px 0 rgba(255,252,246,.9)}
+.lk-input--title:focus{background-image:radial-gradient(ellipse 70% 140% at 0 0,rgba(255,250,240,.9) 0,rgba(255,250,240,0) 70%);
+  box-shadow:inset 0 1px 2px rgba(110,80,50,.08),0 0 0 3px rgba(182,90,60,.18),0 0 34px -6px rgba(214,150,110,.6)}
+.lk-input--title::placeholder{font-weight:600}
+.lk-textarea{height:auto;min-height:200px;padding:15px 18px;font-size:15.5px;font-weight:500;line-height:1.65;resize:vertical}
+/* select with its own caret */
+.lk-select{position:relative}
+.lk-select select{-webkit-appearance:none;appearance:none;padding:0 46px 0 46px;cursor:pointer;text-overflow:ellipsis}
+.lk-select > i{position:absolute;top:50%;transform:translateY(-50%);pointer-events:none}
+.lk-select > .ph-tag{left:17px;font-size:17px;color:var(--terra)}
+.lk-select > .ph-caret-down{right:17px;font-size:14px;color:var(--muted);transition:transform .3s var(--ease),color .2s}
+.lk-select:hover > .ph-caret-down{color:var(--ink-soft)}
+.lk-select:focus-within > .ph-caret-down{color:var(--terra);transform:translateY(-50%) rotate(180deg)}
+.lk-select select option{color:var(--ink)}
+/* where and for how much: one deliberate pair in a shallow tray */
+.lk-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;padding:18px;border-radius:18px;
+  background-color:rgba(215,197,172,.28);background-image:linear-gradient(180deg,rgba(var(--shade),.04),rgba(255,252,246,.12));
+  box-shadow:inset 0 2px 6px rgba(110,80,50,.13),inset 0 -1px 0 rgba(255,252,246,.6),0 1px 0 rgba(255,252,246,.85)}
+.lk-pair .lk-field{margin-top:0;min-width:0}
+.lk-pair .lk-field:first-child{padding-right:18px;border-right:1px solid rgba(120,90,60,.18);box-shadow:1px 0 0 rgba(255,252,246,.7)}
+.lk-pair .lk-field:last-child{padding-left:18px}
+.lk-icon-field{position:relative}
+.lk-icon-field > i{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--terra);pointer-events:none;transition:transform .3s var(--ease)}
+.lk-icon-field:focus-within > i{transform:translateY(-50%) scale(1.08)}
+.lk-icon-field .lk-input{padding-left:44px}
+/* rand amount: a fixed R key set beside the number */
+.lk-money{display:grid;grid-template-columns:54px minmax(0,1fr)}
+.lk-money__r{display:grid;place-items:center;border-radius:12px 0 0 12px;border:1px solid rgba(150,118,84,.3);border-right:0;background:#E2D5C1;font-size:17px;font-weight:800;color:var(--terra-dk);
+  text-shadow:0 1px 0 rgba(255,252,246,.6);box-shadow:inset 0 2px 3px rgba(110,80,50,.12),0 1px 0 rgba(255,252,246,.85);transition:border-color .25s var(--ease),color .25s var(--ease),background-color .25s var(--ease)}
+.lk-money .lk-input{border-radius:0 12px 12px 0;font-size:18px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;-moz-appearance:textfield;appearance:textfield}
+.lk-money .lk-input::-webkit-outer-spin-button,.lk-money .lk-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.lk-money:focus-within .lk-money__r{border-color:rgba(182,90,60,.85);color:var(--terra);background:#EBDCC8}
+
+/* culmination: a quiet note and the one terracotta action */
+.lk-submit{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:40px;padding-top:28px}
+.lk-submit::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(120,90,60,.06),rgba(120,90,60,.28) 50%,rgba(120,90,60,.06));box-shadow:0 1px 0 rgba(255,252,246,.85)}
+.lk-submit__note{max-width:34ch;font-size:13.5px;color:var(--muted)}
+.lk-post{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;flex:none;min-width:200px;height:58px;padding:0 30px;border-radius:14px;border:1px solid #A04D31;
+  background:var(--terra);color:#FFF8F1;font-size:16px;font-weight:800;letter-spacing:-.005em;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.34),inset 0 -2px 0 rgba(92,36,18,.26),0 1px 1px rgba(92,36,18,.16),0 12px 22px -12px rgba(158,74,47,.9);
+  transition:background-color .25s var(--ease),box-shadow .25s var(--ease),transform .18s var(--ease),opacity .18s}
+.lk-post i{font-size:18px;transition:transform .3s var(--ease)}
+.lk-post:hover{background:#B75D3E;transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,232,214,.46),inset 0 -2px 0 rgba(92,36,18,.28),0 3px 3px rgba(92,36,18,.16),0 20px 32px -14px rgba(158,74,47,1)}
+.lk-post:hover i{transform:translateX(2px)}
+.lk-post:active{background:var(--terra-dk);transform:translateY(1px);box-shadow:inset 0 2px 6px rgba(70,26,12,.42)}
+.lk-post:focus-visible{outline:2px solid var(--terra);outline-offset:3px}
+/* disabled = posting: the label reads "Posting..." and a small spinner turns beside it */
+.lk-post:disabled{cursor:progress;transform:none;background:#A85638;opacity:.92;box-shadow:inset 0 2px 5px rgba(70,26,12,.32)}
+.lk-post:disabled::before{content:'';width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,248,241,.35);border-top-color:#FFF8F1;animation:lkSpin .8s linear infinite}
+@keyframes lkSpin{to{transform:rotate(360deg)}}
+
+/* ---- Messages written into #alertBox ---- */
+#alertBox:empty{display:none}
+#alertBox{margin-top:36px}
+#alertBox + .lk-submit{margin-top:22px}
+.alert{display:flex;align-items:center;gap:12px;padding:15px 18px;border-radius:14px;border:1px solid transparent;font-size:14.5px;font-weight:700;line-height:1.4;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55);animation:lkIn .3s cubic-bezier(.2,.7,.2,1) both}
+.alert::before{content:'';flex:none;width:10px;height:10px;border-radius:50%}
+.alert-success{background:rgba(91,122,95,.11);border-color:rgba(91,122,95,.3);color:var(--sage-dk)}
+.alert-success::before{background:var(--sage);box-shadow:0 0 0 4px rgba(91,122,95,.18)}
+.alert-danger{background:rgba(140,78,64,.09);border-color:rgba(140,78,64,.28);color:var(--rust)}
+.alert-danger::before{width:12px;height:3px;border-radius:2px;background:var(--rust)}
+@keyframes lkIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* entrance: the composition is revealed, not thrown in */
+@keyframes lkRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes lkDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---- Footer ---- */
+.lk-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:32px 0 40px;font-size:13.5px;color:rgba(241,234,223,.55)}
+.lk-foot strong{color:var(--on-dark)}
+
+/* ---- Responsive ---- */
+@media (max-width:1100px){
+  .lk-intro{padding:48px 40px 48px 44px}
+  .lk-form{padding:46px 44px 44px 40px}
+}
+/* while the form shares the sheet with the introduction, the pair is too narrow side by side */
+@media (max-width:1100px) and (min-width:981px){
+  .lk-pair{grid-template-columns:minmax(0,1fr)}
+  .lk-pair .lk-field:first-child{padding:0 0 18px;border-right:0;border-bottom:1px solid #DCD0BD;box-shadow:0 1px 0 rgba(255,255,255,.75)}
+  .lk-pair .lk-field:last-child{padding:18px 0 0}
+}
+@media (max-width:980px){
+  /* stack: the introduction becomes a header band across the sheet */
+  .lk-sheet{grid-template-columns:minmax(0,1fr);margin-top:22px}
+  .lk-intro{padding:44px 40px 34px}
+  .lk-intro__inner{position:static}
+  .lk-intro::after{left:40px;right:40px;top:auto;bottom:0;width:auto;height:1px;box-shadow:0 1px 0 rgba(255,252,246,.85);
+    background:linear-gradient(90deg,rgba(120,90,60,0),rgba(120,90,60,.22) 15%,rgba(120,90,60,.22) 85%,rgba(120,90,60,0))}
+  .lk-lead{max-width:46ch}
+  .lk-next{margin-top:30px}
+  .lk-next ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 20px}
+  .lk-next li{grid-template-columns:minmax(0,1fr);gap:4px}
+  .lk-form{padding:36px 40px 40px}
+}
+@media (max-width:640px){
+  :root{--gutter:12px}
+  .lk-top__inner{height:64px}
+  .lk-brand{font-size:17px}
+  .lk-quiet span,.lk-logout span{display:none}
+  .lk-quiet,.lk-logout{width:40px;padding:0;justify-content:center}
+  .lk-sheet{margin-top:14px;border-radius:24px}
+  .lk-intro{padding:32px 22px 26px}
+  .lk-intro::after{left:22px;right:22px}
+  .lk-h1{font-size:clamp(34px,10vw,44px)}
+  .lk-lead{font-size:16px}
+  .lk-next ol{grid-template-columns:minmax(0,1fr)}
+  .lk-next li{grid-template-columns:30px minmax(0,1fr);gap:10px;padding:10px 0}
+  .lk-form{padding:28px 18px 26px}
+  .lk-section+.lk-section{margin-top:30px}
+  .lk-input--title{height:60px;padding:0 16px;font-size:18.5px}
+  .lk-textarea{min-height:180px}
+  /* location and budget stack */
+  .lk-pair{grid-template-columns:minmax(0,1fr);padding:16px}
+  .lk-pair .lk-field:first-child{padding:0 0 18px;border-right:0;border-bottom:1px solid #DCD0BD;box-shadow:0 1px 0 rgba(255,255,255,.75)}
+  .lk-pair .lk-field:last-child{padding:18px 0 0}
+  /* the action spans the sheet */
+  .lk-submit{flex-direction:column-reverse;align-items:stretch;gap:14px;margin-top:32px;padding-top:22px}
+  .lk-submit__note{max-width:none;text-align:center}
+  .lk-post{width:100%}
+  .lk-foot{flex-direction:column;align-items:flex-start;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  .lk-top,.lk-sheet,.lk-intro,.lk-form,.lk-section,.lk-submit,.alert,
+  .lk-sheet::before,.lk-sheet::after,.lk-sheet__glow,.lk-intro__inner::before,.lk-intro::before{animation:none!important}
+  .lk-post,.lk-post i,.lk-input,.lk-select > .ph-caret-down,.lk-icon-field > i{transition-duration:.01ms!important}
+  .lk-post:hover,.lk-post:active{transform:none}
+  .lk-post:disabled::before{animation:lkSpin 1.6s linear infinite}
+}
+  </style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = '';
+  </script>
+</head>
+<body>
+<a class="lk-skip" href="#postJobForm">Skip to the form</a>
+
+<header class="lk-top">
+  <div class="lk-wrap lk-top__inner">
+    <a class="lk-brand" href="/" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <div class="lk-top__end">
+      <a href="/customer-dashboard" class="lk-quiet" aria-label="Back to Dashboard"><i class="ph ph-arrow-left" aria-hidden="true"></i><span>Back to Dashboard</span></a>
+      <button type="button" class="lk-logout" onclick="logout()" aria-label="Logout"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Logout</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="lk-wrap lk-sheet">
+  <span class="lk-sheet__glow" aria-hidden="true"></span>
+  <section class="lk-intro" aria-labelledby="pageTitle">
+    <div class="lk-intro__inner">
+      <p class="lk-eyebrow">Post a new job</p>
+      <h1 class="lk-h1" id="pageTitle">Tell us what needs doing.</h1>
+      <p class="lk-lead">Describe the work clearly and local freelancers can apply.</p>
+      <div class="lk-next">
+        <h2 class="lk-next__title">What happens next</h2>
+        <ol>
+          <li>Freelancers near you see the job and apply.</li>
+          <li>You compare who applied on your dashboard.</li>
+          <li>Accept one person and get the work done.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="lk-form">
+    <form id="postJobForm">
+      <fieldset class="lk-section">
+        <legend class="lk-section__head"><b>01</b>The job</legend>
+        <div class="lk-field">
+          <label class="lk-label" for="title">Job Title<span class="lk-req" aria-hidden="true">*</span></label>
+          <input type="text" id="title" class="lk-input lk-input--title" placeholder="e.g. TV Wall Mount Installation" required/>
+        </div>
+        <div class="lk-field">
+          <label class="lk-label" for="categoryId">Category<span class="lk-req" aria-hidden="true">*</span></label>
+          <div class="lk-select">
+            <i class="ph ph-tag" aria-hidden="true"></i>
+            <select id="categoryId" class="lk-input" required><option value="">-- Select --</option></select>
+            <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="lk-section">
+        <legend class="lk-section__head"><b>02</b>The details</legend>
+        <div class="lk-field">
+          <label class="lk-label" for="description">Description<span class="lk-req" aria-hidden="true">*</span></label>
+          <textarea id="description" class="lk-input lk-textarea" rows="7" placeholder="Describe the job in detail — what needs to be done, any requirements, access details, etc." required></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset class="lk-section">
+        <legend class="lk-section__head"><b>03</b>Where, and for how much</legend>
+        <div class="lk-pair">
+          <div class="lk-field">
+            <label class="lk-label" for="location">Location<span class="lk-req" aria-hidden="true">*</span></label>
+            <div class="lk-icon-field">
+              <i class="ph ph-map-pin" aria-hidden="true"></i>
+              <input type="text" id="location" class="lk-input" placeholder="e.g. Soweto, Meadowlands" required/>
+            </div>
+          </div>
+          <div class="lk-field">
+            <label class="lk-label" for="budget">Budget (ZAR)<span class="lk-req" aria-hidden="true">*</span></label>
+            <div class="lk-money">
+              <span class="lk-money__r" aria-hidden="true">R</span>
+              <input type="number" id="budget" class="lk-input" placeholder="300" min="10" required/>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- messages appear here, beside the action that produced them -->
+      <div id="alertBox" role="status" aria-live="polite"></div>
+      <div class="lk-submit">
+        <p class="lk-submit__note">Your job goes live straight away. You can cancel it from your dashboard until someone is hired.</p>
+        <button type="submit" class="lk-post"><i class="ph-bold ph-paper-plane-right" aria-hidden="true"></i>Post Job</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer class="lk-wrap lk-foot">
+  <span><strong>LokshinGigs</strong> &nbsp;Local work, done right.</span>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  async function init() {
+    const user = await requireLogin();
+    if (!user || user.role !== 'Customer') return window.location.href = '/login';
+    loadCategories('categoryId');
+  }
+  document.getElementById('postJobForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button'); btn.disabled = true; btn.textContent = 'Posting...';
+    const data = await apiPost('/jobs', {
+      title: document.getElementById('title').value,
+      categoryId: document.getElementById('categoryId').value,
+      description: document.getElementById('description').value,
+      location: document.getElementById('location').value,
+      budget: document.getElementById('budget').value
+    });
+    if (data.success) {
+      document.getElementById('alertBox').innerHTML = `<div class="alert alert-success">Job posted! Redirecting...</div>`;
+      setTimeout(() => window.location.href = '/customer-dashboard', 1500);
+    } else {
+      document.getElementById('alertBox').innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+      btn.disabled = false; btn.innerHTML = '<i class="ph-bold ph-paper-plane-right" aria-hidden="true"></i>Post Job';
+    }
+  });
+  init();
+</script>
+</body>
+</html>

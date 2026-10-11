@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>My Profile – Lokshin Gigs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css" rel="stylesheet">
+  <style>
+/* =====================================================================
+   LOKSHIN GIGS — PROFILE
+   An identity dossier: a near-black room lit by slow copper light, the
+   person's name set in a serif, and their record on dark lacquered
+   surfaces ruled with fine ivory lines. Manrope carries every control;
+   Instrument Serif is kept for the identity moments only.
+   One self-contained stylesheet; no Bootstrap CSS is loaded.
+   ===================================================================== */
+
+/* ---- Tokens ---- */
+:root{
+  --bg:#0D0907; --bg-2:#160D09;
+  --surface:#21120D; --surface-2:#2B1711; --surface-3:#351B13; --burgundy:#3A1D15;
+  --well:#110A07;
+  --terra:#B65A3C; --terra-light:#D07855; --copper:#8F634A;
+  --ivory:#F7F2E9; --ivory-soft:rgba(247,242,233,.68); --ivory-muted:rgba(247,242,233,.42); --ivory-faint:rgba(247,242,233,.22);
+  --line:rgba(247,242,233,.10); --line-strong:rgba(247,242,233,.16);
+  --terra-glow:rgba(182,90,60,.16);
+  --sage-light:#A9C3A6;
+  --sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif','Cormorant Garamond',Georgia,serif;
+  --wrap:1280px; --gutter:28px;
+  --ease:cubic-bezier(.22,.61,.24,1);
+  /* pointer influence (written by the small script at the end; 0 when idle) */
+  --px:0px; --py:0px; --mx:0; --my:0;
+}
+
+/* ---- Base ---- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg);color-scheme:dark}
+body{margin:0;min-height:100vh;font-family:var(--sans);font-size:15px;line-height:1.55;font-weight:500;color:var(--ivory);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,p,dl,dd{margin:0}
+:focus-visible{outline:1px solid var(--terra-light);outline-offset:3px;border-radius:4px}
+.lk-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.lk-wrap{width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto}
+.lk-skip{position:absolute;left:16px;top:-48px;z-index:300;padding:10px 14px;border-radius:6px;background:var(--ivory);color:var(--bg);font-weight:700;text-decoration:none}
+.lk-skip:focus{top:12px}
+
+/* ---- Environment: blackened espresso, burgundy depth, slow copper light ---- */
+.lk-env{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 62% at 14% 8%,rgba(58,29,21,.72) 0,rgba(58,29,21,.32) 45%,rgba(58,29,21,0) 78%),
+    radial-gradient(ellipse 64% 58% at 92% 96%,rgba(53,27,19,.7) 0,rgba(43,23,17,.3) 46%,rgba(43,23,17,0) 80%),
+    linear-gradient(170deg,#120B08 0,#0D0907 55%,#0A0705 100%);
+  animation:lkFade 1s var(--ease) both}
+/* vignette */
+.lk-env::before{content:'';position:absolute;inset:0;z-index:3;background:radial-gradient(ellipse 120% 100% at 50% 40%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
+/* fine grain */
+.lk-env::after{content:'';position:absolute;inset:0;z-index:4;opacity:.08;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.lk-env__a,.lk-env__b,.lk-env__follow{position:absolute;z-index:1;border-radius:50%}
+/* copper light behind the identity */
+.lk-env__a{left:-18vw;top:-14vh;width:80vw;height:92vh;opacity:.5;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(182,90,60,.34) 0,rgba(170,84,56,.17) 30%,rgba(143,99,74,.06) 58%,rgba(143,99,74,0) 80%)}
+/* a deeper, browner copper low on the right */
+.lk-env__b{right:-24vw;bottom:-30vh;width:88vw;height:100vh;opacity:.48;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(143,99,74,.38) 0,rgba(120,60,40,.2) 36%,rgba(58,29,21,.07) 64%,rgba(58,29,21,0) 82%)}
+/* the faint light that leans toward the viewer's pointer */
+.lk-env__follow{left:calc(50% - 360px);top:calc(40% - 360px);width:720px;height:720px;opacity:0;
+  background:radial-gradient(circle at 50% 50%,rgba(208,120,85,.14) 0,rgba(208,120,85,.05) 40%,rgba(208,120,85,0) 70%);
+  transform:translate3d(var(--px),var(--py),0);transition:opacity 1.2s var(--ease)}
+.has-pointer .lk-env__follow{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .lk-env__a{animation:lkDriftA 24s ease-in-out infinite alternate}
+  .lk-env__b{animation:lkDriftB 31s ease-in-out -11s infinite alternate}
+}
+@keyframes lkDriftA{0%{transform:translate3d(0,0,0) scale(1);opacity:.44}100%{transform:translate3d(4vw,3vh,0) scale(1.06);opacity:.6}}
+@keyframes lkDriftB{0%{transform:translate3d(0,0,0) scale(1.04);opacity:.4}100%{transform:translate3d(-5vw,-3vh,0) scale(1);opacity:.56}}
+
+/* ---- Header: barely there ---- */
+.lk-top{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(13,9,7,.88),rgba(13,9,7,.6));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  animation:lkFade .8s var(--ease) both}
+.lk-top::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,rgba(247,242,233,0),rgba(247,242,233,.1) 20%,rgba(247,242,233,.1) 80%,rgba(247,242,233,0))}
+.lk-top__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.lk-brand{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:500;letter-spacing:-.01em;text-decoration:none;color:var(--ivory-soft)}
+.lk-brand strong{font-weight:800;color:var(--ivory)}
+.lk-brand__mark{display:grid;place-items:center;width:26px;height:26px;border-radius:6px;background:var(--terra);color:#fff;font-size:13px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,220,200,.3)}
+.lk-top__end{display:flex;align-items:center;gap:4px}
+.lk-nav{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:6px;background:transparent;
+  font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ivory-soft);text-decoration:none;transition:color .2s,background-color .2s}
+.lk-nav i{font-size:16px}
+.lk-nav:hover{color:var(--ivory);background:rgba(247,242,233,.05)}
+.lk-nav--out i{color:var(--terra-light)}
+
+/* ---- The dossier ---- */
+.lk-dossier{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px;align-items:start;padding:64px 0 40px}
+
+/* identity */
+.lk-id__inner{position:sticky;top:112px}
+.lk-kicker{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-kicker::after{content:'';flex:1;max-width:120px;height:1px;background:linear-gradient(90deg,var(--line-strong),rgba(247,242,233,0))}
+.lk-kicker b{font-weight:800;color:var(--terra-light)}
+/* monogram: an identity mark in a dark inset frame with copper crop marks */
+.lk-mark{position:relative;display:grid;place-items:center;width:120px;height:120px;margin-top:34px;border-radius:4px;background:var(--well);
+  box-shadow:inset 0 1px 0 rgba(247,242,233,.05),inset 0 0 0 1px rgba(247,242,233,.07),0 30px 50px -30px rgba(0,0,0,.9);
+  animation:lkMark .9s var(--ease) .25s both}
+.lk-mark::before{content:'';position:absolute;inset:9px;border:1px solid rgba(208,120,85,.42);border-radius:2px;
+  background:radial-gradient(ellipse 80% 70% at calc(50% + var(--mx) * 14%) calc(30% + var(--my) * 14%),rgba(208,120,85,.2),rgba(208,120,85,0) 70%)}
+.lk-mark::after{content:'';position:absolute;inset:-6px;pointer-events:none;
+  background:
+    linear-gradient(var(--terra-light),var(--terra-light)) 0 0/12px 1px,linear-gradient(var(--terra-light),var(--terra-light)) 0 0/1px 12px,
+    linear-gradient(var(--terra-light),var(--terra-light)) 100% 0/12px 1px,linear-gradient(var(--terra-light),var(--terra-light)) 100% 0/1px 12px,
+    linear-gradient(var(--terra-light),var(--terra-light)) 0 100%/12px 1px,linear-gradient(var(--terra-light),var(--terra-light)) 0 100%/1px 12px,
+    linear-gradient(var(--terra-light),var(--terra-light)) 100% 100%/12px 1px,linear-gradient(var(--terra-light),var(--terra-light)) 100% 100%/1px 12px;
+  background-repeat:no-repeat;opacity:.7}
+.lk-mark__letters{position:relative;font-family:var(--serif);font-size:56px;line-height:1;letter-spacing:.02em;color:var(--ivory);text-shadow:0 0 28px rgba(208,120,85,.35)}
+.lk-id__name{margin-top:34px;font-family:var(--serif);font-weight:400;font-size:clamp(54px,6.4vw,96px);line-height:.92;letter-spacing:-.012em;color:var(--ivory);text-wrap:balance;overflow-wrap:anywhere;
+  animation:lkRise .8s var(--ease) .4s both}
+.lk-id__name.is-wait{color:var(--ivory-faint)}
+.lk-id__role{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ivory);animation:lkRise .7s var(--ease) .52s both}
+.lk-id__role i{font-size:16px;color:var(--terra-light)}
+.lk-id__line{margin-top:10px;font-size:15px;color:var(--ivory-soft);animation:lkRise .7s var(--ease) .58s both}
+.lk-id__line:empty{display:none}
+.lk-id__meta{display:grid;gap:0;margin-top:34px;animation:lkRise .7s var(--ease) .64s both}
+.lk-id__meta div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:12px 0;position:relative}
+.lk-id__meta div::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,var(--line-strong),rgba(247,242,233,.03))}
+.lk-id__meta dt{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-id__meta dd{font-size:14px;font-weight:600;color:var(--ivory);overflow-wrap:anywhere}
+/* completeness: a thin instrument line */
+.lk-complete{margin-top:30px;animation:lkRise .7s var(--ease) .7s both}
+.lk-complete__row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.lk-complete__lbl{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-complete__val{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ivory);font-variant-numeric:tabular-nums}
+.lk-complete__track{position:relative;height:2px;margin-top:12px;background:var(--line)}
+.lk-complete__fill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--copper),var(--terra-light));box-shadow:0 0 12px rgba(208,120,85,.5);
+  transition:width .7s var(--ease)}
+.lk-complete__fill::after{content:'';position:absolute;right:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--terra-light);box-shadow:0 0 10px rgba(208,120,85,.8)}
+.lk-complete__hint{margin-top:10px;font-size:12.5px;color:var(--ivory-muted)}
+
+/* ---- Workspace: dark lacquered surface ---- */
+.lk-work{min-width:0;display:grid;gap:28px}
+.lk-panel{position:relative;padding:44px 46px 40px;border-radius:10px;
+  background:linear-gradient(180deg,rgba(43,23,17,.94) 0,rgba(33,18,13,.96) 40%,rgba(26,14,10,.97) 100%);
+  box-shadow:inset 0 1px 0 rgba(247,242,233,.08),inset 0 0 0 1px rgba(247,242,233,.06),0 0 0 1px rgba(0,0,0,.4),0 60px 100px -50px rgba(0,0,0,.95);
+  animation:lkRise .8s var(--ease) .55s both}
+/* a copper edge catching light along the top of the surface */
+.lk-panel::before{content:'';position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,rgba(208,120,85,0),rgba(208,120,85,.55) 22%,rgba(208,120,85,.12) 60%,rgba(208,120,85,0))}
+.lk-sec{min-width:0;margin:0;padding:0;border:0}
+.lk-sec + .lk-sec,#freelancerSection .lk-sec{margin-top:40px}
+.lk-sec__head{float:left;width:100%;padding:0;display:flex;align-items:center;gap:10px;margin-bottom:24px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ivory-soft)}
+.lk-sec__head b{font-weight:800;color:var(--terra-light);font-variant-numeric:tabular-nums}
+.lk-sec__head i{font-style:normal;color:var(--ivory-faint)}
+.lk-sec__head::after{content:'';flex:1;height:1px;margin-left:6px;background:linear-gradient(90deg,var(--line-strong),rgba(247,242,233,.02))}
+.lk-sec__head + *{clear:both}
+.lk-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.lk-field{min-width:0}
+.lk-field + .lk-field{margin-top:22px}
+.lk-grid .lk-field + .lk-field{margin-top:0}
+.lk-label{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:10.5px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-label i{font-size:14px;letter-spacing:0;color:var(--terra-light)}
+/* recessed fields: dark wells with a warm hairline */
+.lk-input{display:block;width:100%;height:50px;padding:0 15px;border-radius:6px;border:1px solid var(--line);background:var(--well);
+  font-size:15.5px;font-weight:600;color:var(--ivory);caret-color:var(--terra-light);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.55),0 1px 0 rgba(247,242,233,.045);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease),background-color .25s var(--ease)}
+.lk-input::placeholder{color:var(--ivory-faint);font-weight:500}
+.lk-input:hover:not(:disabled){border-color:var(--line-strong)}
+.lk-input:focus{outline:0;border-color:rgba(208,120,85,.75);background:#150C09;box-shadow:inset 0 2px 4px rgba(0,0,0,.5),0 0 0 3px rgba(182,90,60,.18),0 0 26px -6px rgba(208,120,85,.4)}
+.lk-input--name{height:58px;font-size:20px;font-weight:700;letter-spacing:-.01em}
+.lk-input:disabled{background:transparent;border-style:dashed;border-color:var(--line-strong);color:var(--ivory-soft);box-shadow:none;cursor:not-allowed}
+.lk-locked{position:relative}
+.lk-locked > i{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--ivory-muted);pointer-events:none}
+.lk-locked .lk-input{padding-right:40px}
+.lk-hint{display:block;margin-top:8px;font-size:12px;color:var(--ivory-muted)}
+textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;resize:vertical}
+.lk-input--statement{min-height:88px;font-size:16px}
+.lk-input--bio{min-height:160px}
+/* primary skill reads like a designation */
+.lk-select{position:relative}
+.lk-select select{-webkit-appearance:none;appearance:none;height:58px;padding:0 44px 0 16px;font-size:18px;font-weight:700;letter-spacing:-.01em;cursor:pointer;text-overflow:ellipsis}
+.lk-select select option{background:#1A100C;color:var(--ivory)}
+.lk-select > i{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ivory-muted);pointer-events:none;transition:transform .3s var(--ease),color .2s}
+.lk-select:focus-within > i{color:var(--terra-light);transform:translateY(-50%) rotate(180deg)}
+
+/* save */
+.lk-save{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:40px;padding-top:26px}
+.lk-save::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,rgba(247,242,233,.02),var(--line-strong) 50%,rgba(247,242,233,.02))}
+.lk-save__note{font-size:12.5px;color:var(--ivory-muted);max-width:36ch}
+.lk-save__btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;flex:none;min-width:176px;height:48px;padding:0 22px;border-radius:8px;
+  border:1px solid rgba(208,120,85,.75);background:var(--terra);color:#FFF6EE;font-size:14.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+  box-shadow:inset 0 1px 0 rgba(255,222,200,.32),inset 0 -2px 0 rgba(70,26,12,.32),0 14px 28px -14px rgba(182,90,60,.85);
+  transition:background-color .25s var(--ease),box-shadow .25s var(--ease),transform .18s var(--ease)}
+.lk-save__btn i{font-size:16px}
+.lk-save__btn:hover{background:#BF6142;transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,228,210,.42),inset 0 -2px 0 rgba(70,26,12,.32),0 20px 34px -14px rgba(208,120,85,.9)}
+.lk-save__btn:active{transform:translateY(1px);background:#A3502F;box-shadow:inset 0 2px 6px rgba(50,18,8,.5)}
+.lk-save__btn:disabled{cursor:progress;transform:none;background:#9E4E32;box-shadow:inset 0 2px 5px rgba(50,18,8,.4)}
+.lk-save__btn:disabled::before{content:'';width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,246,238,.3);border-top-color:#FFF6EE;animation:lkSpin .8s linear infinite}
+@keyframes lkSpin{to{transform:rotate(360deg)}}
+
+/* messages written into #alertBox */
+#alertBox:empty{display:none}
+#alertBox{margin-top:34px}
+#alertBox + .lk-save{margin-top:20px}
+.alert{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:6px;font-size:14px;font-weight:700;border:1px solid var(--line);background:rgba(247,242,233,.03);
+  animation:lkRise .35s var(--ease) both}
+.alert::before{content:'';flex:none;width:7px;height:7px;border-radius:50%}
+.alert-success{color:var(--sage-light);border-color:rgba(169,195,166,.25);background:rgba(91,122,95,.1)}
+.alert-success::before{background:var(--sage-light);box-shadow:0 0 10px rgba(169,195,166,.6)}
+.alert-danger{color:#E9A58A;border-color:rgba(208,120,85,.3);background:rgba(182,90,60,.1)}
+.alert-danger::before{border-radius:1px;width:10px;height:2px;background:var(--terra-light)}
+
+/* ---- Reputation: an oxidised plate, separate from the form ---- */
+.lk-rep{position:relative;padding:40px 46px 36px;border-radius:10px;background:linear-gradient(180deg,rgba(22,13,9,.96),rgba(17,10,7,.97));
+  box-shadow:inset 0 1px 0 rgba(247,242,233,.05),inset 0 0 0 1px rgba(247,242,233,.05),0 0 0 1px rgba(0,0,0,.4),0 50px 90px -50px rgba(0,0,0,.95);
+  animation:lkRise .8s var(--ease) .75s both}
+.lk-rep[hidden]{display:none}
+.lk-rep__sum{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:end;padding-bottom:30px}
+.lk-rep__score{display:flex;align-items:flex-end;gap:12px}
+.lk-rep__avg{font-family:var(--serif);font-size:96px;line-height:.82;letter-spacing:-.02em;color:var(--ivory)}
+.lk-rep__of{padding-bottom:8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-rep__stars{margin-top:14px;font-size:16px;letter-spacing:.14em}
+.lk-rep__stars small{display:none}
+.lk-rep__count{margin-top:6px;font-size:13px;font-weight:700;color:var(--ivory-soft)}
+/* rating distribution, calculated from the reviews shown below */
+.lk-dist{display:grid;gap:7px;max-width:320px;justify-self:end;width:100%}
+.lk-dist__row{display:grid;grid-template-columns:18px minmax(0,1fr) 22px;gap:10px;align-items:center;font-size:11.5px;font-weight:800;color:var(--ivory-muted);font-variant-numeric:tabular-nums}
+.lk-dist__bar{position:relative;height:2px;background:var(--line)}
+.lk-dist__bar span{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--copper),var(--terra-light));transition:width .8s var(--ease)}
+.lk-dist__row b{text-align:right;font-weight:800;color:var(--ivory-soft)}
+.stars{color:var(--terra-light)}
+.stars-empty{color:rgba(247,242,233,.14)}
+/* reviews */
+.lk-review{position:relative;padding:22px 0 20px}
+.lk-review::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,var(--line-strong),rgba(247,242,233,.02))}
+.lk-review__head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.lk-review__who{display:block;font-size:14.5px;font-weight:800;color:var(--ivory)}
+.lk-review__job{display:block;margin-top:2px;font-size:12.5px;color:var(--ivory-muted)}
+.lk-review__stars{flex:none;font-size:13px;letter-spacing:.12em;white-space:nowrap}
+.lk-review__stars small{margin-left:6px;font-size:12px;font-weight:800;letter-spacing:0;color:var(--ivory-soft)}
+.lk-review__quote{margin-top:12px;max-width:62ch;font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.4;color:rgba(247,242,233,.86)}
+.lk-review__date{display:block;margin-top:10px;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ivory-faint)}
+.lk-empty{position:relative;padding:26px 0 6px;font-size:14px;color:var(--ivory-soft)}
+.lk-empty::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,var(--line-strong),rgba(247,242,233,.02))}
+.lk-empty b{display:block;font-family:var(--serif);font-weight:400;font-size:26px;color:var(--ivory)}
+.lk-wait{font-size:13px;color:var(--ivory-muted)}
+
+/* ---- Footer ---- */
+.lk-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0 40px;font-size:12px;letter-spacing:.04em;color:var(--ivory-faint)}
+.lk-foot strong{color:var(--ivory-soft)}
+.lk-foot__link{color:var(--ivory-soft);font-weight:600;text-decoration:underline;text-decoration-color:var(--terra);text-underline-offset:3px;transition:color .18s}
+.lk-foot__link:hover{color:var(--ivory);text-decoration-thickness:2px}
+.lk-foot__link:focus-visible{outline-width:2px}
+
+/* ---- Toast (showAlert() from main.js, used in preview only) ---- */
+.alert-float{position:fixed;top:84px;right:24px;z-index:999;max-width:min(380px,calc(100% - 48px));animation:lkRise .3s var(--ease) both;background:#1C110C;box-shadow:0 20px 40px -20px rgba(0,0,0,.9)}
+.alert-float .btn-close{display:none}
+.alert-warning{color:#E8C58A;border-color:rgba(232,197,138,.25)}
+
+/* ---- Preview badge ---- */
+.lk-preview{position:fixed;left:20px;bottom:20px;z-index:60;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:6px;border:1px solid var(--line-strong);
+  background:rgba(13,9,7,.9);color:var(--ivory-soft);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.lk-preview::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--terra-light)}
+
+/* ---- Entrance ---- */
+@keyframes lkFade{from{opacity:0}to{opacity:1}}
+@keyframes lkRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes lkMark{from{opacity:0;transform:translateY(8px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(-20px -20px -20px -20px)}}
+
+/* ---- Responsive ---- */
+@media (max-width:1180px){
+  .lk-dossier{gap:48px}
+  .lk-panel,.lk-rep{padding:38px 36px 34px}
+}
+@media (max-width:1024px){
+  /* the dossier reads top to bottom: identity, profile, reputation */
+  .lk-dossier{grid-template-columns:minmax(0,1fr);gap:44px;padding-top:44px}
+  .lk-id__inner{position:static;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:36px;align-items:end}
+  .lk-kicker{grid-column:1 / -1}
+  .lk-mark{grid-row:2 / span 3;align-self:start}
+  .lk-id__name{margin-top:34px;font-size:clamp(52px,8vw,84px)}
+  .lk-id__role,.lk-id__line{grid-column:2}
+  .lk-id__meta{grid-column:1 / -1;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
+  .lk-id__meta div{grid-template-columns:minmax(0,1fr);gap:4px}
+  .lk-complete{grid-column:1 / -1}
+}
+@media (max-width:680px){
+  :root{--gutter:18px}
+  .lk-top__inner{height:60px}
+  .lk-nav span{display:none}
+  .lk-nav{width:38px;padding:0;justify-content:center}
+  .lk-dossier{padding-top:30px;gap:34px}
+  .lk-id__inner{display:block}
+  .lk-mark{width:92px;height:92px;margin-top:26px}
+  .lk-mark__letters{font-size:42px}
+  .lk-id__name{margin-top:26px;font-size:clamp(46px,14vw,64px)}
+  .lk-id__role{margin-top:16px}
+  .lk-id__meta{grid-template-columns:minmax(0,1fr);margin-top:26px}
+  .lk-id__meta div{grid-template-columns:110px minmax(0,1fr);gap:12px}
+  .lk-panel,.lk-rep{padding:30px 20px 26px;border-radius:8px}
+  .lk-grid{grid-template-columns:minmax(0,1fr);gap:22px}
+  .lk-save{flex-direction:column-reverse;align-items:stretch;gap:14px}
+  .lk-save__note{max-width:none;text-align:center}
+  .lk-save__btn{width:100%;height:52px}
+  .lk-rep__sum{grid-template-columns:minmax(0,1fr);gap:24px}
+  .lk-dist{justify-self:stretch;max-width:none}
+  .lk-rep__avg{font-size:80px}
+  .lk-review__head{flex-direction:column;gap:8px}
+  .lk-review__quote{font-size:18px}
+  .lk-foot{flex-direction:column;align-items:flex-start;gap:4px}
+  .alert-float{left:18px;right:18px;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .lk-env,.lk-env__a,.lk-env__b,.lk-top,.lk-mark,.lk-id__name,.lk-id__role,.lk-id__line,.lk-id__meta,.lk-complete,.lk-panel,.lk-rep,.alert{animation:none!important}
+  .lk-env__follow{display:none}
+  .lk-complete__fill,.lk-dist__bar span{transition:none}
+}
+  </style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = '';
+  </script>
+</head>
+<body>
+<div class="lk-env" aria-hidden="true"><span class="lk-env__a"></span><span class="lk-env__b"></span><span class="lk-env__follow"></span></div>
+<a class="lk-skip" href="#profileForm">Skip to your profile</a>
+
+<header class="lk-top">
+  <div class="lk-wrap lk-top__inner">
+    <a class="lk-brand" href="/" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <nav class="lk-top__end" aria-label="Account">
+      <span id="backLink"></span>
+      <button type="button" class="lk-nav lk-nav--out" onclick="logout()" aria-label="Logout"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Logout</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="lk-wrap lk-dossier">
+  <!-- ============ IDENTITY ============ -->
+  <section class="lk-id" aria-labelledby="idName">
+    <div class="lk-id__inner">
+      <p class="lk-kicker"><span>Profile</span><b id="idNumber">/ 01</b></p>
+      <div class="lk-mark" aria-hidden="true"><span class="lk-mark__letters" id="idMonogram">·</span></div>
+      <h1 class="lk-id__name is-wait" id="idName">Your profile</h1>
+      <p class="lk-id__role"><i class="ph-fill ph-seal-check" aria-hidden="true"></i><span id="idRole">Loading</span></p>
+      <p class="lk-id__line" id="idLine"></p>
+      <dl class="lk-id__meta">
+        <div><dt>Email</dt><dd id="idEmail">—</dd></div>
+        <div><dt>Phone</dt><dd id="idPhone">—</dd></div>
+        <div><dt>Member since</dt><dd id="idSince">—</dd></div>
+      </dl>
+      <div class="lk-complete" aria-live="polite">
+        <div class="lk-complete__row"><span class="lk-complete__lbl">Profile complete</span><span class="lk-complete__val" id="idComplete">—</span></div>
+        <div class="lk-complete__track" aria-hidden="true"><span class="lk-complete__fill" id="idCompleteFill"></span></div>
+        <p class="lk-complete__hint" id="idCompleteHint"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORKSPACE ============ -->
+  <div class="lk-work">
+    <section class="lk-panel" aria-labelledby="formTitle">
+      <h2 class="lk-sr" id="formTitle">Edit your profile</h2>
+      <form id="profileForm">
+        <fieldset class="lk-sec">
+          <legend class="lk-sec__head"><b>01</b><i>/</i>Identity</legend>
+          <div class="lk-field">
+            <label class="lk-label" for="fullName"><i class="ph ph-user" aria-hidden="true"></i>Full Name</label>
+            <input type="text" id="fullName" class="lk-input lk-input--name" autocomplete="name" required/>
+          </div>
+        </fieldset>
+
+        <fieldset class="lk-sec">
+          <legend class="lk-sec__head"><b>02</b><i>/</i>Contact</legend>
+          <div class="lk-grid">
+            <div class="lk-field">
+              <label class="lk-label" for="email"><i class="ph ph-envelope-simple" aria-hidden="true"></i>Email Address</label>
+              <div class="lk-locked">
+                <input type="email" id="email" class="lk-input" disabled aria-describedby="emailHint"/>
+                <i class="ph ph-lock-simple" aria-hidden="true"></i>
+              </div>
+              <small class="lk-hint" id="emailHint">Email cannot be changed.</small>
+            </div>
+            <div class="lk-field">
+              <label class="lk-label" for="phone"><i class="ph ph-phone" aria-hidden="true"></i>Phone Number</label>
+              <input type="tel" id="phone" class="lk-input" autocomplete="tel" required/>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Freelancer only fields -->
+        <div id="freelancerSection" style="display:none">
+          <fieldset class="lk-sec">
+            <legend class="lk-sec__head"><b>03</b><i>/</i>Professional profile</legend>
+            <div class="lk-field">
+              <label class="lk-label" for="skillCategory"><i class="ph ph-briefcase" aria-hidden="true"></i>Primary Skill Category</label>
+              <div class="lk-select">
+                <select id="skillCategory" class="lk-input"></select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="lk-field">
+              <label class="lk-label" for="experience"><i class="ph ph-identification-card" aria-hidden="true"></i>Experience</label>
+              <textarea id="experience" class="lk-input lk-input--statement" rows="2" placeholder="e.g. 9 years, registered electrician"></textarea>
+            </div>
+            <div class="lk-field">
+              <label class="lk-label" for="bio"><i class="ph ph-quotes" aria-hidden="true"></i>Bio</label>
+              <textarea id="bio" class="lk-input lk-input--bio" rows="5" placeholder="Tell customers about yourself..."></textarea>
+            </div>
+          </fieldset>
+        </div>
+
+        <div id="alertBox" role="status" aria-live="polite"></div>
+        <div class="lk-save">
+          <p class="lk-save__note">Changes to your name and phone apply across Lokshin as soon as you save.</p>
+          <button type="submit" class="lk-save__btn"><i class="ph-bold ph-check" aria-hidden="true"></i>Save Changes</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============ REPUTATION (freelancers) ============ -->
+    <section class="lk-rep" id="reputation" hidden aria-labelledby="repTitle">
+      <h2 class="lk-sec__head" id="repTitle"><b>04</b><i>/</i>Reputation</h2>
+      <div class="lk-rep__sum">
+        <div>
+          <div class="lk-rep__score"><span class="lk-rep__avg" id="repAvg">—</span><span class="lk-rep__of">out of 5</span></div>
+          <div class="lk-rep__stars" id="repStars" aria-hidden="true"></div>
+          <p class="lk-rep__count" id="repCount">Reading your reviews…</p>
+        </div>
+        <div class="lk-dist" id="repDist" aria-label="Ratings by number of stars"></div>
+      </div>
+      <div id="reviewsList"><p class="lk-wait">Loading reviews...</p></div>
+    </section>
+  </div>
+</main>
+
+<footer class="lk-wrap lk-foot">
+  <span><strong>LokshinGigs</strong> &nbsp;Local work, done right.</span>
+  <span><a class="lk-foot__link" href="/terms">Terms &amp; Conditions</a> &nbsp;&middot;&nbsp; Your profile</span>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<!-- ============ PREVIEW MODE (isolated, this page only) ===============
+     Active ONLY on file:// or with ?preview=1 on this page. Serves clearly
+     labelled sample data through the same fetch calls the page makes, so the
+     design can be inspected without a session. &role=customer shows the
+     customer version. In normal use this block returns immediately.
+     ================================================================== -->
+<script>
+(function () {
+  var qs = (function () { try { return new URLSearchParams(location.search); } catch (e) { return null; } })();
+  var isPreview = location.protocol === 'file:' || (qs && qs.get('preview') === '1');
+  if (!isPreview) return;
+  var role = qs && qs.get('role') === 'customer' ? 'Customer' : 'Freelancer';
+  var day = 864e5, now = Date.now(), ago = function (n) { return new Date(now - n * day).toISOString(); };
+  var cats = ['Appliance Repair','Beauty Services','Computer Repairs','Electrical','Gardening','Graphic Design','Handyman','House Cleaning','Painting','Photography','Plumbing','Tutoring']
+    .map(function (n, i) { return { CategoryID: i + 1, CategoryName: n }; });
+  var people = {
+    Freelancer: { UserID: 31, FullName: 'Sipho Dlamini', Email: 'sipho.dlamini@example.co.za', PhoneNumber: '0721234567', Role: 'Freelancer', CreatedAt: '2025-03-14T09:00:00Z',
+      freelancerData: { SkillCategory: '4', Experience: '9 years, registered electrician', Bio: 'Domestic wiring, DB boards, geysers and outdoor lighting around Soweto and the West Rand. I issue certificates of compliance and I clean up after myself.', Rating: 4.8, TotalReviews: 5 } },
+    Customer: { UserID: 7, FullName: 'Thandi Mokoena', Email: 'thandi.mokoena@example.co.za', PhoneNumber: '0821234567', Role: 'Customer', CreatedAt: '2025-06-02T09:00:00Z' }
+  };
+  var reviews = [
+    { CustomerName: 'Thandi Mokoena', JobTitle: 'Rewire kitchen plugs', Rating: 5, Comment: 'Arrived on time, explained everything and left the kitchen spotless.', ReviewDate: ago(3) },
+    { CustomerName: 'Bheki Nxumalo', JobTitle: 'Replace an old DB board', Rating: 5, Comment: 'Neat work and he brought the certificate the same day.', ReviewDate: ago(15) },
+    { CustomerName: 'Nomsa Khumalo', JobTitle: 'Install outdoor security lights', Rating: 4, Comment: 'Good job. Took a little longer than planned but the lights are perfect.', ReviewDate: ago(34) },
+    { CustomerName: 'Lwazi Ndlovu', JobTitle: 'Fix a tripping circuit', Rating: 5, Comment: '', ReviewDate: ago(51) },
+    { CustomerName: 'Palesa Mabena', JobTitle: 'Geyser timer switch', Rating: 5, Comment: 'Friendly and fair price. Will call him again.', ReviewDate: ago(80) }
+  ];
+  var me = people[role];
+  var reply = function (body, status) { return new Promise(function (res) { setTimeout(function () {
+    res(new Response(JSON.stringify(body), { status: status || 200, headers: { 'Content-Type': 'application/json' } })); }, 260); }); };
+  window.requireLogin = async function () { return { id: me.UserID, name: me.FullName, role: me.Role }; };
+  window.logout = function () { showAlert('Logging out is turned off in preview mode.', 'warning'); };
+  var realFetch = window.fetch.bind(window);
+  window.fetch = function (input, opts) {
+    var url = String(input), method = ((opts && opts.method) || 'GET').toUpperCase();
+    var body = {}; try { body = JSON.parse((opts && opts.body) || '{}'); } catch (e) {}
+    if (url === '/api/users/profile' && method === 'GET') return reply({ success: true, profile: JSON.parse(JSON.stringify(me)) });
+    if (url === '/api/users/profile' && method === 'PUT') {
+      if (!body.fullName || !body.phone) return reply({ success: false, message: 'Name and phone are required.' }, 400);
+      me.FullName = body.fullName; me.PhoneNumber = body.phone;
+      if (me.freelancerData) { me.freelancerData.SkillCategory = body.skillCategory || 'General'; me.freelancerData.Experience = body.experience || ''; me.freelancerData.Bio = body.bio || ''; }
+      return reply({ success: true, message: 'Profile updated successfully.' });
+    }
+    if (url === '/api/categories') return reply({ success: true, categories: cats });
+    if (/^\/api\/reviews\/freelancer\/\d+$/.test(url)) return reply({ success: true, reviews: reviews });
+    return realFetch(input, opts);
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    var b = document.createElement('div'); b.className = 'lk-preview'; b.textContent = 'Preview · sample data'; document.body.appendChild(b);
+  });
+})();
+</script>
+
+<!-- ============ PROFILE LOGIC ==========================================
+     The original page logic: same functions, IDs, API calls and save body.
+     Changes: restyled markup strings; the save button keeps its icon; one
+     event at the end of init() so the identity column can render; and the
+     skill pre-select also matches the stored category ID (see note below).
+     ================================================================== -->
+<script>
+  let userRole = null;
+  let userId   = null;
+
+  async function init() {
+    const user = await requireLogin();
+    if (!user) return;
+    userRole = user.role;
+    userId   = user.id;
+
+    // Set back link based on role
+    const backLink = userRole === 'Freelancer' ? '/freelancer-dashboard' : '/customer-dashboard';
+    document.getElementById('backLink').innerHTML =
+      `<a href="${backLink}" class="lk-nav" aria-label="Dashboard"><i class="ph ph-arrow-left" aria-hidden="true"></i><span>Dashboard</span></a>`;
+
+    // Load profile data
+    const res  = await fetch('/api/users/profile');
+    const data = await res.json();
+    if (!data.success) return;
+    const p = data.profile;
+
+    document.getElementById('fullName').value = p.FullName;
+    document.getElementById('email').value    = p.Email;
+    document.getElementById('phone').value    = p.PhoneNumber;
+
+    if (userRole === 'Freelancer') {
+      document.getElementById('freelancerSection').style.display = 'block';
+      await loadCategories('skillCategory');
+
+      if (p.freelancerData) {
+        document.getElementById('skillCategory').value = '';
+        // Set the skill category dropdown
+        // (registration stores the category ID, so match the option's value as well as its name)
+        const opts = document.getElementById('skillCategory').options;
+        for (let i = 0; i < opts.length; i++) {
+          if (opts[i].text === p.freelancerData.SkillCategory || (opts[i].value && opts[i].value === String(p.freelancerData.SkillCategory))) {
+            opts[i].selected = true; break;
+          }
+        }
+        document.getElementById('experience').value = p.freelancerData.Experience || '';
+        document.getElementById('bio').value        = p.freelancerData.Bio || '';
+      }
+      loadReviews();
+    }
+    document.dispatchEvent(new CustomEvent('lk:profile', { detail: p }));
+  }
+
+  async function loadReviews() {
+    const res  = await fetch(`/api/reviews/freelancer/${userId}`);
+    const data = await res.json();
+    const el   = document.getElementById('reviewsList');
+
+    if (!data.success || !data.reviews.length) {
+      el.innerHTML = '<p class="lk-empty"><b>No reviews yet.</b>Reviews appear here once customers rate the jobs you have completed.</p>';
+      return;
+    }
+    el.innerHTML = data.reviews.map(r => `
+      <article class="lk-review" data-rating="${r.Rating}">
+        <div class="lk-review__head">
+          <div>
+            <strong class="lk-review__who">${r.CustomerName}</strong>
+            <span class="lk-review__job">for ${r.JobTitle}</span>
+          </div>
+          <div class="lk-review__stars">${renderStars(r.Rating)}</div>
+        </div>
+        ${r.Comment ? `<p class="lk-review__quote">“${r.Comment}”</p>` : ''}
+        <small class="lk-review__date">${formatDate(r.ReviewDate)}</small>
+      </article>`).join('');
+  }
+
+  document.getElementById('profileForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Saving...';
+
+    const res  = await fetch('/api/users/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName:      document.getElementById('fullName').value,
+        phone:         document.getElementById('phone').value,
+        skillCategory: document.getElementById('skillCategory')?.value || '',
+        experience:    document.getElementById('experience')?.value    || '',
+        bio:           document.getElementById('bio')?.value           || ''
+      })
+    });
+    const data = await res.json();
+    document.getElementById('alertBox').innerHTML =
+      `<div class="alert alert-${data.success ? 'success' : 'danger'}">${data.message}</div>`;
+    btn.disabled = false; btn.innerHTML = '<i class="ph-bold ph-check" aria-hidden="true"></i>Save Changes';
+  });
+
+  window.addEventListener('load', init);
+</script>
+
+<!-- ============ PRESENTATION ===========================================
+     Renders the identity column from data the page already loaded, keeps it
+     in step with the form while editing, summarises the reviews already
+     rendered, and adds the pointer-reactive light. Calls no API.
+     ================================================================== -->
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var role = null;
+
+  function initials(name) {
+    return String(name || '').trim().split(/\s+/).filter(Boolean).map(function (s) { return s[0]; }).slice(0, 2).join('').toUpperCase() || '·';
+  }
+  function skillName() {
+    var sel = $('skillCategory'); var o = sel && sel.options[sel.selectedIndex];
+    return o && o.value ? o.text : '';
+  }
+  function fields() {
+    var f = [['Full name', $('fullName').value], ['Email', $('email').value], ['Phone', $('phone').value]];
+    if (role === 'Freelancer') f.push(['Primary skill', skillName()], ['Experience', $('experience').value], ['Bio', $('bio').value]);
+    return f;
+  }
+  function render() {
+    var name = $('fullName').value.trim();
+    $('idName').textContent = name || 'Your profile';
+    $('idName').classList.toggle('is-wait', !name);
+    $('idMonogram').textContent = initials(name);
+    $('idEmail').textContent = $('email').value || '—';
+    $('idPhone').textContent = $('phone').value || '—';
+    var skill = skillName();
+    $('idLine').textContent = role === 'Freelancer' ? (skill ? skill + ' · professional profile' : 'Professional profile') : (role ? 'Hiring local skills on Lokshin' : '');
+    var f = fields(), done = f.filter(function (x) { return String(x[1] || '').trim(); }).length, missing = f.filter(function (x) { return !String(x[1] || '').trim(); }).map(function (x) { return x[0].toLowerCase(); });
+    $('idComplete').textContent = done + ' / ' + f.length;
+    $('idCompleteFill').style.width = (f.length ? Math.round(done / f.length * 100) : 0) + '%';
+    $('idCompleteHint').textContent = missing.length ? 'Still to add: ' + missing.join(', ') + '.' : 'Everything is filled in.';
+  }
+
+  document.addEventListener('lk:profile', function (e) {
+    var p = e.detail || {};
+    role = p.Role || null;
+    $('idRole').textContent = role || 'Member';
+    if (p.UserID) $('idNumber').textContent = '/ No. ' + String(p.UserID).padStart(4, '0');
+    if (p.CreatedAt) { var d = new Date(p.CreatedAt); if (!isNaN(d)) $('idSince').textContent = d.toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' }); }
+    if (role === 'Freelancer') $('reputation').hidden = false;
+    render();
+  });
+  ['fullName', 'phone', 'experience', 'bio'].forEach(function (id) { var el = $(id); if (el) el.addEventListener('input', function () { if (role) render(); }); });
+  $('skillCategory').addEventListener('change', function () { if (role) render(); });
+
+  /* reputation summary, calculated only from the reviews rendered in #reviewsList */
+  function summarise() {
+    var items = Array.prototype.slice.call($('reviewsList').querySelectorAll('[data-rating]'));
+    var ratings = items.map(function (r) { return Number(r.getAttribute('data-rating')); }).filter(function (n) { return n >= 1 && n <= 5; });
+    if ($('reviewsList').querySelector('.lk-wait')) return;
+    if (!ratings.length) {
+      $('repAvg').textContent = '—'; $('repStars').innerHTML = ''; $('repCount').textContent = 'No reviews yet'; $('repDist').innerHTML = ''; return;
+    }
+    var avg = ratings.reduce(function (a, b) { return a + b; }, 0) / ratings.length;
+    $('repAvg').textContent = avg.toFixed(1);
+    $('repStars').innerHTML = typeof renderStars === 'function' ? renderStars(avg) : '';
+    $('repCount').textContent = ratings.length + (ratings.length === 1 ? ' review' : ' reviews');
+    var rows = '';
+    for (var s = 5; s >= 1; s--) {
+      var n = ratings.filter(function (r) { return r === s; }).length;
+      rows += '<div class="lk-dist__row"><span>' + s + '</span><span class="lk-dist__bar"><span style="width:' + Math.round(n / ratings.length * 100) + '%"></span></span><b>' + n + '</b></div>';
+    }
+    $('repDist').innerHTML = rows;
+  }
+  new MutationObserver(summarise).observe($('reviewsList'), { childList: true });
+
+  /* pointer: the room's light leans a few pixels toward the viewer (fine pointers, full motion only) */
+  var fine = window.matchMedia && matchMedia('(pointer:fine)').matches;
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (fine && !still) {
+    var root = document.documentElement, tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    var step = function () {
+      cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
+      root.style.setProperty('--px', (cx * 60).toFixed(1) + 'px');
+      root.style.setProperty('--py', (cy * 40).toFixed(1) + 'px');
+      root.style.setProperty('--mx', cx.toFixed(3));
+      root.style.setProperty('--my', cy.toFixed(3));
+      raf = (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) ? requestAnimationFrame(step) : 0;
+    };
+    window.addEventListener('pointermove', function (e) {
+      tx = (e.clientX / innerWidth) * 2 - 1; ty = (e.clientY / innerHeight) * 2 - 1;
+      root.classList.add('has-pointer');
+      if (!raf) raf = requestAnimationFrame(step);
+    }, { passive: true });
+  }
+})();
+</script>
+</body>
+</html>

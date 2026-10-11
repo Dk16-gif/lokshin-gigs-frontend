@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in — Lokshin Gigs</title>
+  <meta name="description" content="Sign in to Lokshin Gigs — the community marketplace for local township services." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/tailwind.css" />
+
+  <script src="/js/main.js" defer></script>
+  <script src="/js/pages/login.js" defer></script>
+
+  <style>
+    /* Footer legal link (plain CSS so it does not depend on compiled Tailwind classes) */
+    .lk-legal-link { color: rgba(247,242,233,0.78); font-weight: 600; text-decoration: underline; text-decoration-color: #B65A3C; text-underline-offset: 3px; border-radius: 2px; transition: color 180ms; }
+    .lk-legal-link:hover { color: #F7F2E9; text-decoration-thickness: 2px; }
+    .lk-legal-link:focus-visible { outline: 2px solid #B65A3C; outline-offset: 2px; }
+    .atmos {
+      position: relative; overflow: hidden;
+      background: #230F08; isolation: isolate;
+      --g1x: 30%; --g1y: 40%;
+      --g2x: 65%; --g2y: 55%;
+      --g3x: 48%; --g3y: 45%;
+    }
+    .atmos > * { position: absolute; pointer-events: none; }
+    .atmos-g1, .atmos-g2, .atmos-g3 { position: absolute; inset: -22%; }
+    .atmos-g1 {
+      transform: rotate(-8deg);
+      background: radial-gradient(ellipse 85% 26% at var(--g1x) var(--g1y), rgba(212,128,78,0.20), transparent 60%);
+    }
+    .atmos-g2 {
+      transform: rotate(12deg);
+      background: radial-gradient(ellipse 78% 30% at var(--g2x) var(--g2y), rgba(184,88,58,0.14), transparent 58%);
+    }
+    .atmos-g3 {
+      transform: rotate(-3deg);
+      background: radial-gradient(ellipse 92% 22% at var(--g3x) var(--g3y), rgba(200,110,68,0.08), transparent 65%);
+    }
+    .atmos-shadow {
+      inset: 0;
+      background:
+        radial-gradient(ellipse 42% 55% at 94% 10%, rgba(8,4,3,0.50), transparent 55%),
+        radial-gradient(ellipse 36% 46% at 6% 94%, rgba(6,3,2,0.45), transparent 55%);
+    }
+    .atmos-typo {
+      inset: 0; display: flex; align-items: center; justify-content: center;
+      padding: 0 6%;
+      font-family: 'Manrope', system-ui, sans-serif;
+      font-weight: 500; font-size: 14px;
+      letter-spacing: 0.32em; text-transform: uppercase; text-align: center;
+      color: rgba(255,250,235,0.90);
+      white-space: nowrap; overflow: hidden; user-select: none;
+      text-shadow: 0 0 1px rgba(255,240,210,0.55), 0 0 8px rgba(240,200,150,0.35), 0 0 22px rgba(200,130,90,0.22);
+    }
+    .atmos-grain {
+      inset: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      mix-blend-mode: overlay; opacity: 0.55;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .atmos { --g1x:35%; --g1y:42%; --g2x:60%; --g2y:52%; --g3x:48%; --g3y:46%; }
+    }
+
+    /* ─── View switching ─── */
+    .login-view { display: none; }
+    .login-view.active { display: block; }
+
+    /* ─── Centered placeholder, left-aligned typed value ─── */
+    .fi-align { text-align: center; }
+    .fi-align.has-value { text-align: left; }
+
+    /* ─── Alert banners for forgot/reset views ─── */
+    .alert-banner { border-radius: 0.25rem; padding: 0.5rem 0.75rem; font-size: 13.5px; line-height: 1.375; }
+    .alert-banner-err { border: 1px solid rgba(168,62,43,0.3); background: rgba(168,62,43,0.1); color: #a83e2b; }
+    .alert-banner-ok  { border: 1px solid rgba(79,107,62,0.3); background: rgba(79,107,62,0.1); color: #4f6b3e; }
+
+    /* ─── Forgot password link — serif italic treatment ─── */
+    .forgot-link {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+    .forgot-link:hover,
+    .forgot-link:focus,
+    .forgot-link:active { color: #A83E2B; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ─── Back-to-sign-in hover interaction ─── */
+    .back-link {
+      transition: color 0.15s ease, transform 0.15s ease;
+      display: inline-block;
+    }
+    .back-link:hover,
+    .back-link:focus {
+      color: #A83E2B;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transform: translateX(2px);
+    }
+  </style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = '';
+  </script>
+</head>
+
+<body class="min-h-screen bg-brand-dark font-sans text-ink antialiased">
+  <div class="flex min-h-screen flex-col">
+
+    <header class="flex items-start justify-between px-6 pt-5 pb-4 text-bg-elevated
+                   sm:px-10 sm:pt-6 sm:pb-5 lg:px-20 lg:pt-8 lg:pb-6 xl:px-24">
+      <div>
+        <a href="/" class="inline-flex items-center gap-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark">
+          <span class="inline-block h-2 w-2 rounded-full bg-accent" aria-hidden="true"></span>
+          <span class="text-[15px] font-semibold tracking-tight">Lokshin Gigs</span>
+        </a>
+        <p class="mt-1 pl-4 text-[12.5px] leading-normal text-bg-elevated/65">Find someone local to get it done.</p>
+      </div>
+      <div class="pt-[3px] text-[13.5px] text-bg-elevated/70">
+        <span class="hidden sm:inline">New here?</span>
+        <a href="/register" class="ml-1 font-medium text-bg-elevated underline decoration-accent decoration-2 underline-offset-[5px] hover:decoration-accent/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark">Create an account</a>
+      </div>
+    </header>
+
+    <div class="flex flex-1 items-center justify-center px-6 sm:px-10 lg:px-20 xl:px-24">
+      <div class="relative flex w-full max-w-[1240px] flex-col overflow-hidden bg-bg
+                  lg:flex-row lg:min-h-[540px] xl:min-h-[580px]">
+
+        <div id="atmos" class="atmos aspect-[4/3] w-full lg:aspect-auto lg:w-[55%] lg:self-stretch" aria-hidden="true">
+          <div class="atmos-g1"></div>
+          <div class="atmos-g2"></div>
+          <div class="atmos-g3"></div>
+          <div class="atmos-shadow"></div>
+          <div class="atmos-typo">MADE HERE. FOR HERE.</div>
+          <div class="atmos-grain"></div>
+        </div>
+
+        <div class="flex flex-1 items-center justify-center px-6 py-8 sm:px-10 sm:py-10 lg:w-[45%] lg:px-14 lg:py-10">
+          <div class="w-full max-w-[380px]">
+
+            <!-- ═══ LOGIN VIEW ═══ -->
+            <div id="loginView" class="login-view active">
+              <div class="text-center">
+                <h1 class="text-[36px] font-semibold leading-[1.05] tracking-tight sm:text-[38px]">Welcome back</h1>
+                <p class="mx-auto mt-2 max-w-[340px] text-[15px] leading-relaxed text-ink-soft">Sign in to post a job, respond to work, or manage your listings.</p>
+              </div>
+              <div class="mx-auto mt-6 h-px w-10 bg-accent" aria-hidden="true"></div>
+              <form id="loginForm" novalidate class="mt-6 space-y-4">
+                <div id="loginError" role="alert" hidden class="rounded border border-danger/30 bg-danger/10 px-3 py-2 text-[13.5px] leading-snug text-danger"></div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-center gap-2.5 mb-1">
+                    <svg class="h-4 w-4 flex-shrink-0 text-ink-muted" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></svg>
+                    <label for="email" class="text-[12px] font-medium text-ink-soft">Email Address</label>
+                  </div>
+                  <input type="email" id="email" name="email" autocomplete="email" required spellcheck="false" placeholder="you@email.com"
+                    class="fi-align w-full rounded border border-border bg-bg-elevated px-3 py-2.5 text-[15px] leading-normal text-ink placeholder:text-ink-muted transition-colors hover:border-border-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated" />
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-center gap-2.5 mb-1">
+                    <svg class="h-4 w-4 flex-shrink-0 text-ink-muted" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>
+                    <label for="password" class="text-[12px] font-medium text-ink-soft">Password</label>
+                  </div>
+                  <div class="relative">
+                    <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="Your password"
+                      class="fi-align w-full rounded border border-border bg-bg-elevated px-3 py-2.5 pr-11 text-[15px] leading-normal text-ink placeholder:text-ink-muted transition-colors hover:border-border-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated" />
+                    <button type="button" id="passwordToggle" aria-label="Show password" aria-pressed="false" aria-controls="password"
+                      class="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-ink-muted transition-colors hover:text-ink focus:outline-none focus-visible:text-ink">
+                      <svg id="iconEye" class="h-[18px] w-[18px]" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.58,27.65,38.41C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.47,133.47,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"/></svg>
+                      <svg id="iconEyeSlash" class="hidden h-[18px] w-[18px]" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M53.92,34.62A8,8,0,1,0,42.08,45.38L61.32,66.55C25,88.84,9.38,123.2,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.85,19.57,27.65,38.38C61.43,194.74,93.12,208,128,208a127.11,127.11,0,0,0,52.07-10.83l21.9,24.09a8,8,0,1,0,11.84-10.76Zm47.33,75.84,41.67,45.85a32,32,0,0,1-41.67-45.85ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.16,133.16,0,0,1,25,128c4.69-8.79,19.66-33.39,47.35-49.38l18,19.75a48,48,0,0,0,63.66,70l14.73,16.2A112,112,0,0,1,128,192Zm6-95.43a8,8,0,0,1,3-15.72,48.16,48.16,0,0,1,38.77,42.64,8,8,0,0,1-7.22,8.71,6.39,6.39,0,0,1-.75,0,8,8,0,0,1-8-7.26A32.09,32.09,0,0,0,134,96.57Zm113.28,34.69c-.42.94-10.55,23.37-33.36,43.8a8,8,0,1,1-10.67-11.92A132.77,132.77,0,0,0,231.05,128a133.15,133.15,0,0,0-23.12-30.77C185.67,75.19,158.78,64,128,64a118.37,118.37,0,0,0-19.36,1.57A8,8,0,1,1,106,49.79,134,134,0,0,1,128,48c34.88,0,66.57,13.26,91.66,38.35,18.83,18.82,27.3,37.62,27.65,38.41A8,8,0,0,1,247.31,131.26Z"/></svg>
+                    </button>
+                  </div>
+                  <a href="#" id="forgotLink" class="forgot-link mt-1 block text-right text-[12px] font-medium text-accent focus:outline-none">Forgot password?</a>
+                </div>
+                <button type="submit" id="loginSubmit"
+                  class="group mt-1 w-full rounded bg-accent px-4 py-2.5 text-[14.5px] font-semibold text-bg-elevated transition-colors hover:bg-[#A34E33] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated disabled:cursor-not-allowed disabled:opacity-70">
+                  <span class="inline-flex items-center justify-center gap-2">
+                    <span id="loginSubmitLabel">Sign in</span>
+                    <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+                  </span>
+                </button>
+              </form>
+              <div class="my-3 flex items-center gap-2.5 text-[11px] font-medium text-ink-muted">
+                <span class="h-px flex-1 bg-border"></span><span>or</span><span class="h-px flex-1 bg-border"></span>
+              </div>
+              <button type="button" id="googleSignin"
+                class="flex w-full items-center justify-center gap-3 rounded border border-border bg-transparent px-4 py-2.5 text-[13px] font-semibold text-ink transition-colors hover:border-border-strong hover:bg-ink/[0.03] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated">
+                <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.9 7.35 2.56 10.56l7.97-5.97z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.97C6.51 42.62 14.62 48 24 48z"/></svg>
+                <span>Sign in with Google </span>
+              </button>
+            </div>
+
+            <!-- ═══ FORGOT PASSWORD VIEW ═══ -->
+            <div id="forgotView" class="login-view">
+              <div class="text-center">
+                <h1 class="text-[36px] font-semibold leading-[1.05] tracking-tight sm:text-[38px]">Reset password</h1>
+                <p class="mx-auto mt-2 max-w-[340px] text-[15px] leading-relaxed text-ink-soft">Enter your email and we'll send a reset link.</p>
+              </div>
+              <div class="mx-auto mt-6 h-px w-10 bg-accent" aria-hidden="true"></div>
+              <form id="forgotForm" novalidate class="mt-6 space-y-4">
+                <div id="forgotAlert"></div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-center gap-2.5 mb-1">
+                    <svg class="h-4 w-4 flex-shrink-0 text-ink-muted" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></svg>
+                    <label for="forgotEmail" class="text-[12px] font-medium text-ink-soft">Email Address</label>
+                  </div>
+                  <input type="email" id="forgotEmail" name="email" autocomplete="email" required spellcheck="false" placeholder="you@email.com"
+                    class="fi-align w-full rounded border border-border bg-bg-elevated px-3 py-2.5 text-[15px] leading-normal text-ink placeholder:text-ink-muted transition-colors hover:border-border-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated" />
+                </div>
+                <button type="submit" id="forgotSubmit"
+                  class="group mt-1 w-full rounded bg-accent px-4 py-2.5 text-[14.5px] font-semibold text-bg-elevated transition-colors hover:bg-[#A34E33] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated disabled:cursor-not-allowed disabled:opacity-70">
+                  <span class="inline-flex items-center justify-center gap-2">
+                    <span id="forgotSubmitLabel">Send Reset Link</span>
+                    <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+                  </span>
+                </button>
+              </form>
+              <p class="mt-6 text-center text-[13px]"><a href="#" id="backToLogin" class="back-link font-medium text-accent focus:outline-none">&larr; Back to sign in</a></p>
+            </div>
+
+            <!-- ═══ RESET PASSWORD VIEW ═══ -->
+            <div id="resetView" class="login-view">
+              <div class="text-center">
+                <h1 class="text-[36px] font-semibold leading-[1.05] tracking-tight sm:text-[38px]">Set new password</h1>
+                <p class="mx-auto mt-2 max-w-[340px] text-[15px] leading-relaxed text-ink-soft">Choose a strong password for your account.</p>
+              </div>
+              <div class="mx-auto mt-6 h-px w-10 bg-accent" aria-hidden="true"></div>
+              <form id="resetForm" novalidate class="mt-6 space-y-4">
+                <div id="resetAlert"></div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-center gap-2.5 mb-1">
+                    <svg class="h-4 w-4 flex-shrink-0 text-ink-muted" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>
+                    <label for="newPassword" class="text-[12px] font-medium text-ink-soft">New Password</label>
+                  </div>
+                  <div class="relative">
+                    <input type="password" id="newPassword" name="newPassword" autocomplete="new-password" required placeholder="At least 8 characters"
+                      class="fi-align w-full rounded border border-border bg-bg-elevated px-3 py-2.5 pr-11 text-[15px] leading-normal text-ink placeholder:text-ink-muted transition-colors hover:border-border-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated" />
+                    <button type="button" data-pw-toggle aria-label="Show password" aria-pressed="false"
+                      class="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-ink-muted transition-colors hover:text-ink focus:outline-none focus-visible:text-ink">
+                      <svg class="pw-eye h-[18px] w-[18px]" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.58,27.65,38.41C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.47,133.47,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"/></svg>
+                      <svg class="pw-eye-off hidden h-[18px] w-[18px]" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M53.92,34.62A8,8,0,1,0,42.08,45.38L61.32,66.55C25,88.84,9.38,123.2,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.85,19.57,27.65,38.38C61.43,194.74,93.12,208,128,208a127.11,127.11,0,0,0,52.07-10.83l21.9,24.09a8,8,0,1,0,11.84-10.76Zm47.33,75.84,41.67,45.85a32,32,0,0,1-41.67-45.85ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.16,133.16,0,0,1,25,128c4.69-8.79,19.66-33.39,47.35-49.38l18,19.75a48,48,0,0,0,63.66,70l14.73,16.2A112,112,0,0,1,128,192Zm6-95.43a8,8,0,0,1,3-15.72,48.16,48.16,0,0,1,38.77,42.64,8,8,0,0,1-7.22,8.71,6.39,6.39,0,0,1-.75,0,8,8,0,0,1-8-7.26A32.09,32.09,0,0,0,134,96.57Zm113.28,34.69c-.42.94-10.55,23.37-33.36,43.8a8,8,0,1,1-10.67-11.92A132.77,132.77,0,0,0,231.05,128a133.15,133.15,0,0,0-23.12-30.77C185.67,75.19,158.78,64,128,64a118.37,118.37,0,0,0-19.36,1.57A8,8,0,1,1,106,49.79,134,134,0,0,1,128,48c34.88,0,66.57,13.26,91.66,38.35,18.83,18.82,27.3,37.62,27.65,38.41A8,8,0,0,1,247.31,131.26Z"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-center gap-2.5 mb-1">
+                    <svg class="h-4 w-4 flex-shrink-0 text-ink-muted" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>
+                    <label for="confirmPassword" class="text-[12px] font-medium text-ink-soft">Confirm Password</label>
+                  </div>
+                  <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required placeholder="Re-enter your password"
+                    class="fi-align w-full rounded border border-border bg-bg-elevated px-3 py-2.5 text-[15px] leading-normal text-ink placeholder:text-ink-muted transition-colors hover:border-border-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated" />
+                </div>
+                <button type="submit" id="resetSubmit"
+                  class="group mt-1 w-full rounded bg-accent px-4 py-2.5 text-[14.5px] font-semibold text-bg-elevated transition-colors hover:bg-[#A34E33] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-elevated disabled:cursor-not-allowed disabled:opacity-70">
+                  <span class="inline-flex items-center justify-center gap-2">
+                    <span id="resetSubmitLabel">Reset Password</span>
+                    <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
+                  </span>
+                </button>
+              </form>
+              <p class="mt-6 text-center text-[13px]"><a href="/login" class="back-link font-medium text-accent focus:outline-none">&larr; Back to sign in</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="px-6 pt-4 pb-4 text-bg-elevated/45 sm:px-10 sm:pb-6 lg:px-20 lg:pb-6 xl:px-24">
+      <p class="text-[11px] tracking-wide">&copy; Lokshin Gigs <span aria-hidden="true">&middot;</span> <a href="/terms" class="lk-legal-link">Terms &amp; Conditions</a></p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Terms &amp; Conditions — Lokshin Gigs</title>
+<meta name="description" content="The Terms &amp; Conditions that govern use of the Lokshin Gigs local-services marketplace in South Africa."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+<style>
+/* ==========================================================================
+   Lokshin Gigs — Terms & Conditions
+   Public, static page. No login, session, API call or database needed.
+   Palette and type follow Login / Registration: espresso shell, ivory paper,
+   terracotta accent, Manrope.
+   ========================================================================== */
+:root{
+  --espresso:#230F08;
+  --espresso-2:#2E150B;
+  --on-dark:#F7F2E9;
+  --on-dark-2:rgba(247,242,233,.72);
+  --on-dark-3:rgba(247,242,233,.50);
+  --line-dark:rgba(247,242,233,.12);
+  --paper:#FCF8F0;
+  --paper-line:#E8DFCE;
+  --ink:#1F1B16;
+  --ink-2:#4A4238;
+  --ink-3:#5E554A;
+  --terra:#B65A3C;
+  --terra-ink:#8F3F24;      /* terracotta for text on paper (6.8:1) */
+  --terra-light:#D98A6C;    /* terracotta for text on espresso (6.8:1) */
+  --radius:4px;
+  --measure:68ch;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--espresso);-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{min-height:100vh;background:var(--espresso);color:var(--on-dark);font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--terra-light);outline-offset:3px;border-radius:2px}
+
+.skip{position:absolute;left:16px;top:-60px;z-index:100;padding:10px 14px;border-radius:var(--radius);background:var(--on-dark);color:var(--ink);font-weight:700;font-size:14px;text-decoration:none;transition:top .15s}
+.skip:focus{top:12px}
+
+/* ---- Grain, same treatment as the Registration cards, kept faint ---- */
+.lk-grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.10 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+.lk-wrap{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;padding:0 clamp(16px,5vw,56px)}
+
+/* ---- Header ---- */
+.lk-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0 10px;flex-wrap:wrap}
+.brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:2px}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--terra);flex-shrink:0}
+.brand-name{font-size:15px;font-weight:600;color:var(--on-dark);white-space:nowrap}
+.brand-tag{margin-top:4px;padding-left:16px;font-size:12.5px;color:var(--on-dark-3)}
+.lk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:1px solid var(--line-dark);border-radius:var(--radius);color:var(--on-dark);font-size:13.5px;font-weight:600;text-decoration:none;transition:border-color .18s,background .18s}
+.lk-back i{font-size:16px;color:var(--terra-light);transition:transform .18s}
+.lk-back:hover{border-color:rgba(247,242,233,.30);background:rgba(247,242,233,.04)}
+.lk-back:hover i{transform:translateX(-2px)}
+
+/* ---- Title block ---- */
+.lk-hero{padding:clamp(40px,7vw,84px) 0 clamp(28px,4vw,44px);border-bottom:1px solid var(--line-dark)}
+.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--on-dark-3)}
+.sec-label i{font-size:15px;color:var(--terra-light)}
+.lk-hero h1{margin-top:14px;font-size:clamp(36px,6.2vw,64px);font-weight:700;line-height:1.02;letter-spacing:-.03em;color:var(--on-dark)}
+.lk-hero h1 .amp{color:var(--terra-light);font-weight:600}
+.lk-intro{margin-top:18px;max-width:58ch;font-size:clamp(16px,1.6vw,18px);line-height:1.6;color:var(--on-dark-2)}
+.lk-meta{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:30px}
+.lk-meta div{min-width:0}
+.lk-meta dt{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--on-dark-3)}
+.lk-meta dd{margin-top:4px;font-size:14.5px;font-weight:600;color:var(--on-dark)}
+
+/* ---- Layout: contents rail + document ---- */
+.lk-layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(32px,4vw,56px);align-items:start;padding:clamp(28px,4vw,44px) 0 clamp(48px,6vw,80px)}
+
+/* Contents */
+.lk-toc{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(247,242,233,.18) transparent;padding-right:4px}
+.lk-toc__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lk-toc__title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--on-dark-3)}
+.lk-toc__btn{display:none}
+.lk-toc ol{list-style:none;margin-top:14px;border-left:1px solid var(--line-dark)}
+.lk-toc li a{position:relative;display:grid;grid-template-columns:24px 1fr;gap:6px;padding:6px 8px 6px 14px;font-size:13px;line-height:1.4;color:var(--on-dark-3);text-decoration:none;border-radius:0 2px 2px 0;transition:color .15s,background .15s}
+.lk-toc li a span{font-variant-numeric:tabular-nums;color:rgba(247,242,233,.38);font-weight:600}
+.lk-toc li a::before{content:'';position:absolute;left:-1px;top:6px;bottom:6px;width:2px;background:transparent;transition:background .15s}
+.lk-toc li a:hover{color:var(--on-dark);background:rgba(247,242,233,.04)}
+.lk-toc li a[aria-current="true"]{color:var(--on-dark)}
+.lk-toc li a[aria-current="true"] span{color:var(--terra-light)}
+.lk-toc li a[aria-current="true"]::before{background:var(--terra)}
+
+/* Document */
+.lk-doc{background:var(--paper);color:var(--ink);border:1px solid var(--paper-line);border-radius:var(--radius);padding:clamp(24px,5.5vw,64px) clamp(20px,5.5vw,72px)}
+.lk-doc>*{max-width:var(--measure)}
+.lk-sec+.lk-sec{margin-top:clamp(40px,5vw,56px);padding-top:clamp(36px,4.5vw,48px);border-top:1px solid var(--paper-line)}
+.lk-sec h2{scroll-margin-top:24px;font-size:clamp(21px,2.3vw,25px);font-weight:700;line-height:1.22;letter-spacing:-.015em;color:var(--ink)}
+.lk-sec h2 .n{display:block;margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--terra-ink);font-variant-numeric:tabular-nums}
+.lk-sec p,.lk-sec li{font-size:16.5px;line-height:1.72;color:var(--ink-2)}
+.lk-sec h2+*{margin-top:18px}
+.cl{position:relative;padding-left:3.1rem}
+.cl+.cl,.cl+ul,ul+.cl,.cl+.lk-brief,.lk-brief+.cl{margin-top:14px}
+.cl__n{position:absolute;left:0;top:0;font-size:14px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums;line-height:1.95}
+.lk-sec ul{margin:10px 0 0 3.1rem;padding-left:1.1rem}
+.lk-sec ul li{padding-left:4px}
+.lk-sec ul li+li{margin-top:6px}
+.lk-sec ul li::marker{color:var(--terra)}
+.lk-sec strong{color:var(--ink);font-weight:700}
+.lk-doc a{color:var(--terra-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600}
+.lk-doc a:hover{text-decoration-thickness:2px}
+.lk-doc :focus-visible{outline-color:var(--terra-ink)}
+.lk-brief{margin-left:3.1rem;padding:12px 16px;border-left:2px solid var(--terra);background:rgba(182,90,60,.06);border-radius:0 var(--radius) var(--radius) 0}
+.lk-brief p{font-size:15.5px;color:var(--ink)}
+.lk-brief b{display:block;margin-bottom:2px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--terra-ink)}
+.lk-contact{margin:16px 0 0 3.1rem;padding:16px 18px;border:1px dashed var(--paper-line);border-radius:var(--radius)}
+.lk-contact p{font-size:15.5px}
+
+/* Closing notice */
+.lk-notice{display:flex;gap:14px;margin-top:clamp(40px,5vw,56px);padding:18px 20px;border:1px solid var(--paper-line);border-radius:var(--radius);background:#F7F2E9}
+.lk-notice i{flex-shrink:0;font-size:20px;color:var(--terra-ink);margin-top:2px}
+.lk-notice p{font-size:14.5px;line-height:1.65;color:var(--ink-2)}
+.lk-notice strong{color:var(--ink)}
+.lk-doc__end{margin-top:22px;font-size:13.5px;color:var(--ink-3)}
+
+/* ---- Footer ---- */
+.lk-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding:20px 0 28px;border-top:1px solid var(--line-dark);font-size:13px;color:var(--on-dark-3)}
+.lk-foot nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+.lk-foot a{display:inline-flex;align-items:center;gap:6px;color:var(--on-dark-2);text-decoration:none;font-weight:600;padding:4px 0}
+.lk-foot a:hover{color:var(--on-dark);text-decoration:underline;text-underline-offset:3px}
+.lk-foot a i{font-size:14px;color:var(--terra-light)}
+
+/* ---- Tablet and mobile ---- */
+@media (max-width:1023px){
+  .lk-layout{grid-template-columns:minmax(0,1fr);gap:20px}
+  .lk-toc{position:static;max-height:none;overflow:visible;padding:14px 16px;border:1px solid var(--line-dark);border-radius:var(--radius);background:rgba(247,242,233,.03)}
+  .js .lk-toc__btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 10px;margin:-6px -10px -6px 0;background:none;border:0;border-radius:var(--radius);color:var(--on-dark);font:600 13.5px/1 'Manrope',sans-serif;cursor:pointer}
+  .lk-toc__btn i{font-size:16px;color:var(--terra-light);transition:transform .2s}
+  .lk-toc__btn[aria-expanded="true"] i{transform:rotate(180deg)}
+  .js .lk-toc.is-closed ol{display:none}
+  .lk-toc ol{columns:2;column-gap:20px;border-left:0}
+  .lk-toc li{break-inside:avoid}
+  .lk-toc li a{padding-left:8px}
+  .lk-toc li a::before{display:none}
+}
+@media (max-width:640px){
+  .lk-top{padding-top:16px}
+  .brand-tag{display:none}
+  .lk-back{padding:8px 12px}
+  .lk-toc ol{columns:1}
+  .lk-meta{gap:14px 28px}
+  .lk-doc{padding:24px 18px 28px}
+  .lk-sec p,.lk-sec li{font-size:16px;line-height:1.7}
+  .cl{padding-left:2.5rem}
+  .lk-sec ul{margin-left:2.5rem}
+  .lk-brief,.lk-contact{margin-left:0}
+  .lk-notice{padding:16px}
+}
+@media (max-width:360px){.lk-back span{display:none}}
+
+/* ---- Print ---- */
+@media print{
+  html,body{background:#fff;color:#000}
+  .lk-grain,.lk-back,.lk-toc,.lk-foot nav,.skip{display:none!important}
+  .lk-wrap{width:100%;padding:0}
+  .lk-hero{padding:0 0 16px;border-color:#ccc}
+  .lk-hero h1,.lk-meta dd,.brand-name{color:#000}
+  .lk-intro,.lk-meta dt,.sec-label,.brand-tag{color:#333}
+  .lk-layout{display:block;padding:16px 0}
+  .lk-doc{border:0;padding:0;background:#fff}
+  .lk-sec{break-inside:auto}
+  .lk-sec h2{break-after:avoid}
+}
+</style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = '';
+  </script>
+</head>
+<body>
+<a class="skip" href="#terms">Skip to the Terms</a>
+<div class="lk-grain" aria-hidden="true"></div>
+
+<div class="lk-wrap">
+  <header class="lk-top">
+    <div>
+      <a href="/" class="brand" aria-label="Lokshin Gigs home"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Lokshin Gigs</span></a>
+      <p class="brand-tag">Find someone local to get it done.</p>
+    </div>
+    <a href="/" class="lk-back" id="backLink"><i class="ph-bold ph-arrow-left" aria-hidden="true"></i><span id="backLabel">Back to Lokshin Gigs</span></a>
+  </header>
+
+  
+  <section class="lk-hero" aria-labelledby="pageTitle">
+    <p class="sec-label"><i class="ph ph-scales" aria-hidden="true"></i>Legal</p>
+    <h1 id="pageTitle">Terms <span class="amp">&amp;</span> Conditions</h1>
+    <p class="lk-intro">These Terms &amp; Conditions govern your access to and use of the Lokshin Gigs platform. Please read them carefully before you create an account, post a job or apply for work.</p>
+    <!-- Update both dates here when the Terms change. -->
+    <dl class="lk-meta">
+      <div><dt>Effective date</dt><dd><time datetime="2026-10-08">8 October 2026</time></dd></div>
+      <div><dt>Last updated</dt><dd><time datetime="2026-10-08">8 October 2026</time></dd></div>
+      <div><dt>Applies to</dt><dd>Customers and Freelancers in South Africa</dd></div>
+    </dl>
+  </section>
+
+  <div class="lk-layout">
+    <nav class="lk-toc" id="toc" aria-labelledby="tocTitle">
+      <div class="lk-toc__head">
+        <h2 class="lk-toc__title" id="tocTitle">Contents</h2>
+        <button type="button" class="lk-toc__btn" id="tocBtn" aria-expanded="false" aria-controls="tocList">21 sections<i class="ph-bold ph-caret-down" aria-hidden="true"></i></button>
+      </div>
+      <ol id="tocList">
+        <li><a href="#acceptance"><span>1</span>Acceptance of these Terms</a></li>
+        <li><a href="#about"><span>2</span>About Lokshin Gigs</a></li>
+        <li><a href="#eligibility"><span>3</span>Eligibility and Account Registration</a></li>
+        <li><a href="#accounts"><span>4</span>User Accounts and Account Security</a></li>
+        <li><a href="#customers"><span>5</span>Customer Responsibilities</a></li>
+        <li><a href="#freelancers"><span>6</span>Freelancer Responsibilities</a></li>
+        <li><a href="#jobs"><span>7</span>Jobs, Applications and Agreements</a></li>
+        <li><a href="#payments"><span>8</span>Payments, Pricing and Budgets</a></li>
+        <li><a href="#conduct"><span>9</span>Platform Conduct and Prohibited Activities</a></li>
+        <li><a href="#content"><span>10</span>User Content</a></li>
+        <li><a href="#reviews"><span>11</span>Reviews and Ratings</a></li>
+        <li><a href="#communications"><span>12</span>Communications and Contact Information</a></li>
+        <li><a href="#ip"><span>13</span>Intellectual Property</a></li>
+        <li><a href="#availability"><span>14</span>Platform Availability and Changes</a></li>
+        <li><a href="#termination"><span>15</span>Suspension and Termination</a></li>
+        <li><a href="#liability"><span>16</span>Disclaimers and Limitation of Liability</a></li>
+        <li><a href="#indemnity"><span>17</span>Indemnity</a></li>
+        <li><a href="#privacy"><span>18</span>Privacy and Personal Information</a></li>
+        <li><a href="#changes"><span>19</span>Changes to these Terms</a></li>
+        <li><a href="#law"><span>20</span>Governing Law</a></li>
+        <li><a href="#contact"><span>21</span>Contact Information</a></li>
+      </ol>
+    </nav>
+
+    <main id="terms" class="lk-doc" tabindex="-1">
+
+      <section class="lk-sec" aria-labelledby="acceptance">
+        <h2 id="acceptance"><span class="n">Section 01</span>Acceptance of these Terms</h2>
+        <p class="cl"><span class="cl__n">1.1</span>By creating an account on Lokshin Gigs, or by otherwise accessing or using the platform, you agree to be bound by these Terms &amp; Conditions (the &ldquo;Terms&rdquo;). If you do not agree to these Terms, you must not use the platform.</p>
+        <p class="cl"><span class="cl__n">1.2</span>In these Terms, &ldquo;Lokshin Gigs&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; and &ldquo;our&rdquo; refer to the operator of the Lokshin Gigs platform. &ldquo;You&rdquo; means any person who accesses or uses the platform. A &ldquo;Customer&rdquo; is a user who posts jobs, a &ldquo;Freelancer&rdquo; is a user who offers services and applies for jobs, and a &ldquo;User&rdquo; is any Customer or Freelancer.</p>
+        <p class="cl"><span class="cl__n">1.3</span>The &ldquo;platform&rdquo; means the Lokshin Gigs website and the features and services made available through it.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="about">
+        <h2 id="about"><span class="n">Section 02</span>About Lokshin Gigs</h2>
+        <p class="cl"><span class="cl__n">2.1</span>Lokshin Gigs is an online marketplace that helps people in South African communities find local services. Customers post jobs describing work they need done. Freelancers browse those jobs and apply. Customers choose which Freelancer, if any, to work with.</p>
+        <p class="cl"><span class="cl__n">2.2</span>Lokshin Gigs provides the platform only. We do not perform the services advertised on the platform, we do not employ Freelancers, and Freelancers are not our employees, agents or contractors. Customers are not our agents either.</p>
+        <p class="cl"><span class="cl__n">2.3</span>Any agreement to carry out work is made directly between the Customer and the Freelancer. Lokshin Gigs is not a party to that agreement.</p>
+        <div class="lk-brief"><p><b>In short</b>Lokshin Gigs helps customers and freelancers find each other. The work, the price and the agreement are between the customer and the freelancer.</p></div>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="eligibility">
+        <h2 id="eligibility"><span class="n">Section 03</span>Eligibility and Account Registration</h2>
+        <p class="cl"><span class="cl__n">3.1</span>You must be at least 18 years old, and legally able to enter into a binding agreement under South African law, to register an account and use the platform.</p>
+        <p class="cl"><span class="cl__n">3.2</span>When you register, you choose whether to join as a Customer or as a Freelancer. You must provide information that is true, accurate, current and complete, including your full name, email address and phone number, and you must keep it up to date.</p>
+        <p class="cl"><span class="cl__n">3.3</span>Each account is for one person. You may not register on behalf of someone else without their authority, and you may not create a new account if we have previously suspended or closed your account, unless we agree to it.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="accounts">
+        <h2 id="accounts"><span class="n">Section 04</span>User Accounts and Account Security</h2>
+        <p class="cl"><span class="cl__n">4.1</span>You are responsible for keeping your password confidential and for all activity that takes place under your account. Choose a strong password, do not share it, and sign out when you use a shared or public device.</p>
+        <p class="cl"><span class="cl__n">4.2</span>If you suspect that someone else has accessed your account, change your password and tell us as soon as possible using the details in <a href="#contact">section 21</a>.</p>
+        <p class="cl"><span class="cl__n">4.3</span>We may require you to change your password, or may temporarily restrict access to your account, if we reasonably believe your account has been compromised or is being misused.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="customers">
+        <h2 id="customers"><span class="n">Section 05</span>Customer Responsibilities</h2>
+        <p class="cl"><span class="cl__n">5.1</span>If you use Lokshin Gigs as a Customer, you agree to:</p>
+        <ul>
+          <li>post only genuine and lawful jobs, and describe each job accurately, including the work required, the location and your budget;</li>
+          <li>not ask a Freelancer to do anything unlawful or unsafe;</li>
+          <li>make your own assessment of any Freelancer before you hire them, including their experience, their reviews and, where the work legally requires it, any licence, registration or certificate they need;</li>
+          <li>give the Freelancer accurate information and safe, reasonable access to the place where the work is to be done;</li>
+          <li>pay the Freelancer what you agreed, in the way and at the time you agreed;</li>
+          <li>keep the status of your jobs up to date, including marking a job as completed or cancelling a job that is no longer available; and</li>
+          <li>leave honest and fair reviews (see <a href="#reviews">section 11</a>).</li>
+        </ul>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="freelancers">
+        <h2 id="freelancers"><span class="n">Section 06</span>Freelancer Responsibilities</h2>
+        <p class="cl"><span class="cl__n">6.1</span>If you use Lokshin Gigs as a Freelancer, you agree to:</p>
+        <ul>
+          <li>keep your profile accurate, including your skills, experience and the areas you serve, and never misrepresent your qualifications or experience;</li>
+          <li>apply only for jobs that you are able, qualified and willing to do;</li>
+          <li>hold any licence, registration, certificate, permit or insurance that the law requires for the work you offer. Some types of work, such as certain electrical, gas or plumbing work, may be subject to specific legal requirements, and it is your responsibility to know and meet them;</li>
+          <li>carry out work with reasonable care and skill, safely, and in line with the law and what you agreed with the Customer;</li>
+          <li>be honest and clear with Customers about your price, timing, materials and any changes;</li>
+          <li>keep the status of your active jobs up to date; and</li>
+          <li>take responsibility for your own tax affairs, including declaring your income to the South African Revenue Service (SARS) where required.</li>
+        </ul>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="jobs">
+        <h2 id="jobs"><span class="n">Section 07</span>Jobs, Applications and Agreements</h2>
+        <p class="cl"><span class="cl__n">7.1</span>A job posted on the platform is an invitation for Freelancers to apply. Posting a job, or applying for one, does not on its own create a binding contract.</p>
+        <p class="cl"><span class="cl__n">7.2</span>When a Customer accepts an application, the platform marks the job as in progress and declines the other pending applications for that job. Accepting an application shows that the Customer and the Freelancer intend to work together. The details of the work, including the scope, price, timing, materials and payment, are for the Customer and the Freelancer to agree directly. We recommend that you confirm these details with each other in writing, for example by text message, before work starts.</p>
+        <p class="cl"><span class="cl__n">7.3</span>Lokshin Gigs is not a party to any agreement between a Customer and a Freelancer and does not guarantee that a job will be started, completed or completed to a particular standard.</p>
+        <p class="cl"><span class="cl__n">7.4</span>Marking a job as completed or cancelled on the platform updates the platform&rsquo;s record. It does not, by itself, change any obligation the Customer and the Freelancer have agreed with each other.</p>
+        <p class="cl"><span class="cl__n">7.5</span>If a dispute arises between Users, the Users should try to resolve it directly. We may look into conduct reported to us to decide whether these Terms have been breached, but we are not obliged to mediate or decide disputes between Users. Depending on the circumstances, the Consumer Protection Act 68 of 2008 may apply to dealings between Users.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="payments">
+        <h2 id="payments"><span class="n">Section 08</span>Payments, Pricing and Budgets</h2>
+        <p class="cl"><span class="cl__n">8.1</span>The budget shown on a job is the Customer&rsquo;s indication, in South African rand, of what they expect to pay. It is not a quote, an invoice or a guaranteed price. The final price is agreed between the Customer and the Freelancer.</p>
+        <p class="cl"><span class="cl__n">8.2</span>Lokshin Gigs does not currently process, hold or collect payments for jobs. Payment is arranged and made directly between the Customer and the Freelancer. We are not responsible for non-payment, late payment, refunds, deposits or the payment method Users choose.</p>
+        <p class="cl"><span class="cl__n">8.3</span>Take care with payments. Be cautious about paying large amounts upfront, keep proof of payment, and never share your banking passwords, PINs or one-time PINs with anyone.</p>
+        <p class="cl"><span class="cl__n">8.4</span>If we introduce fees or payment features in future, we will update these Terms and tell you before any fee applies to you.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="conduct">
+        <h2 id="conduct"><span class="n">Section 09</span>Platform Conduct and Prohibited Activities</h2>
+        <p class="cl"><span class="cl__n">9.1</span>When you use Lokshin Gigs, you must not:</p>
+        <ul>
+          <li>break any law, or help or encourage anyone else to do so;</li>
+          <li>post false, misleading or fraudulent jobs, profiles, applications or reviews;</li>
+          <li>harass, threaten, abuse, intimidate or unfairly discriminate against any person;</li>
+          <li>post content that is defamatory, hateful, obscene or violent, or that infringes anyone else&rsquo;s rights;</li>
+          <li>offer, request or arrange illegal goods or services, or work that is unsafe;</li>
+          <li>use the platform to scam people or to obtain money or personal information under false pretences;</li>
+          <li>collect, copy or use other Users&rsquo; personal information, including their contact details, for any purpose unrelated to a job you are both involved in;</li>
+          <li>send spam or unsolicited marketing to other Users;</li>
+          <li>impersonate any person or misrepresent who you are or who you are associated with;</li>
+          <li>try to gain unauthorised access to the platform or to other accounts, interfere with the platform&rsquo;s security or operation, introduce malicious code, overload the platform, or scrape or harvest data from it; or</li>
+          <li>create more than one account to get around a suspension, to mislead other Users or to manipulate reviews.</li>
+        </ul>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="content">
+        <h2 id="content"><span class="n">Section 10</span>User Content</h2>
+        <p class="cl"><span class="cl__n">10.1</span>&ldquo;User Content&rdquo; means anything you submit to the platform, including your profile details, job posts, applications and cover notes, and reviews.</p>
+        <p class="cl"><span class="cl__n">10.2</span>You are responsible for your User Content. You confirm that it is accurate and lawful and that you have the right to submit it.</p>
+        <p class="cl"><span class="cl__n">10.3</span>You keep ownership of your User Content. You give Lokshin Gigs a non-exclusive, royalty-free licence to host, store, display, reproduce and use your User Content for the purpose of operating, providing and improving the platform, for as long as it remains on the platform and afterwards for as long as is reasonably necessary to keep records or to meet legal obligations.</p>
+        <p class="cl"><span class="cl__n">10.4</span>We do not review all User Content before it appears on the platform. We may remove, hide or restrict any User Content that we reasonably believe breaches these Terms or the law.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="reviews">
+        <h2 id="reviews"><span class="n">Section 11</span>Reviews and Ratings</h2>
+        <p class="cl"><span class="cl__n">11.1</span>Customers may rate a Freelancer from one to five stars and leave a written review about a job. These ratings contribute to the average rating shown on the Freelancer&rsquo;s profile.</p>
+        <p class="cl"><span class="cl__n">11.2</span>Reviews must be honest, fair, relevant to the job and based on your own genuine experience. You must not offer or accept anything in exchange for a review, review yourself or someone you have a close personal or business connection with, or threaten a negative review to get something you are not entitled to.</p>
+        <p class="cl"><span class="cl__n">11.3</span>Reviews and ratings are the opinions of the Users who write them, not of Lokshin Gigs. We do not verify reviews, and we may remove any review that we reasonably believe breaches these Terms.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="communications">
+        <h2 id="communications"><span class="n">Section 12</span>Communications and Contact Information</h2>
+        <p class="cl"><span class="cl__n">12.1</span>To help Users work together, the platform shares some contact details between Users involved in the same job:</p>
+        <ul>
+          <li>when a Freelancer applies for a job, the Customer who posted it can see the Freelancer&rsquo;s name and phone number; and</li>
+          <li>when a Customer accepts a Freelancer&rsquo;s application, the Freelancer can see the Customer&rsquo;s name and phone number.</li>
+        </ul>
+        <p class="cl"><span class="cl__n">12.2</span>You may use another User&rsquo;s contact details only to communicate about the job you are both involved in.</p>
+        <p class="cl"><span class="cl__n">12.3</span>Calls, messages and meetings between Users take place outside the platform. We cannot monitor them and are not responsible for them. Use your own judgement and take sensible precautions when you meet someone or allow them into your home or business.</p>
+        <p class="cl"><span class="cl__n">12.4</span>We may contact you by email, by phone or through the platform about your account, your jobs and changes to these Terms. You agree that communications we send you electronically satisfy any legal requirement that they be in writing, to the extent permitted by the Electronic Communications and Transactions Act 25 of 2002.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="ip">
+        <h2 id="ip"><span class="n">Section 13</span>Intellectual Property</h2>
+        <p class="cl"><span class="cl__n">13.1</span>The platform, including its design, text, graphics, the Lokshin Gigs name and branding, and its software, but excluding User Content, belongs to Lokshin Gigs or its licensors and is protected by law.</p>
+        <p class="cl"><span class="cl__n">13.2</span>We give you a limited, personal, non-exclusive, non-transferable and revocable right to use the platform in line with these Terms. You may not copy, modify, distribute, sell or reverse engineer any part of the platform, except where the law allows it.</p>
+        <p class="cl"><span class="cl__n">13.3</span>Photographs used on the platform illustrate the kinds of services available. Unless stated otherwise, they do not show actual Users or their work.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="availability">
+        <h2 id="availability"><span class="n">Section 14</span>Platform Availability and Changes</h2>
+        <p class="cl"><span class="cl__n">14.1</span>The platform is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis. We work to keep it running, but we do not guarantee that it will always be available, uninterrupted, secure or free of errors. Access may be interrupted for maintenance or updates, or by events beyond our control, such as power outages, load-shedding or network failures.</p>
+        <p class="cl"><span class="cl__n">14.2</span>We may change, add, suspend or remove features of the platform at any time. Where a change materially affects how you use the platform, we will try to give you reasonable notice.</p>
+        <p class="cl"><span class="cl__n">14.3</span>Keep your own record of anything important to you, such as what you agreed with another User and proof of payment.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="termination">
+        <h2 id="termination"><span class="n">Section 15</span>Suspension and Termination</h2>
+        <p class="cl"><span class="cl__n">15.1</span>You may stop using the platform at any time. To ask for your account to be closed, contact us using the details in <a href="#contact">section 21</a>.</p>
+        <p class="cl"><span class="cl__n">15.2</span>We may suspend, restrict or close your account, or remove your User Content, if we reasonably believe that you have breached these Terms or the law, that your use of the platform creates risk or harm for other Users or for us, or if we are required to by law. Where it is appropriate and lawful to do so, we will tell you why.</p>
+        <p class="cl"><span class="cl__n">15.3</span>When your account is closed, your right to use the platform ends. Sections of these Terms that by their nature should continue to apply, including those on intellectual property, disclaimers and liability, indemnity and governing law, will continue to apply. Closing an account does not automatically cancel any agreement you have made with another User.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="liability">
+        <h2 id="liability"><span class="n">Section 16</span>Disclaimers and Limitation of Liability</h2>
+        <p class="cl"><span class="cl__n">16.1</span>Lokshin Gigs is a marketplace. Unless we expressly say otherwise, we do not verify the identity, qualifications, licences, background or reliability of Users, and we do not guarantee the quality, safety, legality, timing or outcome of any job, or that any User will be available, will pay or will perform as agreed.</p>
+        <p class="cl"><span class="cl__n">16.2</span>You use the platform, and deal with other Users, at your own risk and using your own judgement.</p>
+        <p class="cl"><span class="cl__n">16.3</span>To the fullest extent permitted by law, Lokshin Gigs is not liable for any loss, damage, injury or cost arising from:</p>
+        <ul>
+          <li>any agreement, dealing, work or dispute between Users;</li>
+          <li>anything a User does or fails to do;</li>
+          <li>User Content;</li>
+          <li>interruptions to the platform, errors or loss of data; or</li>
+          <li>any indirect or consequential loss.</li>
+        </ul>
+        <p class="cl"><span class="cl__n">16.4</span>Nothing in these Terms excludes or limits any liability that cannot lawfully be excluded or limited, or any right you have under the Consumer Protection Act 68 of 2008 where that Act applies.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="indemnity">
+        <h2 id="indemnity"><span class="n">Section 17</span>Indemnity</h2>
+        <p class="cl"><span class="cl__n">17.1</span>To the extent permitted by law, you agree to indemnify Lokshin Gigs and the people who operate it against any claim, loss, liability or cost, including reasonable legal costs, that arises from your breach of these Terms, your User Content, your dealings with other Users, or your breach of any law or of anyone else&rsquo;s rights.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="privacy">
+        <h2 id="privacy"><span class="n">Section 18</span>Privacy and Personal Information</h2>
+        <p class="cl"><span class="cl__n">18.1</span>To operate the platform, we process personal information that you give us or that is created when you use the platform. This includes your account details (name, email address, phone number and whether you are a Customer or a Freelancer), Freelancer profile details (such as skills, experience, service areas and ratings), and the jobs, applications and reviews you submit. We also use a cookie to keep you signed in.</p>
+        <p class="cl"><span class="cl__n">18.2</span>We use this information to create and manage your account, to show jobs and profiles to the right Users, to connect Customers and Freelancers (including sharing contact details as described in <a href="#communications">section 12</a>), to keep the platform safe and enforce these Terms, and to meet our legal obligations.</p>
+        <p class="cl"><span class="cl__n">18.3</span>Lokshin Gigs processes personal information subject to the Protection of Personal Information Act 4 of 2013 (POPIA). Under POPIA you may, among other things, ask us for access to the personal information we hold about you and ask us to correct or delete it. You may also lodge a complaint with the Information Regulator. Requests can be made using the details in <a href="#contact">section 21</a>.</p>
+        <p class="cl"><span class="cl__n">18.4</span>If you receive other Users&rsquo; personal information through the platform, you must keep it private and use it only for the job concerned.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="changes">
+        <h2 id="changes"><span class="n">Section 19</span>Changes to these Terms</h2>
+        <p class="cl"><span class="cl__n">19.1</span>We may update these Terms from time to time. When we do, we will change the &ldquo;Last updated&rdquo; date at the top of this page. If a change is material, we will give you reasonable notice, for example on the platform or by email, before it takes effect.</p>
+        <p class="cl"><span class="cl__n">19.2</span>If you continue to use the platform after updated Terms take effect, you accept them. If you do not agree with the updated Terms, you should stop using the platform and ask us to close your account.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="law">
+        <h2 id="law"><span class="n">Section 20</span>Governing Law</h2>
+        <p class="cl"><span class="cl__n">20.1</span>These Terms are governed by the laws of the Republic of South Africa. Subject to any rights you have under consumer protection law, disputes between you and Lokshin Gigs fall under the jurisdiction of the South African courts.</p>
+        <p class="cl"><span class="cl__n">20.2</span>Before starting legal proceedings against Lokshin Gigs, please contact us so that we can try to resolve the matter informally.</p>
+        <p class="cl"><span class="cl__n">20.3</span>If any part of these Terms is found to be invalid or unenforceable, the rest of the Terms will continue to apply. If we do not enforce a right under these Terms straight away, we have not given up that right.</p>
+      </section>
+
+      <section class="lk-sec" aria-labelledby="contact">
+        <h2 id="contact"><span class="n">Section 21</span>Contact Information</h2>
+        <p class="cl"><span class="cl__n">21.1</span>If you have questions about these Terms, want to report a breach of them, or want to make a request about your account or personal information, contact Lokshin Gigs using the details below.</p>
+        <!-- TODO before launch: replace this block with the official Lokshin Gigs contact email
+             (and, if applicable, the registered business name and address). -->
+        <div class="lk-contact">
+          <p>Official contact details for Lokshin Gigs will be published here.</p>
+        </div>
+      </section>
+
+      <aside class="lk-notice" aria-label="About these Terms">
+        <i class="ph ph-info" aria-hidden="true"></i>
+        <p><strong>Please note:</strong> these are general terms for use of the Lokshin Gigs platform. They are not legal advice. Where appropriate, you should obtain independent legal advice about your rights and obligations.</p>
+      </aside>
+      <p class="lk-doc__end">Last updated <time datetime="2026-10-08">8 October 2026</time>.</p>
+    </main>
+  </div>
+
+  <footer class="lk-foot">
+    <span>&copy; Lokshin Gigs</span>
+    <nav aria-label="Footer">
+      <a href="#pageTitle"><i class="ph-bold ph-arrow-up" aria-hidden="true"></i>Back to top</a>
+      <a href="/">Home</a>
+      <a href="/login">Sign in</a>
+      <a href="/register">Create an account</a>
+    </nav>
+  </footer>
+</div>
+
+<script>
+/* Presentation only: no API calls, no session, no storage. */
+(function () {
+  document.documentElement.classList.add('js');
+
+  // Back link: return to the Lokshin Gigs page the visitor came from, if any.
+  var back = document.getElementById('backLink');
+  var backLabel = document.getElementById('backLabel');
+  try {
+    if (document.referrer) {
+      var ref = new URL(document.referrer);
+      if (ref.origin === location.origin && ref.pathname !== location.pathname) {
+        back.href = ref.pathname + ref.search;
+        if (ref.pathname === '/register') backLabel.textContent = 'Back to registration';
+        else if (ref.pathname === '/login') backLabel.textContent = 'Back to sign in';
+      }
+    }
+  } catch (e) { /* keep the default link to the home page */ }
+
+  // Contents: collapsible below 1024px, always open on wide screens.
+  var toc = document.getElementById('toc');
+  var btn = document.getElementById('tocBtn');
+  var narrow = window.matchMedia('(max-width: 1023px)');
+  function setOpen(open) {
+    toc.classList.toggle('is-closed', !open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  setOpen(!narrow.matches);
+  btn.addEventListener('click', function () { setOpen(toc.classList.contains('is-closed')); });
+  var onChange = function (e) { setOpen(!e.matches); };
+  if (narrow.addEventListener) narrow.addEventListener('change', onChange); else narrow.addListener(onChange);
+  toc.addEventListener('click', function (e) {
+    if (e.target.closest('a') && narrow.matches) setOpen(false);
+  });
+
+  // Contents: mark the section currently being read.
+  var links = {};
+  Array.prototype.forEach.call(toc.querySelectorAll('a[href^="#"]'), function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  if (!('IntersectionObserver' in window)) return;
+  var current = null;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var id = en.target.querySelector('h2').id;
+      if (current) current.removeAttribute('aria-current');
+      current = links[id];
+      if (current) current.setAttribute('aria-current', 'true');
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  Array.prototype.forEach.call(document.querySelectorAll('.lk-sec'), function (s) { io.observe(s); });
+})();
+</script>
+</body>
+</html>

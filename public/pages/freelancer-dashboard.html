@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Freelancer Dashboard – Lokshin Gigs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+  <style>
+/* =====================================================================
+   LOKSHIN GIGS — FREELANCER DASHBOARD
+   The darkest of the three dashboards: a workbench. An espresso
+   environment lit by soft clay light, one large ivory work surface,
+   and a dark inlaid pad for the freelancer's own profile and pulse.
+   One authoritative stylesheet for this page. Bootstrap's JavaScript
+   drives the apply modal and the shared toast; none of its CSS is loaded.
+   ===================================================================== */
+
+/* ---- Tokens ---- */
+:root{
+  --esp:#230F08;  --esp-2:#2B150B;  --esp-3:#3A2216;  --esp-4:#46291B;
+  --ivory:#F1EADF; --paper:#F7F2E9; --cream:#FCF8F0; --sand:#E8DFCE; --sand-2:#D8CCB5;
+  --ink:#1F1B16; --ink-soft:#4C463D; --muted:#7F7669;
+  --terra:#B65A3C; --terra-dk:#9E4A2F; --terra-lt:#D98B69;
+  --amber:#B0832A; --amber-dk:#8E6A1E;
+  --sage:#5B7A5F;  --sage-dk:#46624A;
+  --rust:#8C4E40;
+  --on-dark:#F1EADF; --on-dark-2:rgba(241,234,223,.68); --on-dark-3:rgba(241,234,223,.42); --on-dark-4:rgba(241,234,223,.1);
+  --shade:60,42,30;
+  --f:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --wrap:1320px; --gutter:24px;
+  --press:inset 0 2px 5px rgba(120,88,52,.22);
+}
+
+/* ---- Base ---- */
+*,*::before,*::after{box-sizing:border-box}
+/* Environment: espresso material under a broad, quiet clay light. The light pools behind the
+   top of the work surface and fades into darker chocolate at the edges. Feathered, low contrast. */
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:110px;min-height:100%;
+  background-color:var(--esp);background-repeat:no-repeat;
+  background-image:
+    linear-gradient(180deg,rgba(10,4,1,.55) 0,rgba(10,4,1,.22) 110px,rgba(10,4,1,0) 260px),
+    linear-gradient(90deg,rgba(12,5,2,.6) 0,rgba(12,5,2,.3) 5%,rgba(12,5,2,.08) 13%,rgba(12,5,2,0) 22%,rgba(12,5,2,0) 78%,rgba(12,5,2,.08) 87%,rgba(12,5,2,.3) 95%,rgba(12,5,2,.6) 100%),
+    radial-gradient(ellipse 82% 420px at 50% 120px,rgba(176,146,118,.5) 0,rgba(160,130,104,.38) 20%,rgba(140,110,86,.24) 42%,rgba(118,88,66,.1) 68%,rgba(118,88,66,0) 100%),
+    radial-gradient(ellipse 60% 700px at 6% 520px,rgba(150,118,92,.3) 0,rgba(138,106,82,.18) 38%,rgba(120,88,64,.06) 70%,rgba(120,88,64,0) 100%),
+    radial-gradient(ellipse 60% 760px at 96% 860px,rgba(150,118,92,.24) 0,rgba(138,106,82,.13) 40%,rgba(120,88,64,0) 100%),
+    radial-gradient(ellipse 70% 260px at 50% calc(100% - 70px),rgba(160,128,100,.3) 0,rgba(140,110,86,.15) 45%,rgba(120,88,64,0) 100%),
+    linear-gradient(180deg,#1F0D06 0,#2A140A 420px,#2B150B 60%,#1C0B05 100%)}
+body{margin:0;font-family:var(--f);font-size:15px;line-height:1.55;font-weight:500;color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+/* fine material grain over the environment (beneath every module) */
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,p,ol,ul,dl,dd{margin:0}
+ol,ul{padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px;border-radius:8px}
+.lk-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.lk-wrap{width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto}
+.lk-skip{position:absolute;left:16px;top:-48px;z-index:300;padding:10px 14px;border-radius:10px;background:var(--cream);color:var(--ink);font-weight:700;text-decoration:none}
+.lk-skip:focus{top:12px}
+
+/* ---- Buttons: moulded objects, no gradients, no glow ---- */
+.lk-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;border:1px solid transparent;
+  font-size:14.5px;font-weight:700;letter-spacing:-.005em;line-height:1;text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+  transition:background-color .18s,border-color .18s,color .18s,box-shadow .18s,transform .12s}
+.lk-btn i{font-size:16px}
+.lk-btn:hover{transform:translateY(-1px)}
+.lk-btn:active{transform:translateY(1px)}
+.lk-btn:disabled{opacity:.6;cursor:default;transform:none}
+/* primary: terracotta */
+.lk-btn--primary{background:var(--terra);border-color:#A04D31;color:#FFF8F1;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.34),inset 0 -2px 0 rgba(92,36,18,.24),0 1px 1px rgba(92,36,18,.16),0 8px 16px -10px rgba(158,74,47,.85)}
+.lk-btn--primary:hover{background:#AC5336;box-shadow:inset 0 1px 0 rgba(255,226,206,.34),inset 0 -2px 0 rgba(92,36,18,.26),0 1px 1px rgba(92,36,18,.18),0 12px 20px -12px rgba(158,74,47,.95)}
+.lk-btn--primary:active{background:var(--terra-dk);box-shadow:inset 0 2px 5px rgba(70,26,12,.4)}
+/* secondary on ivory */
+.lk-btn--ghost{background:#FBF6EE;border-color:#DCCFB8;color:var(--ink);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(150,118,78,.1),0 1px 1px rgba(105,72,40,.07),0 6px 12px -9px rgba(105,72,40,.4)}
+.lk-btn--ghost i{color:var(--terra)}
+.lk-btn--ghost:hover{background:#F5EDE1;border-color:#D1C2A8}
+.lk-btn--ghost:active{background:#EEE4D4;box-shadow:var(--press)}
+/* secondary: dark espresso */
+.lk-btn--dark{background:var(--esp-3);border-color:#1A0B05;color:#F6EEE3;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.13),inset 0 -2px 0 rgba(0,0,0,.28),0 1px 1px rgba(0,0,0,.2),0 8px 16px -10px rgba(20,8,3,.9)}
+.lk-btn--dark i{color:var(--terra-lt)}
+.lk-btn--dark:hover{background:var(--esp-4)}
+.lk-btn--dark:active{background:#2E1A10;box-shadow:inset 0 2px 5px rgba(0,0,0,.45)}
+.lk-btn--sm{height:36px;padding:0 13px;border-radius:10px;font-size:13.5px;gap:7px}
+.lk-btn--sm i{font-size:15px}
+.lk-btn--block{width:100%}
+
+/* ---- Header: a dark architectural bar ---- */
+.lk-top{position:sticky;top:0;z-index:100;background:rgba(28,12,5,.86);backdrop-filter:saturate(1.1) blur(14px);-webkit-backdrop-filter:saturate(1.1) blur(14px);
+  box-shadow:inset 0 -1px 0 rgba(241,234,223,.06),0 14px 30px -20px rgba(0,0,0,.85)}
+.lk-top__inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;height:74px}
+.lk-brand{justify-self:start;display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:500;letter-spacing:-.02em;text-decoration:none;color:var(--on-dark-2)}
+.lk-brand strong{font-weight:800;color:var(--on-dark)}
+.lk-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--terra);color:#fff;font-size:15px;font-weight:800;
+  box-shadow:inset 0 1px 0 rgba(255,226,206,.35),inset 0 -2px 0 rgba(70,26,12,.3)}
+/* work navigation: a recessed track; the current area rises out of it with a terracotta lip */
+#mainTabs{display:flex;gap:4px;margin:0;padding:5px;border-radius:15px;background:#160803;
+  box-shadow:inset 2px 2px 6px rgba(0,0,0,.65),inset -1px -1px 2px rgba(241,234,223,.05),0 1px 0 rgba(241,234,223,.06)}
+#mainTabs .nav-item{display:flex}
+#mainTabs .nav-link{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 16px 0 14px;border:0;border-radius:11px;background:transparent;
+  font-size:14px;font-weight:700;color:var(--on-dark-2);white-space:nowrap;-webkit-tap-highlight-color:transparent;
+  transition:background-color .18s,color .18s,box-shadow .18s,transform .12s}
+#mainTabs .nav-link > *{pointer-events:none}   /* clicks always land on the button itself */
+#mainTabs .nav-link i{font-size:17px;color:var(--on-dark-3);transition:color .18s}
+#mainTabs .nav-link:hover{color:var(--on-dark);background:rgba(241,234,223,.04)}
+#mainTabs .nav-link:hover i{color:var(--on-dark-2)}
+#mainTabs .nav-link:active{transform:translateY(1px)}
+#mainTabs .nav-link.active{background:var(--esp-3);color:#FCF8F0;
+  box-shadow:inset 0 1px 0 rgba(255,230,210,.13),inset 0 -2px 0 var(--terra),0 4px 10px -4px rgba(0,0,0,.75)}
+#mainTabs .nav-link.active i{color:var(--terra-lt)}
+.lk-tab__n{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:6px;background:var(--on-dark-4);font-size:11.5px;font-weight:800;color:var(--on-dark-2);font-variant-numeric:tabular-nums}
+.lk-tab__n:empty{display:none}
+#mainTabs .nav-link.active .lk-tab__n{background:rgba(182,90,60,.3);color:#F4CDB9}
+.lk-top__end{justify-self:end;display:flex;align-items:center;gap:6px}
+.lk-quiet{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:700;color:var(--on-dark-2);text-decoration:none;transition:color .18s,background-color .18s}
+.lk-quiet i{font-size:18px}
+.lk-quiet:hover{color:var(--on-dark);background:rgba(241,234,223,.05)}
+
+/* ---- The work surface ---- */
+.lk-bench{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 376px;margin-top:30px;border-radius:32px;background-color:var(--ivory);
+  background-image:
+    radial-gradient(ellipse 70% 360px at 38% 0,rgba(255,251,244,.85) 0,rgba(255,251,244,.35) 50%,rgba(255,251,244,0) 100%),
+    radial-gradient(ellipse 90% 96% at 44% 40%,rgba(var(--shade),0) 62%,rgba(var(--shade),.05) 84%,rgba(var(--shade),.1) 100%),
+    linear-gradient(to left,rgba(var(--shade),.14) 0,rgba(var(--shade),.06) 10px,rgba(var(--shade),0) 44px),
+    linear-gradient(to right,rgba(var(--shade),.1) 0,rgba(var(--shade),.04) 14px,rgba(var(--shade),0) 40px),
+    linear-gradient(to top,rgba(var(--shade),.14) 0,rgba(var(--shade),.05) 16px,rgba(var(--shade),0) 50px);
+  box-shadow:-6px -8px 24px rgba(164,134,108,.12),12px 18px 30px -12px rgba(5,2,0,.72),0 56px 96px -40px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.75)}
+.lk-main{min-width:0;padding:46px 50px 56px}
+.lk-hello{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--ink-soft)}
+.lk-hello::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--terra);box-shadow:0 0 0 4px rgba(182,90,60,.16)}
+#welcomeUser:empty::before{content:'Welcome back'}
+.lk-h1{margin-top:16px;font-size:clamp(38px,4.3vw,64px);line-height:.93;font-weight:800;letter-spacing:-.032em;text-transform:uppercase;color:var(--ink);text-wrap:balance}
+.lk-lead{margin-top:16px;max-width:54ch;font-size:16.5px;line-height:1.55;color:var(--ink-soft)}
+.lk-eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lk-panel.is-in{animation:lkIn .35s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lkIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---- Finder: moulded search + category controls ---- */
+.lk-finder{display:flex;align-items:center;gap:8px;margin-top:32px;padding:8px;border-radius:18px;background:#E5DACA;
+  box-shadow:inset 2px 2px 6px rgba(var(--shade),.22),inset -2px -2px 5px rgba(255,255,255,.7)}
+.lk-search{position:relative;flex:1;min-width:0}
+.lk-search > i{position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:19px;color:var(--terra);pointer-events:none}
+#searchQ{display:block;width:100%;height:54px;padding:0 16px 0 48px;border-radius:12px;border:1px solid rgba(214,200,176,.95);background:#FCF8F0;
+  font-size:15.5px;font-weight:600;color:var(--ink);box-shadow:inset 0 1px 0 #fff,0 5px 12px -9px rgba(var(--shade),.7);transition:border-color .18s,box-shadow .18s}
+#searchQ::placeholder{color:#9A9083;font-weight:500}
+#searchQ:focus{outline:0;border-color:var(--terra);box-shadow:inset 0 1px 0 #fff,0 0 0 3px rgba(182,90,60,.18)}
+#searchQ::-webkit-search-cancel-button{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;cursor:pointer;
+  background:var(--sand) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237F7669' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7L7 17'/%3E%3C/svg%3E") center/10px no-repeat}
+.lk-select{position:relative;flex:none}
+.lk-select > i{position:absolute;top:50%;transform:translateY(-50%);pointer-events:none}
+.lk-select > .ph-funnel{left:15px;font-size:17px;color:var(--terra-lt)}
+.lk-select > .ph-caret-down{right:14px;font-size:14px;color:var(--on-dark-2)}
+#filterCat{display:block;width:250px;max-width:100%;height:54px;padding:0 38px 0 42px;border-radius:12px;border:1px solid #160803;background:var(--esp-3);
+  -webkit-appearance:none;appearance:none;font-size:14.5px;font-weight:700;color:var(--on-dark);cursor:pointer;text-overflow:ellipsis;
+  box-shadow:inset 0 1px 0 rgba(255,230,210,.12),inset 0 -2px 0 rgba(0,0,0,.28),0 7px 14px -9px rgba(20,8,3,.85);transition:background-color .18s,box-shadow .18s}
+#filterCat:hover{background:var(--esp-4)}
+#filterCat:focus{outline:0;box-shadow:inset 0 1px 0 rgba(255,230,210,.12),0 0 0 3px rgba(182,90,60,.32)}
+#filterCat option{background:#FCF8F0;color:var(--ink)}
+.lk-results{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:30px 2px 14px}
+.lk-results__n{font-size:13.5px;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+
+/* ---- Job: one physical information object ---- */
+.lk-job{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 200px;border-radius:18px;background:#FBF7F0;border:1px solid rgba(214,200,176,.78);
+  box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(var(--shade),.06),0 14px 26px -22px rgba(var(--shade),.65);transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s}
+.lk-job+.lk-job{margin-top:12px}
+.lk-job:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 #fff,inset 3px 0 0 var(--terra),0 2px 4px rgba(var(--shade),.08),0 20px 32px -22px rgba(var(--shade),.75)}
+.lk-job__body{min-width:0;padding:22px 26px 20px}
+.lk-job__meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:13px;font-weight:600;color:var(--ink-soft)}
+.lk-job__cat{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--terra-dk)}
+.lk-job__loc{display:inline-flex;align-items:center;gap:5px}
+.lk-job__loc i{font-size:14px;color:var(--muted)}
+.lk-job__title{margin-top:8px;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--ink)}
+.lk-job__desc{margin-top:7px;max-width:70ch;font-size:14.5px;line-height:1.6;color:var(--ink-soft)}
+.lk-job__foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:14px;font-size:12.5px;color:var(--muted)}
+.lk-job__foot span{display:inline-flex;align-items:center;gap:5px}
+.lk-job__foot i{font-size:13.5px}
+.lk-job__by b{font-weight:600}
+.lk-job__side{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:18px;padding:22px 24px 20px}
+/* engraved groove between the job and its price */
+.lk-job__side::before{content:'';position:absolute;left:0;top:18px;bottom:18px;width:1px;background:#E4D9C8;box-shadow:1px 0 0 #fff}
+.lk-budget{text-align:right}
+.lk-budget small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lk-budget strong{display:block;margin-top:5px;font-size:26px;line-height:1;font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.lk-job__side .lk-btn{min-width:132px}
+
+/* ---- Status language (applications + statusBadge() from main.js) ----
+   one shape, a distinct marker per state: ring = waiting, half = active work, solid = done, dash = closed */
+.lk-state,.badge-open,.badge-progress,.badge-completed,.badge-cancelled,.badge{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 11px 0 10px;border-radius:8px;
+  border:1px solid transparent;font-size:12.5px;font-weight:700;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.lk-state::before,.badge-open::before,.badge-progress::before,.badge-completed::before,.badge-cancelled::before{content:'';flex:none;width:8px;height:8px;border-radius:50%;box-sizing:border-box}
+.lk-state--pending,.badge-open{background:rgba(182,90,60,.08);border-color:rgba(182,90,60,.22);color:var(--terra-dk)}
+.lk-state--pending::before,.badge-open::before{border:2px solid currentColor}
+.lk-state--accepted,.badge-progress{background:rgba(176,131,42,.11);border-color:rgba(176,131,42,.28);color:var(--amber-dk)}
+.lk-state--accepted::before,.badge-progress::before{border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.badge-completed{background:rgba(91,122,95,.1);border-color:rgba(91,122,95,.26);color:var(--sage-dk)}
+.badge-completed::before{background:currentColor}
+.lk-state--rejected,.badge-cancelled{background:rgba(140,78,64,.08);border-color:rgba(140,78,64,.22);color:var(--rust)}
+.lk-state--rejected::before,.badge-cancelled::before{width:8px;height:2px;border-radius:1px;background:currentColor}
+.badge{background:#F0E8DC;border-color:#E2D7C5;color:var(--muted)}
+
+/* ---- Applications ---- */
+.lk-summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.lk-summary:empty{display:none}
+.lk-summary .lk-state{height:32px;padding:0 12px 0 11px;font-size:13px}
+.lk-summary .lk-state b{font-weight:800;font-variant-numeric:tabular-nums}
+.lk-list{margin-top:26px}
+.lk-app{--acc:var(--terra);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;padding:20px 24px 20px 26px;border-radius:16px;background:#FBF7F0;border:1px solid rgba(214,200,176,.78);
+  box-shadow:inset 3px 0 0 var(--acc),inset 0 1px 0 #fff,0 12px 24px -22px rgba(var(--shade),.6)}
+.lk-app+.lk-app{margin-top:10px}
+.lk-app[data-status="Accepted"]{--acc:var(--amber)}
+.lk-app[data-status="Rejected"]{--acc:var(--rust);background:#F6F0E6}
+.lk-app[data-status="Rejected"] .lk-app__title{color:var(--ink-soft)}
+.lk-app__title{font-size:17px;font-weight:800;letter-spacing:-.015em;line-height:1.3}
+.lk-app__meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:6px;font-size:13px;color:var(--ink-soft)}
+.lk-app__meta span{display:inline-flex;align-items:center;gap:5px}
+.lk-app__meta i{font-size:14px;color:var(--muted)}
+.lk-app__budget{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.lk-app__note{margin-top:12px;padding-left:13px;border-left:2px solid var(--sand-2);max-width:72ch;font-size:14px;line-height:1.6;color:var(--ink-soft)}
+.lk-app__note em{font-style:normal;color:var(--muted)}
+.lk-app__date{display:block;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.lk-app__state{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.lk-won{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--amber-dk)}
+
+/* ---- Active work ---- */
+.lk-work{--acc:var(--amber);position:relative;display:grid;grid-template-columns:minmax(0,1fr) 220px;border-radius:18px;background:#FBF7F0;border:1px solid rgba(214,200,176,.78);
+  box-shadow:inset 3px 0 0 var(--acc),inset 0 1px 0 #fff,0 14px 26px -22px rgba(var(--shade),.65)}
+.lk-work+.lk-work{margin-top:12px}
+.lk-work[data-status="Completed"]{--acc:var(--sage);background:#F6F0E6}
+.lk-work__body{min-width:0;padding:22px 26px 20px 28px}
+.lk-work__top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;font-weight:600;color:var(--ink-soft)}
+.lk-work__title{margin-top:10px;font-size:21px;font-weight:800;letter-spacing:-.022em;line-height:1.25}
+.lk-work__desc{margin-top:6px;max-width:70ch;font-size:14.5px;line-height:1.6;color:var(--ink-soft)}
+.lk-contact{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:16px;padding-top:14px;border-top:1px solid #E9E0D2;box-shadow:inset 0 1px 0 #fff}
+.lk-client{display:inline-flex;align-items:center;gap:6px;margin-right:6px;font-size:13px;color:var(--muted)}
+.lk-client i{font-size:15px}
+.lk-client b{font-weight:700;color:var(--ink-soft)}
+.lk-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 11px;border-radius:9px;border:1px solid #E0D4C0;background:#FCF8F0;font-size:13px;font-weight:700;
+  text-decoration:none;color:var(--ink-soft);box-shadow:inset 0 1px 0 #fff,0 4px 8px -7px rgba(105,72,40,.5);transition:background-color .18s,color .18s,transform .12s}
+.lk-chip i{font-size:15px;color:var(--muted)}
+.lk-chip:hover{background:#F5EDE1;color:var(--ink);transform:translateY(-1px)}
+.lk-chip:active{box-shadow:var(--press);transform:translateY(1px)}
+.lk-chip--wa i{color:#2E8A55}
+.lk-work__side{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;gap:18px;padding:22px 24px 20px}
+.lk-work__side::before{content:'';position:absolute;left:0;top:18px;bottom:18px;width:1px;background:#E4D9C8;box-shadow:1px 0 0 #fff}
+.lk-done{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--sage-dk)}
+.lk-done i{font-size:17px}
+
+/* ---- States: loading / empty / error ---- */
+.lk-skel{display:grid;gap:12px}
+.lk-skel__row{height:148px;border-radius:18px;background:#EFE7DA;border:1px solid rgba(214,200,176,.5);position:relative;overflow:hidden}
+.lk-skel__row::before,.lk-skel__row::after{content:'';position:absolute;left:26px;border-radius:6px;background:#E4D9C8}
+.lk-skel__row::before{top:26px;width:34%;height:12px}
+.lk-skel__row::after{top:52px;width:58%;height:20px}
+.lk-skel--short .lk-skel__row{height:110px}
+@media (prefers-reduced-motion:no-preference){ .lk-skel__row{animation:lkBreathe 1.4s ease-in-out infinite alternate} .lk-skel__row:nth-child(2){animation-delay:.2s} .lk-skel__row:nth-child(3){animation-delay:.4s} }
+@keyframes lkBreathe{from{opacity:1}to{opacity:.55}}
+.lk-msg{display:flex;flex-direction:column;align-items:center;gap:6px;padding:56px 24px 60px;border-radius:18px;text-align:center;background:#EDE4D6;
+  box-shadow:inset 2px 2px 6px rgba(var(--shade),.14),inset -2px -2px 5px rgba(255,255,255,.65)}
+.lk-msg__icon{display:grid;place-items:center;width:52px;height:52px;margin-bottom:8px;border-radius:50%;background:#FBF7F0;color:var(--terra);font-size:22px;
+  box-shadow:inset 0 1px 0 #fff,0 6px 14px -8px rgba(var(--shade),.6)}
+.lk-msg strong{font-size:18px;font-weight:800;letter-spacing:-.015em}
+.lk-msg span{max-width:42ch;font-size:14.5px;color:var(--ink-soft)}
+.lk-msg .lk-btn{margin-top:14px}
+.lk-msg--error .lk-msg__icon{color:var(--rust)}
+
+/* ---- Inlaid pad: profile + work pulse ---- */
+/* a dark pad set into the bench: bevelled into the ivory, softly lit from the top */
+.lk-side{position:relative;margin:14px 14px 14px 0;border-radius:24px;color:var(--on-dark);background-color:var(--esp-2);
+  background-image:radial-gradient(ellipse 120% 50% at 30% 0,rgba(241,234,223,.06),rgba(241,234,223,0) 70%);
+  box-shadow:inset 0 1px 0 rgba(255,230,210,.08),inset 0 0 0 1px rgba(255,230,210,.025),0 0 0 1px rgba(var(--shade),.32),-2px -2px 0 1px rgba(var(--shade),.12),2px 2px 0 1px rgba(255,255,255,.75)}
+.lk-side__inner{position:sticky;top:98px;padding:28px 26px 30px}
+.lk-side__eyebrow{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--on-dark-3)}
+.lk-side__eyebrow::after{content:'';flex:1;height:1px;background:rgba(241,234,223,.08);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.lk-prof__card{margin-top:18px}
+.lk-prof__head{display:flex;align-items:center;gap:14px}
+.lk-prof__avatar{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:15px;background:var(--esp-3);color:var(--on-dark);font-size:16px;font-weight:800;letter-spacing:.02em;
+  box-shadow:inset 0 1px 0 rgba(255,230,210,.14),inset 0 -2px 0 rgba(0,0,0,.3),0 6px 12px -6px rgba(0,0,0,.7)}
+.lk-prof__name{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:#FCF8F0}
+.lk-prof__skill{margin-top:2px;font-size:13.5px;font-weight:700;color:var(--terra-lt)}
+.lk-prof__rating{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:16px;font-size:15px;letter-spacing:.06em}
+.lk-prof__rating .stars{color:var(--terra-lt)}
+.lk-prof__rating .stars-empty{color:rgba(241,234,223,.16)}
+.lk-prof__rating small{margin-left:4px;font-size:13px;font-weight:800;letter-spacing:0;color:var(--on-dark)}
+.lk-prof__reviews{font-size:12.5px;letter-spacing:0;color:var(--on-dark-3)}
+.lk-prof__facts{display:grid;gap:10px;margin-top:18px;padding:14px 16px;border-radius:14px;background:rgba(0,0,0,.22);box-shadow:inset 1px 1px 3px rgba(0,0,0,.45),inset -1px -1px 0 rgba(241,234,223,.04)}
+.lk-prof__facts div{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;font-size:13px}
+.lk-prof__facts dt{font-weight:700;color:var(--on-dark-3)}
+.lk-prof__facts dd{font-weight:600;color:var(--on-dark);overflow-wrap:anywhere}
+.lk-prof__bio{margin-top:16px;font-size:13.5px;line-height:1.6;color:var(--on-dark-2)}
+.lk-prof__card .lk-btn{margin-top:18px}
+.lk-side-wait{font-size:13.5px;color:var(--on-dark-3)}
+/* work pulse: applied → active → done, with reputation kept apart */
+.lk-pulse{margin-top:32px}
+.lk-pulse__track{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:22px}
+.lk-pulse__track::before{content:'';position:absolute;left:16.66%;right:16.66%;top:31px;height:2px;border-radius:2px;background:rgba(241,234,223,.1);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+/* a slow light travelling the line: work moving through the stages */
+.lk-pulse__track::after{content:'';position:absolute;top:30px;left:16.66%;width:4px;height:4px;border-radius:50%;background:var(--terra-lt);opacity:0}
+@media (prefers-reduced-motion:no-preference){ .lk-pulse__track::after{animation:lkTravel 4.2s cubic-bezier(.45,0,.55,1) infinite} }
+@keyframes lkTravel{0%{left:16.66%;opacity:0}12%{opacity:.9}88%{opacity:.9}100%{left:calc(83.33% - 4px);opacity:0}}
+.lk-node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+.lk-node__ring{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:#1A0A04;
+  box-shadow:inset 2px 2px 5px rgba(0,0,0,.6),inset -1px -1px 2px rgba(241,234,223,.06),0 0 0 2px var(--ring),0 0 0 7px var(--esp-2)}
+.lk-node--applied{--ring:rgba(217,139,105,.5)}
+.lk-node--active{--ring:rgba(206,160,72,.55)}
+.lk-node--done{--ring:rgba(125,160,129,.55)}
+.lk-node__num{font-size:23px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:#FCF8F0}
+.lk-node__lbl{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--on-dark-2)}
+.lk-node__chev{position:absolute;top:24px;right:-9px;z-index:2;font-size:14px;color:var(--on-dark-3)}
+.lk-rep{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:26px;padding:18px 18px 18px 20px;border-radius:16px;background:var(--esp-3);
+  box-shadow:inset 0 1px 0 rgba(255,230,210,.1),inset 0 -2px 0 rgba(0,0,0,.25),0 10px 18px -12px rgba(0,0,0,.8)}
+.lk-rep__lbl{display:block;font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--terra-lt)}
+.lk-rep__cap{display:block;margin-top:3px;font-size:12.5px;color:var(--on-dark-3)}
+.lk-rep__num{font-size:32px;font-weight:800;letter-spacing:-.03em;line-height:1;color:#FCF8F0;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---- Footer ---- */
+.lk-foot__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:34px 0 42px;font-size:13.5px;color:rgba(241,234,223,.55)}
+.lk-foot__inner strong{color:var(--on-dark)}
+.lk-foot__inner nav{display:flex;gap:18px}
+.lk-foot__inner a{text-decoration:none;font-weight:600}
+.lk-foot__inner a:hover{color:var(--on-dark)}
+
+/* ---- Modal (Bootstrap JS behaviour, Lokshin presentation) ---- */
+.modal{position:fixed;inset:0;z-index:1055;display:none;overflow-x:hidden;overflow-y:auto;outline:0}
+.modal-dialog{position:relative;display:flex;align-items:center;width:auto;max-width:540px;min-height:calc(100% - 48px);margin:24px auto;padding:0 16px;pointer-events:none}
+.modal.fade{transition:opacity .22s ease}
+.modal.fade:not(.show){opacity:0}
+.modal.fade .modal-dialog{transition:transform .28s cubic-bezier(.2,.7,.2,1);transform:translateY(14px) scale(.985)}
+.modal.show .modal-dialog{transform:none}
+.modal-content{position:relative;display:flex;flex-direction:column;width:100%;pointer-events:auto;border-radius:24px;background:var(--cream);outline:0;overflow:hidden;
+  border:1px solid rgba(214,200,176,.8);box-shadow:inset 0 1px 0 #fff,inset 0 -3px 0 rgba(150,118,78,.06),0 2px 6px rgba(20,8,3,.15),0 44px 90px -30px rgba(0,0,0,.8)}
+.modal-backdrop{position:fixed;inset:0;z-index:1050;background:rgba(14,6,2,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.modal-backdrop.fade{opacity:0;transition:opacity .22s ease}
+.modal-backdrop.show{opacity:1}
+.lk-modal__head{display:flex;align-items:flex-start;gap:14px;padding:24px 24px 18px;border-bottom:1px solid #EFE7DA}
+.lk-modal__head h2{font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25;color:var(--ink)}
+.lk-modal__head p{margin-top:4px;font-size:13.5px;color:var(--muted)}
+.lk-modal__icon{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:12px;background:rgba(182,90,60,.1);color:var(--terra);font-size:21px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+.lk-modal__close{margin-left:auto;flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;border:1px solid #E0D4C0;background:#FBF6EE;color:var(--ink-soft);font-size:16px;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -2px 0 rgba(150,118,78,.09),0 5px 10px -8px rgba(105,72,40,.45);transition:background-color .18s,color .18s,box-shadow .18s}
+.lk-modal__close:hover{background:#F5EDE1;color:var(--ink)}
+.lk-modal__close:active{box-shadow:var(--press)}
+.lk-modal__body{padding:20px 24px 24px}
+.lk-modal__foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px 18px;background:#F5EEE3;border-top:1px solid #EAE0CF}
+/* the job being applied for (filled by openApply()) */
+.lk-brief{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-radius:14px;background:#EFE6D8;
+  box-shadow:inset 2px 2px 5px rgba(var(--shade),.15),inset -2px -2px 5px rgba(255,255,255,.75)}
+.lk-brief__title{display:block;font-size:15.5px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.lk-brief__loc{display:inline-flex;align-items:center;gap:5px;margin-top:3px;font-size:13px;color:var(--ink-soft)}
+.lk-brief__loc i{color:var(--muted)}
+.lk-brief__budget{flex:none;font-size:20px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.lk-field__label{display:block;margin:20px 0 8px;font-size:13.5px;font-weight:700;color:var(--ink-soft)}
+.lk-field__label span{font-weight:500;color:var(--muted)}
+.lk-textarea{display:block;width:100%;min-height:120px;padding:13px 14px;border-radius:14px;border:1px solid #DCCFB8;background:#FAF5EC;font-size:14.5px;line-height:1.55;resize:vertical;
+  box-shadow:inset 2px 2px 5px rgba(120,88,52,.12),inset -2px -2px 5px rgba(255,255,255,.85);transition:border-color .18s,box-shadow .18s}
+.lk-textarea::placeholder{color:#A39B8E}
+.lk-textarea:focus{outline:0;border-color:var(--terra);box-shadow:inset 2px 2px 5px rgba(120,88,52,.12),0 0 0 3px rgba(182,90,60,.15)}
+
+/* ---- Toast (showAlert() from main.js) ---- */
+.alert-float{position:fixed;top:90px;right:24px;z-index:9999;min-width:300px;max-width:min(420px,calc(100% - 48px));padding:14px 46px 14px 18px;border-radius:14px;
+  background:var(--cream);border:1px solid rgba(214,200,176,.8);border-left:4px solid var(--sage);font-size:14px;font-weight:600;color:var(--ink);
+  box-shadow:inset 0 1px 0 #fff,0 22px 44px -22px rgba(0,0,0,.7);animation:lkIn .25s ease both}
+.alert-float.alert-danger{border-left-color:var(--rust)}
+.alert-float.alert-warning{border-left-color:var(--amber)}
+.alert-float .btn-close{position:absolute;top:50%;right:10px;width:28px;height:28px;margin-top:-14px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--muted)}
+.alert-float .btn-close::before{content:'\00D7';font-size:20px;line-height:28px}
+.alert-float .btn-close:hover{background:#F0E8DC;color:var(--ink)}
+.fade:not(.show){opacity:0}
+
+/* ---- Preview badge ---- */
+.lk-preview{position:fixed;left:20px;bottom:20px;z-index:200;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;
+  background:var(--cream);color:var(--ink);font-size:12.5px;font-weight:700;box-shadow:0 10px 24px -12px rgba(0,0,0,.8)}
+.lk-preview::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--amber)}
+
+/* ---- Responsive ---- */
+@media (max-width:1240px){
+  .lk-bench{grid-template-columns:minmax(0,1fr) 336px}
+  .lk-main{padding:40px 40px 48px}
+  .lk-job{grid-template-columns:minmax(0,1fr) 180px}
+  .lk-work{grid-template-columns:minmax(0,1fr) 196px}
+}
+@media (max-width:1060px){
+  /* header: tabs drop to their own row */
+  .lk-top__inner{grid-template-columns:1fr auto;grid-template-areas:"brand end" "tabs tabs";height:auto;row-gap:10px;padding:12px 0}
+  .lk-brand{grid-area:brand}
+  .lk-top__end{grid-area:end}
+  #mainTabs{grid-area:tabs}
+  #mainTabs .nav-item{flex:1}
+  #mainTabs .nav-link{flex:1;justify-content:center}
+  html{scroll-padding-top:150px}
+  /* bench: the pad becomes a band across the top of the surface */
+  .lk-bench{grid-template-columns:minmax(0,1fr);margin-top:22px}
+  .lk-side{order:-1;margin:12px 12px 0}
+  .lk-side__inner{position:static;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;padding:24px}
+  .lk-pulse{margin-top:0}
+  .alert-float{top:140px}
+}
+@media (max-width:760px){
+  :root{--gutter:12px}
+  .lk-brand{font-size:17px}
+  .lk-quiet span,.lk-top__end .lk-btn span{display:none}
+  .lk-quiet,.lk-top__end .lk-btn{width:40px;padding:0;justify-content:center}
+  #mainTabs .nav-link{height:40px;padding:0 8px;gap:7px;font-size:13px}
+  #mainTabs .nav-link i{display:none}
+  .lk-bench{border-radius:24px}
+  .lk-main{padding:28px 18px 32px}
+  .lk-lead{font-size:15.5px}
+  /* the profile pad follows the work on small screens */
+  .lk-side{order:1;margin:0 10px 10px}
+  .lk-side__inner{grid-template-columns:minmax(0,1fr);gap:0;padding:24px 20px 24px}
+  .lk-pulse{margin-top:28px}
+  .lk-finder{flex-direction:column;align-items:stretch}
+  #filterCat{width:100%}
+  .lk-results{flex-direction:column;gap:2px}
+  /* jobs stack: price and action form a footer row */
+  .lk-job,.lk-work{grid-template-columns:minmax(0,1fr)}
+  .lk-job__body,.lk-work__body{padding:20px 20px 16px}
+  .lk-job__title{font-size:18.5px}
+  .lk-work__title{font-size:19px}
+  .lk-job__side,.lk-work__side{flex-direction:row;align-items:center;padding:14px 20px 18px}
+  .lk-job__side::before,.lk-work__side::before{left:20px;right:20px;top:0;bottom:auto;width:auto;height:1px;box-shadow:0 1px 0 #fff}
+  .lk-budget{text-align:left}
+  .lk-budget strong{font-size:22px}
+  .lk-app{grid-template-columns:minmax(0,1fr);gap:12px;padding:18px 18px 18px 20px}
+  .lk-app__state{flex-direction:row;align-items:center;justify-content:space-between}
+  .lk-foot__inner{flex-direction:column;align-items:flex-start}
+  .alert-float{right:12px;left:12px;min-width:0;max-width:none}
+  .lk-preview{left:12px;bottom:12px;padding:6px 11px;font-size:11.5px}
+}
+@media (max-width:400px){
+  #mainTabs .nav-link{font-size:12.5px;padding:0 6px}
+  .lk-tab__n{display:none}
+  .lk-node__ring{width:56px;height:56px}
+  .lk-pulse__track::before{top:27px}
+  .lk-pulse__track::after{top:26px}
+  .lk-node__chev{top:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+  </style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = '';
+  </script>
+</head>
+<body>
+<a class="lk-skip" href="#workspace">Skip to your work</a>
+
+<!-- ============ HEADER ============ -->
+<header class="lk-top">
+  <div class="lk-wrap lk-top__inner">
+    <a class="lk-brand" href="/" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+
+    <ul class="nav nav-tabs" id="mainTabs" aria-label="Your work">
+      <li class="nav-item">
+        <button class="nav-link active" onclick="switchTab('browse')" aria-controls="tab-browse" aria-current="page"><i class="ph ph-magnifying-glass" aria-hidden="true"></i><span>Browse Jobs</span></button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="switchTab('applications')" aria-controls="tab-applications"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i><span>My Applications</span><span class="lk-tab__n" data-count="applied"></span></button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="switchTab('active')" aria-controls="tab-active"><i class="ph ph-toolbox" aria-hidden="true"></i><span>Active Jobs</span><span class="lk-tab__n" data-count="active"></span></button>
+      </li>
+    </ul>
+
+    <div class="lk-top__end">
+      <a href="/profile" class="lk-quiet" aria-label="My Profile"><i class="ph ph-user-circle" aria-hidden="true"></i><span>My Profile</span></a>
+      <button class="lk-btn lk-btn--dark lk-btn--sm" onclick="logout()" aria-label="Logout"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Logout</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ WORK SURFACE ============ -->
+<main class="lk-wrap lk-bench" id="workspace">
+  <div class="lk-main">
+    <p class="lk-hello"><span id="welcomeUser"></span></p>
+
+    <!-- Browse Jobs -->
+    <section id="tab-browse" class="lk-panel is-in" aria-labelledby="browseTitle">
+      <h1 class="lk-h1" id="browseTitle">Find your next job.</h1>
+      <p class="lk-lead">Open jobs posted by people in your area. Pick one that fits your skills and send the customer a short note.</p>
+
+      <div class="lk-finder" role="search">
+        <label class="lk-search">
+          <span class="lk-sr">Search jobs</span>
+          <i class="ph-bold ph-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" id="searchQ" placeholder="Search jobs, e.g. geyser, braids, painting" oninput="loadJobs()" autocomplete="off"/>
+        </label>
+        <label class="lk-select">
+          <span class="lk-sr">Category</span>
+          <i class="ph ph-funnel" aria-hidden="true"></i>
+          <select id="filterCat" onchange="loadJobs()">
+            <option value="">All Categories</option>
+          </select>
+          <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+        </label>
+      </div>
+
+      <div class="lk-results">
+        <span class="lk-eyebrow">Open jobs · newest first</span>
+        <span class="lk-results__n" id="jobsCount" aria-live="polite"></span>
+      </div>
+      <div id="jobsList"><div class="lk-skel" data-state="loading" role="status"><span class="lk-sr">Loading jobs…</span><div class="lk-skel__row"></div><div class="lk-skel__row"></div><div class="lk-skel__row"></div></div></div>
+    </section>
+
+    <!-- My Applications -->
+    <section id="tab-applications" class="lk-panel" style="display:none" aria-labelledby="appsTitle">
+      <h1 class="lk-h1" id="appsTitle">Your applications</h1>
+      <p class="lk-lead">Every job you have applied for, and where each one stands.</p>
+      <div class="lk-summary" id="appsSummary" aria-live="polite"></div>
+      <div class="lk-list" id="applicationsList"><div class="lk-skel lk-skel--short" data-state="loading" role="status"><span class="lk-sr">Loading applications…</span><div class="lk-skel__row"></div><div class="lk-skel__row"></div></div></div>
+    </section>
+
+    <!-- Active Jobs -->
+    <section id="tab-active" class="lk-panel" style="display:none" aria-labelledby="activeTitle">
+      <h1 class="lk-h1" id="activeTitle">Work in motion.</h1>
+      <p class="lk-lead">Jobs you have been hired for. Keep in touch with the customer, and mark the job as done when the work is finished.</p>
+      <div class="lk-list" id="activeJobsList"><div class="lk-skel" data-state="loading" role="status"><span class="lk-sr">Loading active jobs…</span><div class="lk-skel__row"></div><div class="lk-skel__row"></div></div></div>
+    </section>
+  </div>
+
+  <!-- Inlaid pad: profile + work pulse -->
+  <aside class="lk-side" aria-label="Your profile and work pulse">
+    <div class="lk-side__inner">
+      <section class="lk-prof" aria-labelledby="profTitle">
+        <h2 class="lk-side__eyebrow" id="profTitle">Your profile</h2>
+        <div class="lk-prof__card" id="profileCard"><p class="lk-side-wait" data-state="loading">Loading your profile…</p></div>
+      </section>
+
+      <section class="lk-pulse" aria-labelledby="pulseTitle">
+        <h2 class="lk-side__eyebrow" id="pulseTitle">Your work pulse</h2>
+        <div id="statsCard">
+          <ol class="lk-pulse__track">
+            <li class="lk-node lk-node--applied"><span class="lk-node__ring"><span class="lk-node__num" id="statApplied">—</span></span><span class="lk-node__lbl">Applied</span><i class="ph-bold ph-caret-right lk-node__chev" aria-hidden="true"></i></li>
+            <li class="lk-node lk-node--active"><span class="lk-node__ring"><span class="lk-node__num" id="statActive">—</span></span><span class="lk-node__lbl">Active</span><i class="ph-bold ph-caret-right lk-node__chev" aria-hidden="true"></i></li>
+            <li class="lk-node lk-node--done"><span class="lk-node__ring"><span class="lk-node__num" id="statDone">—</span></span><span class="lk-node__lbl">Done</span></li>
+          </ol>
+          <div class="lk-rep">
+            <div><span class="lk-rep__lbl">Reputation</span><span class="lk-rep__cap">Your average rating from customers</span></div>
+            <div class="lk-rep__num" id="statRating">—</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </aside>
+</main>
+
+<footer class="lk-foot">
+  <div class="lk-wrap lk-foot__inner">
+    <span><strong>LokshinGigs</strong> &nbsp;Local work, done right.</span>
+    <nav aria-label="Footer"><a href="/profile">Profile</a><a href="#workspace">Find work</a></nav>
+  </div>
+</footer>
+
+<!-- ============ APPLY MODAL ============ -->
+<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="lk-modal__head">
+        <span class="lk-modal__icon" aria-hidden="true"><i class="ph ph-paper-plane-tilt"></i></span>
+        <div>
+          <h2 id="applyTitle">Apply for Job</h2>
+          <p>The customer sees your note together with your profile.</p>
+        </div>
+        <button type="button" class="lk-modal__close" data-bs-dismiss="modal" aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="lk-modal__body">
+        <div id="applyJobDetails" class="lk-brief"></div>
+        <label class="lk-field__label" for="coverNote">Cover note <span>(optional)</span></label>
+        <textarea id="coverNote" class="lk-textarea" rows="4" placeholder="Tell the customer why you are the best person for this job, your experience, and when you can start..."></textarea>
+      </div>
+      <div class="lk-modal__foot">
+        <button class="lk-btn lk-btn--ghost" data-bs-dismiss="modal">Cancel</button>
+        <button class="lk-btn lk-btn--primary" id="submitApply">Submit Application</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+
+<!-- ============ PREVIEW MODE (isolated) ==============================
+     Active ONLY on file:// or with ?preview=1. Serves clearly-labelled
+     sample data through the same fetch calls the dashboard already makes,
+     so every flow can be exercised without a backend. In normal use this
+     block returns immediately and the live API path is untouched.
+     ================================================================== -->
+<script>
+(function () {
+  var isPreview = location.protocol === 'file:' ||
+    (function () { try { return new URLSearchParams(location.search).get('preview') === '1'; } catch (e) { return false; } })();
+  if (!isPreview) return;
+
+  var day = 864e5, now = Date.now();
+  var ago = function (n) { return new Date(now - n * day).toISOString(); };
+  var cats = ['Appliance Repair','Beauty Services','Computer Repairs','Electrical','Gardening','Graphic Design','Handyman','House Cleaning','Painting','Photography','Plumbing','Tutoring']
+    .map(function (n, i) { return { CategoryID: i + 1, CategoryName: n }; });
+  var catId = function (n) { return cats.find(function (c) { return c.CategoryName === n; }).CategoryID; };
+  var job = function (id, title, cat, budget, loc, days, by, desc) {
+    return { JobID: id, Title: title, CategoryID: catId(cat), CategoryName: cat, Budget: budget, Location: loc, Status: 'Open', PostedAt: ago(days), CustomerName: by, Description: desc };
+  };
+  var open = [
+    job(201, 'Install three outdoor security lights', 'Electrical', 1200, 'Protea Glen, Soweto', 0, 'Nomsa Khumalo', 'We need three LED lights with day/night sensors on the front and side walls of the house. Brackets and wiring to be supplied by the electrician; we already bought the lights.'),
+    job(202, 'Fix a tripping kitchen circuit', 'Electrical', 650, 'Dobsonville, Soweto', 1, 'Lwazi Ndlovu', 'The kitchen plugs trip every time the kettle and microwave run together. Please find the fault and fix it.'),
+    job(203, 'Paint a two-bedroom house inside', 'Painting', 3500, 'Orange Farm', 2, 'Zanele Mokoena', 'Walls and ceilings in two bedrooms, the lounge and the passage. Paint is bought, light colours. Need it done before the end of the month.'),
+    job(204, 'Weekly garden clean-up', 'Gardening', 380, 'Mamelodi East', 2, 'Bheki Nxumalo', 'Cut the grass, trim the hedge at the gate and take the garden refuse away. Every Saturday morning if possible.'),
+    job(205, 'Grade 11 physical sciences tutoring', 'Tutoring', 450, 'Alexandra', 3, 'Palesa Mabena', 'Two sessions a week for my son before his June exams, mainly chemistry. Weekday afternoons work best.'),
+    job(206, 'Install a geyser timer switch', 'Electrical', 480, 'Meadowlands, Soweto', 4, 'Thabiso Radebe', 'Supply and fit a timer on a 150L geyser so it only heats in the morning and evening.'),
+    job(207, 'Assemble a wardrobe and two bedside tables', 'Handyman', 550, 'Tembisa', 5, 'Refilwe Molefe', 'Flat-pack furniture from the shops, all parts in the boxes. Needs to be assembled and the wardrobe fixed to the wall.')
+  ];
+  var apps = [
+    { ApplicationID: 7001, JobID: 202, JobTitle: 'Fix a tripping kitchen circuit', Location: 'Dobsonville, Soweto', Budget: 650, JobStatus: 'Open', Status: 'Pending', DateApplied: ago(0), CoverNote: 'I can come tomorrow after 2pm. Sounds like an overloaded circuit; I will check the breaker and the plug wiring.' },
+    { ApplicationID: 7002, JobID: 103, JobTitle: 'Rewire kitchen plugs', Location: 'Kagiso, Mogale City', Budget: 1400, JobStatus: 'In Progress', Status: 'Accepted', DateApplied: ago(4), CoverNote: 'Registered electrician. Certificate of compliance included.' },
+    { ApplicationID: 7003, JobID: 108, JobTitle: 'Replace an old DB board', Location: 'Jabavu, Soweto', Budget: 2600, JobStatus: 'Completed', Status: 'Accepted', DateApplied: ago(16), CoverNote: 'I have replaced many boards in Soweto and supply the CoC.' },
+    { ApplicationID: 7004, JobID: 109, JobTitle: 'Install ceiling fans in a church hall', Location: 'Naledi, Soweto', Budget: 3800, JobStatus: 'In Progress', Status: 'Rejected', DateApplied: ago(9), CoverNote: '' }
+  ];
+  var active = [
+    { JobID: 103, Title: 'Rewire kitchen plugs', Description: 'Old double plugs are loose and one has burn marks. Replace four plugs and check the circuit.', Location: 'Kagiso, Mogale City', Budget: 1400, Status: 'In Progress', CustomerName: 'Thandi Mokoena', CustomerPhone: '0821234567' },
+    { JobID: 108, Title: 'Replace an old DB board', Description: 'Replace the old DB board with a new one with earth leakage, and issue a certificate of compliance.', Location: 'Jabavu, Soweto', Budget: 2600, Status: 'Completed', CustomerName: 'Bheki Nxumalo', CustomerPhone: '0835550142' }
+  ];
+  var profile = { UserID: 31, FullName: 'Sipho Dlamini', Email: 'sipho.d@example.co.za', PhoneNumber: '0721234567', Role: 'Freelancer',
+    freelancerData: { SkillCategory: 'Electrical', Experience: '9 years, registered electrician', Bio: 'Domestic wiring, DB boards, geysers and outdoor lighting around Soweto and the West Rand. I issue certificates of compliance.', Rating: 4.8, TotalReviews: 23 } };
+
+  var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
+  var reply = function (body, status) {
+    return new Promise(function (res) {
+      setTimeout(function () { res(new Response(JSON.stringify(body), { status: status || 200, headers: { 'Content-Type': 'application/json' } })); }, 240);
+    });
+  };
+
+  window.requireLogin = async function () { return { id: 31, name: 'Sipho Dlamini', role: 'Freelancer' }; };
+  window.logout = function () { showAlert('Logging out is turned off in preview mode.', 'warning'); };
+
+  var realFetch = window.fetch.bind(window);
+  window.fetch = function (input, opts) {
+    var url = String(input), method = ((opts && opts.method) || 'GET').toUpperCase(), m;
+    var body = {}; try { body = JSON.parse((opts && opts.body) || '{}'); } catch (e) {}
+    if (method === 'GET' && url === '/api/categories') return reply({ success: true, categories: clone(cats) });
+    if (method === 'GET' && /^\/api\/jobs(\?|$)/.test(url)) {
+      var qs = new URLSearchParams(url.split('?')[1] || ''), cat = qs.get('category'), q = (qs.get('search') || '').toLowerCase();
+      var list = open.filter(function (j) { return j.Status === 'Open' && (!cat || String(j.CategoryID) === cat) &&
+        (!q || j.Title.toLowerCase().indexOf(q) > -1 || j.Description.toLowerCase().indexOf(q) > -1); });
+      return reply({ success: true, jobs: clone(list) });
+    }
+    if (method === 'GET' && url === '/api/applications/my') return reply({ success: true, applications: clone(apps) });
+    if (method === 'GET' && url === '/api/applications/active') return reply({ success: true, jobs: clone(active) });
+    if (method === 'GET' && url === '/api/users/profile') return reply({ success: true, profile: clone(profile) });
+    if (method === 'POST' && (m = url.match(/^\/api\/jobs\/(\d+)\/apply$/))) {
+      var j = open.find(function (x) { return x.JobID === +m[1]; });
+      if (!j) return reply({ success: false, message: 'Job not found.' }, 404);
+      if (j.Status !== 'Open') return reply({ success: false, message: 'This job is no longer accepting applications.' }, 400);
+      if (apps.some(function (a) { return a.JobID === j.JobID; })) return reply({ success: false, message: 'You have already applied for this job.' }, 409);
+      apps.unshift({ ApplicationID: 7100 + apps.length, JobID: j.JobID, JobTitle: j.Title, Location: j.Location, Budget: j.Budget, JobStatus: 'Open', Status: 'Pending', DateApplied: new Date().toISOString(), CoverNote: body.coverNote || null });
+      return reply({ success: true, message: 'Application submitted successfully!' }, 201);
+    }
+    if (method === 'PUT' && (m = url.match(/^\/api\/jobs\/(\d+)\/status$/))) {
+      var a = active.find(function (x) { return x.JobID === +m[1]; });
+      if (['Open', 'In Progress', 'Completed', 'Cancelled'].indexOf(body.status) < 0) return reply({ success: false, message: 'Invalid status.' }, 400);
+      if (a) a.Status = body.status;
+      return reply({ success: true, message: 'Job marked as ' + body.status + '.' });
+    }
+    return realFetch(input, opts);
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var b = document.createElement('div');
+    b.className = 'lk-preview'; b.textContent = 'Preview with sample data';
+    document.body.appendChild(b);
+  });
+})();
+</script>
+
+<!-- ============ FREELANCER DASHBOARD LOGIC ============================
+     The original page logic: same functions, same IDs, same API calls and
+     the same conditions. Only the markup each function writes has been
+     restyled (Phosphor icons in place of emoji, Lokshin classes).
+     ================================================================== -->
+<script>
+  let applyJobId = null;
+  let currentUser = null;
+
+  async function init() {
+    currentUser = await requireLogin();
+    if (!currentUser || currentUser.role !== 'Freelancer') return window.location.href = '/login';
+    document.getElementById('welcomeUser').textContent = `Hello, ${currentUser.name}`;
+    loadCategoriesWithCount();
+    loadJobs();
+    loadProfile();
+    loadApplications();
+    loadActiveJobs();
+  }
+
+  function switchTab(name) {
+    ['browse','applications','active'].forEach(t => {
+      document.getElementById(`tab-${t}`).style.display = 'none';
+    });
+    document.getElementById(`tab-${name}`).style.display = 'block';
+    document.querySelectorAll('#mainTabs .nav-link').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Load categories WITH job count badges
+  async function loadCategoriesWithCount() {
+    try {
+      const [catRes, jobRes] = await Promise.all([
+        fetch('/api/categories'),
+        fetch('/api/jobs')
+      ]);
+      const catData = await catRes.json();
+      const jobData = await jobRes.json();
+
+      const sel = document.getElementById('filterCat');
+      sel.innerHTML = '<option value="">All Categories</option>';
+
+      if (catData.success) {
+        // Count jobs per category
+        const counts = {};
+        if (jobData.success) {
+          jobData.jobs.forEach(j => {
+            counts[j.CategoryID] = (counts[j.CategoryID] || 0) + 1;
+          });
+        }
+        catData.categories.forEach(c => {
+          const count = counts[c.CategoryID] || 0;
+          sel.innerHTML += `<option value="${c.CategoryID}">${c.CategoryName} (${count} open)</option>`;
+        });
+      }
+    } catch (err) {
+      loadCategories('filterCat', true);
+    }
+  }
+
+  async function loadJobs() {
+    const cat = document.getElementById('filterCat').value;
+    const q   = document.getElementById('searchQ').value;
+    let url   = '/api/jobs?';
+    if (cat) url += `category=${cat}&`;
+    if (q)   url += `search=${encodeURIComponent(q)}`;
+
+    const res  = await fetch(url);
+    const data = await res.json();
+    const el   = document.getElementById('jobsList');
+
+    if (!data.success || !data.jobs.length) {
+      el.innerHTML = `
+        <div class="lk-msg" data-state="empty">
+          <span class="lk-msg__icon"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>
+          <strong>Nothing here yet.</strong>
+          <span>No open jobs match right now. Try another category or a different search.</span>
+        </div>`;
+      return;
+    }
+
+    el.innerHTML = data.jobs.map(j => `
+      <article class="lk-job">
+        <div class="lk-job__body">
+          <div class="lk-job__meta">
+            <span class="lk-job__cat">${j.CategoryName || '—'}</span>
+            <span class="lk-job__loc"><i class="ph ph-map-pin" aria-hidden="true"></i>${j.Location}</span>
+          </div>
+          <h3 class="lk-job__title">${j.Title}</h3>
+          <p class="lk-job__desc">${j.Description.substring(0,150)}${j.Description.length > 150 ? '...' : ''}</p>
+          <div class="lk-job__foot">
+            <span><i class="ph ph-clock" aria-hidden="true"></i>Posted ${formatDate(j.PostedAt)}</span>
+            <span class="lk-job__by">by <b>${j.CustomerName}</b></span>
+          </div>
+        </div>
+        <div class="lk-job__side">
+          <div class="lk-budget"><small>Budget</small><strong>${formatZAR(j.Budget)}</strong></div>
+          <button class="lk-btn lk-btn--primary"
+            onclick="openApply(${j.JobID},'${j.Title.replace(/'/g,"\\'")}','${j.Location}','${formatZAR(j.Budget)}')">
+            Apply now<i class="ph-bold ph-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </article>`).join('');
+  }
+
+  async function loadApplications() {
+    const res  = await fetch('/api/applications/my');
+    const data = await res.json();
+    const el   = document.getElementById('applicationsList');
+
+    if (!data.success || !data.applications.length) {
+      el.innerHTML = `
+        <div class="lk-msg" data-state="empty">
+          <span class="lk-msg__icon"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i></span>
+          <strong>No applications yet.</strong>
+          <span>You have not applied for any jobs yet. When you do, each one shows up here with its status.</span>
+        </div>`;
+      document.getElementById('statApplied').textContent = '0';
+      return;
+    }
+
+    document.getElementById('statApplied').textContent = data.applications.length;
+
+    el.innerHTML = data.applications.map(a => `
+      <article class="lk-app" data-status="${a.Status}">
+        <div>
+          <h3 class="lk-app__title">${a.JobTitle}</h3>
+          <div class="lk-app__meta">
+            <span><i class="ph ph-map-pin" aria-hidden="true"></i>${a.Location}</span>
+            <span class="lk-app__budget">${formatZAR(a.Budget)}</span>
+          </div>
+          <p class="lk-app__note">${a.CoverNote || '<em>No cover note.</em>'}</p>
+          <small class="lk-app__date">Applied ${formatDate(a.DateApplied)}</small>
+        </div>
+        <div class="lk-app__state">
+          <span class="lk-state lk-state--${String(a.Status).toLowerCase()}">
+            ${a.Status}
+          </span>
+          ${a.Status === 'Accepted' ? '<div class="lk-won"><i class="ph-bold ph-check" aria-hidden="true"></i>You got the job!</div>' : ''}
+        </div>
+      </article>`).join('');
+  }
+
+  async function loadActiveJobs() {
+    const res  = await fetch('/api/applications/active');
+    const data = await res.json();
+    const el   = document.getElementById('activeJobsList');
+
+    if (!data.success || !data.jobs.length) {
+      el.innerHTML = `
+        <div class="lk-msg" data-state="empty">
+          <span class="lk-msg__icon"><i class="ph ph-toolbox" aria-hidden="true"></i></span>
+          <strong>No active jobs right now.</strong>
+          <span>Jobs you are hired for appear here. Apply for jobs to get started.</span>
+        </div>`;
+      document.getElementById('statActive').textContent = '0';
+      document.getElementById('statDone').textContent   = '0';
+      return;
+    }
+
+    const active    = data.jobs.filter(j => j.Status === 'In Progress');
+    const completed = data.jobs.filter(j => j.Status === 'Completed');
+    document.getElementById('statActive').textContent = active.length;
+    document.getElementById('statDone').textContent   = completed.length;
+
+    el.innerHTML = data.jobs.map(j => `
+      <article class="lk-work" data-status="${j.Status}">
+        <div class="lk-work__body">
+          <div class="lk-work__top">
+            ${statusBadge(j.Status)}
+            <span class="lk-job__loc"><i class="ph ph-map-pin" aria-hidden="true"></i>${j.Location}</span>
+          </div>
+          <h3 class="lk-work__title">${j.Title}</h3>
+          <p class="lk-work__desc">${j.Description.substring(0,100)}${j.Description.length > 100 ? '...' : ''}</p>
+          <div class="lk-contact">
+            <span class="lk-client"><i class="ph ph-user" aria-hidden="true"></i>Customer <b>${j.CustomerName}</b></span>
+            ${j.CustomerPhone ? `
+            <a class="lk-chip" href="tel:${j.CustomerPhone}"><i class="ph ph-phone" aria-hidden="true"></i>${j.CustomerPhone}</a>
+            <a href="https://wa.me/27${j.CustomerPhone.replace(/^0/,'')}" target="_blank" rel="noopener"
+               class="lk-chip lk-chip--wa"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp Customer</a>` : ''}
+          </div>
+        </div>
+        <div class="lk-work__side">
+          <div class="lk-budget"><small>Budget</small><strong>${formatZAR(j.Budget)}</strong></div>
+          ${j.Status === 'In Progress' ? `
+            <button class="lk-btn lk-btn--dark" onclick="markDone(${j.JobID})">
+              <i class="ph-bold ph-check" aria-hidden="true"></i>Mark as Done
+            </button>` : '<div class="lk-done"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Completed</div>'
+          }
+        </div>
+      </article>`).join('');
+  }
+
+  async function markDone(jobId) {
+    if (!confirm('Mark this job as done? The customer will be notified to confirm completion and leave a review.')) return;
+    const data = await apiPut(`/jobs/${jobId}/status`, { status: 'Completed' });
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    if (data.success) loadActiveJobs();
+  }
+
+  async function loadProfile() {
+    const res  = await fetch('/api/users/profile');
+    const data = await res.json();
+    if (!data.success) return;
+    const p  = data.profile;
+    const fl = p.freelancerData;
+    document.getElementById('statRating').textContent = fl?.Rating ? parseFloat(fl.Rating).toFixed(1) + '★' : '—';
+    document.getElementById('profileCard').innerHTML = `
+      <div class="lk-prof__head">
+        <span class="lk-prof__avatar" aria-hidden="true">${String(p.FullName || '').split(/\s+/).filter(Boolean).map(s => s[0]).slice(0,2).join('').toUpperCase()}</span>
+        <div>
+          <div class="lk-prof__name">${p.FullName}</div>
+          <div class="lk-prof__skill">${fl?.SkillCategory || ''}</div>
+        </div>
+      </div>
+      <div class="lk-prof__rating">${renderStars(fl?.Rating || 0)}<span class="lk-prof__reviews">${fl?.TotalReviews || 0} review(s)</span></div>
+      <dl class="lk-prof__facts">
+        ${fl?.Experience ? `<div><dt>Experience</dt><dd>${fl.Experience}</dd></div>` : ''}
+        <div><dt>Phone</dt><dd>${p.PhoneNumber}</dd></div>
+      </dl>
+      <p class="lk-prof__bio">${fl?.Bio || 'No bio added yet.'}</p>
+      <a href="/profile" class="lk-btn lk-btn--dark lk-btn--block"><i class="ph ph-user-circle" aria-hidden="true"></i>View profile</a>`;
+  }
+
+  function openApply(jobId, title, location, budget) {
+    applyJobId = jobId;
+    document.getElementById('applyTitle').textContent = `Apply: ${title}`;
+    document.getElementById('applyJobDetails').innerHTML =
+      `<div><strong class="lk-brief__title">${title}</strong><span class="lk-brief__loc"><i class="ph ph-map-pin" aria-hidden="true"></i>${location}</span></div><span class="lk-brief__budget">${budget}</span>`;
+    document.getElementById('coverNote').value = '';
+    new bootstrap.Modal(document.getElementById('applyModal')).show();
+  }
+
+  document.getElementById('submitApply').addEventListener('click', async () => {
+    const btn = document.getElementById('submitApply');
+    btn.disabled = true; btn.textContent = 'Submitting...';
+    const data = await apiPost(`/jobs/${applyJobId}/apply`, {
+      coverNote: document.getElementById('coverNote').value
+    });
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    bootstrap.Modal.getInstance(document.getElementById('applyModal')).hide();
+    btn.disabled = false; btn.textContent = 'Submit Application';
+    if (data.success) {
+      loadApplications();
+      switchTab('applications');
+    }
+  });
+
+  window.addEventListener('load', init);
+</script>
+
+<!-- ============ PRESENTATION WIRING ===================================
+     Reads what the logic above has already rendered and keeps the
+     surrounding presentation in step with it. Calls no API, changes no
+     data, and never alters how the original functions behave.
+     ================================================================== -->
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var tabs = { browse: 'tab-browse', applications: 'tab-applications', active: 'tab-active' };
+
+  /* 1 · Keep the header tabs in step with the visible panel.
+     switchTab() marks whatever was clicked; after an application is submitted that is the
+     Submit button rather than a tab, so the correct tab is re-marked from the visible panel. */
+  function syncTabs() {
+    var current = null;
+    Object.keys(tabs).forEach(function (k) { var p = document.getElementById(tabs[k]); if (p && p.style.display !== 'none') current = k; });
+    if (!current) return;
+    document.querySelectorAll('#mainTabs .nav-link').forEach(function (b) {
+      var on = (b.getAttribute('onclick') || '').indexOf("'" + current + "'") > -1;
+      b.classList.toggle('active', on);
+      if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    var sub = document.getElementById('submitApply'); if (sub) sub.classList.remove('active');
+  }
+  var tabObserver = new MutationObserver(syncTabs);
+  Object.keys(tabs).forEach(function (k) { var p = document.getElementById(tabs[k]); if (p) tabObserver.observe(p, { attributes: true, attributeFilter: ['style'] }); });
+  // panels animate in when shown (class toggle only: the observer watches style, never class)
+  document.querySelectorAll('.lk-panel').forEach(function (p) {
+    var shown = p.style.display !== 'none';
+    new MutationObserver(function () {
+      var now = p.style.display !== 'none';
+      if (now && !shown) { p.classList.remove('is-in'); void p.offsetWidth; p.classList.add('is-in'); }
+      shown = now;
+    }).observe(p, { attributes: true, attributeFilter: ['style'] });
+  });
+
+  /* 2 · Result count for Browse Jobs, read from the rendered list */
+  var jobsList = $('#jobsList'), count = $('#jobsCount');
+  function syncCount() {
+    if (!jobsList || !count) return;
+    if (jobsList.querySelector('[data-state="loading"]')) { count.textContent = ''; return; }
+    var n = jobsList.querySelectorAll('.lk-job').length;
+    var filtered = $('#filterCat').value || $('#searchQ').value.trim();
+    count.textContent = n ? n + (n === 1 ? ' open job' : ' open jobs') + (filtered ? ' match' : '') : (filtered ? 'No matches' : '');
+  }
+  if (jobsList) new MutationObserver(syncCount).observe(jobsList, { childList: true });
+
+  /* 3 · Status summary above the applications, read from the rendered list */
+  var appsList = $('#applicationsList'), summary = $('#appsSummary');
+  function syncSummary() {
+    if (!appsList || !summary) return;
+    var tally = {};
+    appsList.querySelectorAll('.lk-app[data-status]').forEach(function (a) { var s = a.getAttribute('data-status'); tally[s] = (tally[s] || 0) + 1; });
+    summary.innerHTML = Object.keys(tally).map(function (s) {
+      return '<span class="lk-state lk-state--' + s.toLowerCase() + '"><b>' + tally[s] + '</b>&nbsp;' + s.toLowerCase() + '</span>';
+    }).join('');
+  }
+  if (appsList) new MutationObserver(syncSummary).observe(appsList, { childList: true });
+
+  /* 4 · Tab counters mirror the existing stats */
+  function mirror(statId, key) {
+    var src = document.getElementById(statId), dst = $('.lk-tab__n[data-count="' + key + '"]');
+    if (!src || !dst) return;
+    var copy = function () { var v = parseInt(src.textContent, 10); dst.textContent = v > 0 ? String(v) : ''; };
+    new MutationObserver(copy).observe(src, { childList: true, characterData: true, subtree: true }); copy();
+  }
+  mirror('statApplied', 'applied'); mirror('statActive', 'active');
+
+  /* 5 · Failed requests: replace a stuck loading state with a clear message and a retry */
+  var retry = { jobsList: 'loadJobs', applicationsList: 'loadApplications', activeJobsList: 'loadActiveJobs' };
+  var labels = { jobsList: 'open jobs', applicationsList: 'your applications', activeJobsList: 'your active jobs' };
+  function failStuck() {
+    Object.keys(retry).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el || !el.querySelector('[data-state="loading"]')) return;
+      el.innerHTML = '<div class="lk-msg lk-msg--error" role="alert"><span class="lk-msg__icon"><i class="ph ph-wifi-slash" aria-hidden="true"></i></span>' +
+        '<strong>We could not load ' + labels[id] + '.</strong><span>Check your connection, then try again.</span>' +
+        '<button type="button" class="lk-btn lk-btn--ghost lk-btn--sm" data-retry="' + retry[id] + '"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i>Try again</button></div>';
+    });
+    var prof = document.getElementById('profileCard');
+    if (prof && prof.querySelector('[data-state="loading"]')) prof.innerHTML = '<p class="lk-side-wait">Your profile could not be loaded right now.</p>';
+  }
+  // only network/response failures count (not, e.g., switchTab() reading a finished event)
+  window.addEventListener('unhandledrejection', function (e) {
+    var m = String((e.reason && e.reason.message) || e.reason || '');
+    if (/fetch|network|load failed|json|unexpected token|unexpected end/i.test(m)) failStuck();
+  });
+  window.addEventListener('load', function () { setTimeout(failStuck, 15000); });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-retry]'); if (!b) return;
+    var fn = window[b.getAttribute('data-retry')]; if (typeof fn !== 'function') return;
+    var host = b.closest('[id]');
+    host.innerHTML = '<div class="lk-skel lk-skel--short" data-state="loading" role="status"><span class="lk-sr">Loading…</span><div class="lk-skel__row"></div></div>';
+    fn();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "lokshin-gigs-frontend",
+  "version": "1.0.0",
+  "description": "Lokshin Gigs \u2014 Frontend",
+  "scripts": {
+    "start": "npx serve public -p 3001",
+    "dev": "npx serve public -p 3001"
+  }
+}

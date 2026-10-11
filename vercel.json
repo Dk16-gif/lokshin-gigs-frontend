@@ -1,9 +1,9 @@
 {
   "rewrites": [
-    { "source": "/pages/:page*", "destination": "/pages/:page*" },
-    { "source": "/css/:file*", "destination": "/css/:file*" },
-    { "source": "/js/:file*", "destination": "/js/:file*" },
-    { "source": "/images/:file*", "destination": "/images/:file*" },
-    { "source": "/", "destination": "/index.html" }
+    { "source": "/", "destination": "/public/index.html" },
+    { "source": "/pages/:page*", "destination": "/public/pages/:page*" },
+    { "source": "/css/:file*", "destination": "/public/css/:file*" },
+    { "source": "/js/:file*", "destination": "/public/js/:file*" },
+    { "source": "/images/:file*", "destination": "/public/images/:file*" }
   ]
 }

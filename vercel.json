@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/pages/:page*", "destination": "/pages/:page*" },
+    { "source": "/css/:file*", "destination": "/css/:file*" },
+    { "source": "/js/:file*", "destination": "/js/:file*" },
+    { "source": "/images/:file*", "destination": "/images/:file*" },
+    { "source": "/", "destination": "/index.html" }
+  ]
+}

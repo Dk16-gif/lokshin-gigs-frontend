@@ -960,7 +960,10 @@ h1,h2,h3,p{margin:0}
 
   async function init() {
     const user = await requireLogin();
-    if (!user || user.role !== 'Customer') return window.location.href = '/pages/login.html';
+    if (!user || user.role !== 'Customer') {
+  document.body.innerHTML = '<pre style="padding:20px">AUTH FAILED - user: ' + JSON.stringify(user) + ' - API_BASE: ' + window.API_BASE + '</pre>';
+  return;
+}
     document.getElementById('welcomeUser').textContent = `Hello, ${user.name}`;
     loadJobs();
   }

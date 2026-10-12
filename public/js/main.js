@@ -21,10 +21,6 @@ function showAlert(msg, type = 'success') {
     setTimeout(() => d.remove(), 4000);
 }
 async function getCurrentUser() {
-    const local = localStorage.getItem('lg_user');
-    if (local) {
-        try { return JSON.parse(local); } catch {}
-    }
     try {
         const r = await fetch(`${API}/auth/me`, { credentials: 'include' });
         const d = await r.json();
@@ -32,8 +28,15 @@ async function getCurrentUser() {
             localStorage.setItem('lg_user', JSON.stringify(d.user));
             return d.user;
         }
+        // Backend says not logged in — clear localStorage
+        localStorage.removeItem('lg_user');
         return null;
     } catch {
+        // Network error — fall back to localStorage
+        const local = localStorage.getItem('lg_user');
+        if (local) {
+            try { return JSON.parse(local); } catch {}
+        }
         return null;
     }
 }

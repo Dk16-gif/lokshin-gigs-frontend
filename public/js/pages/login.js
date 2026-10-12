@@ -124,6 +124,7 @@ function initLoginPage() {
             if (r.success && r.user) {
                 submitLabel.textContent = 'Signed in — redirecting…';
                 const target = ROLE_REDIRECT[r.user.role] || '/';
+                localStorage.setItem('lg_user', JSON.stringify(r.user));
                 setTimeout(() => { window.location.href = target; }, 400);
                 return;
             }

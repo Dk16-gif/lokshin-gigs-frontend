@@ -423,7 +423,7 @@ ol{padding:0;list-style:none}
 <script>
   async function init() {
     const user = await requireLogin();
-    if (!user || user.role !== 'Customer') return window.location.href = '/login';
+    if (!user || user.role !== 'Customer') return window.location.href = '/pages/login.html';
     loadCategories('categoryId');
   }
   document.getElementById('postJobForm').addEventListener('submit', async e => {

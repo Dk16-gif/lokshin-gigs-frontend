@@ -459,7 +459,7 @@ a{color:inherit}
       if (ref.origin === location.origin && ref.pathname !== location.pathname) {
         back.href = ref.pathname + ref.search;
         if (ref.pathname === '/register') backLabel.textContent = 'Back to registration';
-        else if (ref.pathname === '/login') backLabel.textContent = 'Back to sign in';
+        else if (ref.pathname === '/pages/login.html') backLabel.textContent = 'Back to sign in';
       }
     }
   } catch (e) { /* keep the default link to the home page */ }

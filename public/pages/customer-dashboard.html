@@ -960,7 +960,7 @@ h1,h2,h3,p{margin:0}
 
   async function init() {
     const user = await requireLogin();
-    if (!user || user.role !== 'Customer') return window.location.href = '/login';
+    if (!user || user.role !== 'Customer') return window.location.href = '/pages/login.html';
     document.getElementById('welcomeUser').textContent = `Hello, ${user.name}`;
     loadJobs();
   }

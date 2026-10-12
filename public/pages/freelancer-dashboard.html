@@ -691,7 +691,7 @@ ol,ul{padding:0;list-style:none}
 
   async function init() {
     currentUser = await requireLogin();
-    if (!currentUser || currentUser.role !== 'Freelancer') return window.location.href = '/login';
+    if (!currentUser || currentUser.role !== 'Freelancer') return window.location.href = '/pages/login.html';
     document.getElementById('welcomeUser').textContent = `Hello, ${currentUser.name}`;
     loadCategoriesWithCount();
     loadJobs();

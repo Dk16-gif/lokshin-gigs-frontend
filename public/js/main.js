@@ -21,6 +21,14 @@ function showAlert(msg, type = 'success') {
     setTimeout(() => d.remove(), 4000);
 }
 async function getCurrentUser() {
+    // Check localStorage first
+    const local = localStorage.getItem('lg_user');
+    let localUser = null;
+    if (local) {
+        try { localUser = JSON.parse(local); } catch {}
+    }
+
+    // Try to verify with backend
     try {
         const r = await fetch(`${API}/auth/me`, { credentials: 'include' });
         const d = await r.json();
@@ -28,16 +36,14 @@ async function getCurrentUser() {
             localStorage.setItem('lg_user', JSON.stringify(d.user));
             return d.user;
         }
-        // Backend says not logged in — clear localStorage
+        // Backend says not logged in but we have localStorage
+        // Trust localStorage since cross-domain cookies are blocked
+        if (localUser) return localUser;
         localStorage.removeItem('lg_user');
         return null;
     } catch {
-        // Network error — fall back to localStorage
-        const local = localStorage.getItem('lg_user');
-        if (local) {
-            try { return JSON.parse(local); } catch {}
-        }
-        return null;
+        // Network error — trust localStorage
+        return localUser;
     }
 }
 // FIX: use relative paths so they work regardless of how server is run

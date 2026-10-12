@@ -21,12 +21,19 @@ function showAlert(msg, type = 'success') {
     setTimeout(() => d.remove(), 4000);
 }
 async function getCurrentUser() {
+    const local = localStorage.getItem('lg_user');
+    if (local) {
+        try { return JSON.parse(local); } catch {}
+    }
     try {
         const r = await fetch(`${API}/auth/me`, { credentials: 'include' });
         const d = await r.json();
-        return d.success ? d.user : null;
-    }
-    catch {
+        if (d.success) {
+            localStorage.setItem('lg_user', JSON.stringify(d.user));
+            return d.user;
+        }
+        return null;
+    } catch {
         return null;
     }
 }
@@ -85,9 +92,11 @@ async function apiDelete(url) {
 }
 // FIX: relative redirect path
 async function logout() {
+    localStorage.removeItem('lg_user');
     await fetch(`${API}/auth/logout`, { method: 'POST', credentials: 'include' });
     window.location.href = '/pages/login.html';
 }
+
 async function loadCategories(selectId, allOption = false) {
     const r = await fetch(`${API}/categories`, { credentials: 'include' });
     const d = await r.json();

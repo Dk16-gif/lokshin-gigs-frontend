@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Complete Your Profile – Lokshin Gigs</title>
+  <link rel="stylesheet" href="/css/design-system.css"/>
+  <link rel="stylesheet" href="/css/tailwind.css"/>
+  <script>window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';</script>
+</head>
+<body class="bg-brand-dark min-h-screen flex items-center justify-center p-4">
+  <div style="background:#fff;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.25);width:100%;max-width:480px;padding:40px;">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:2rem;font-weight:900;color:#1B4F8A">Lokshin<span style="color:#E8960C">Gigs</span></div>
+      <h2 style="font-size:1.4rem;font-weight:800;margin-top:8px">Almost there! 👋</h2>
+      <p style="color:#64748B;font-size:0.9rem;margin-top:4px">We just need a few more details to set up your account.</p>
+    </div>
+
+    <div id="alertBox" style="margin-bottom:16px"></div>
+
+    <form id="setupForm">
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:6px">Full Name</label>
+        <input type="text" id="fullName" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:0.9rem;background:#F8FAFC" readonly/>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:6px">Email Address</label>
+        <input type="email" id="email" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:0.9rem;background:#F8FAFC" readonly/>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:6px">Phone Number <span style="color:red">*</span></label>
+        <input type="tel" id="phone" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:0.9rem" placeholder="e.g. 0821234567" required/>
+      </div>
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:10px">I want to <span style="color:red">*</span></label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div id="roleCustomer" onclick="selectRole('Customer')"
+            style="border:2px solid #1B4F8A;background:#EFF6FF;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
+            <div style="font-size:1.8rem">👤</div>
+            <div style="font-weight:700;font-size:0.88rem;margin-top:4px">Hire Services</div>
+            <div style="font-size:0.75rem;color:#64748B">Customer</div>
+          </div>
+          <div id="roleFreelancer" onclick="selectRole('Freelancer')"
+            style="border:2px solid #E2E8F0;background:#fff;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
+            <div style="font-size:1.8rem">🔧</div>
+            <div style="font-weight:700;font-size:0.88rem;margin-top:4px">Offer Services</div>
+            <div style="font-size:0.75rem;color:#64748B">Freelancer</div>
+          </div>
+        </div>
+        <input type="hidden" id="selectedRole" value="Customer"/>
+      </div>
+
+      <button type="submit" id="submitBtn"
+        style="width:100%;background:#E8960C;color:#fff;font-weight:700;padding:12px;border:none;border-radius:10px;font-size:1rem;cursor:pointer">
+        Create My Account →
+      </button>
+    </form>
+
+    <p style="text-align:center;margin-top:16px;font-size:0.82rem;color:#64748B">
+      Already have an account? <a href="/pages/login.html" style="color:#1B4F8A;font-weight:700">Log in here</a>
+    </p>
+  </div>
+
+  <script>
+    const params   = new URLSearchParams(window.location.search);
+    const fullName = decodeURIComponent(params.get('name') || '');
+    const email    = decodeURIComponent(params.get('email') || '');
+    const googleId = decodeURIComponent(params.get('gid') || '');
+
+    document.getElementById('fullName').value = fullName;
+    document.getElementById('email').value    = email;
+
+    // Default Customer selected
+    selectRole('Customer');
+
+    function selectRole(role) {
+      document.getElementById('selectedRole').value = role;
+      const customer   = document.getElementById('roleCustomer');
+      const freelancer = document.getElementById('roleFreelancer');
+      if (role === 'Customer') {
+        customer.style.borderColor   = '#1B4F8A';
+        customer.style.background    = '#EFF6FF';
+        freelancer.style.borderColor = '#E2E8F0';
+        freelancer.style.background  = '#fff';
+      } else {
+        freelancer.style.borderColor = '#E8960C';
+        freelancer.style.background  = '#FFF7ED';
+        customer.style.borderColor   = '#E2E8F0';
+        customer.style.background    = '#fff';
+      }
+    }
+
+    document.getElementById('setupForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn   = document.getElementById('submitBtn');
+      const role  = document.getElementById('selectedRole').value;
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!phone) {
+        document.getElementById('alertBox').innerHTML =
+          '<div style="background:#FEE2E2;color:#991B1B;padding:10px;border-radius:8px;font-size:13px">Phone number is required.</div>';
+        return;
+      }
+
+      btn.disabled     = true;
+      btn.textContent  = 'Creating account...';
+
+      const API = window.API_BASE + '/api';
+      try {
+        const r    = await fetch(`${API}/auth/google/complete`, {
+          method:      'POST',
+          headers:     { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body:        JSON.stringify({ fullName, email, phone, role, googleId })
+        });
+        const data = await r.json();
+
+        if (data.success) {
+          localStorage.setItem('lg_user', JSON.stringify(data.user));
+          const dash = role === 'Freelancer'
+            ? '/pages/freelancer-dashboard.html'
+            : '/pages/customer-dashboard.html';
+          window.location.href = dash +
+            `?uid=${data.user.id}&name=${encodeURIComponent(data.user.name)}&role=${role}&ref=${data.user.refNumber}`;
+        } else {
+          document.getElementById('alertBox').innerHTML =
+            `<div style="background:#FEE2E2;color:#991B1B;padding:10px;border-radius:8px;font-size:13px">${data.message}</div>`;
+          btn.disabled    = false;
+          btn.textContent = 'Create My Account →';
+        }
+      } catch (err) {
+        document.getElementById('alertBox').innerHTML =
+          '<div style="background:#FEE2E2;color:#991B1B;padding:10px;border-radius:8px;font-size:13px">Network error. Please try again.</div>';
+        btn.disabled    = false;
+        btn.textContent = 'Create My Account →';
+      }
+    });
+  </script>
+</body>
+</html>

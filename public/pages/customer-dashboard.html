@@ -575,6 +575,16 @@ h1,h2,h3,p{margin:0}
   <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
+    const params = new URLSearchParams(window.location.search);
+if (params.get('uid')) {
+    localStorage.setItem('lg_user', JSON.stringify({
+        id:        params.get('uid'),
+        name:      decodeURIComponent(params.get('name')),
+        role:      params.get('role'),
+        refNumber: params.get('ref')
+    }));
+    window.history.replaceState({}, '', '/pages/customer-dashboard.html');
+}
   </script>
 </head>
 <body>

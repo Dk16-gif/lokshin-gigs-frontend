@@ -450,6 +450,16 @@ ol,ul{padding:0;list-style:none}
   <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
+    const params = new URLSearchParams(window.location.search);
+if (params.get('uid')) {
+    localStorage.setItem('lg_user', JSON.stringify({
+        id:        params.get('uid'),
+        name:      decodeURIComponent(params.get('name')),
+        role:      params.get('role'),
+        refNumber: params.get('ref')
+    }));
+    window.history.replaceState({}, '', '/pages/freelancer-dashboard.html');
+}
   </script>
 </head>
 <body>

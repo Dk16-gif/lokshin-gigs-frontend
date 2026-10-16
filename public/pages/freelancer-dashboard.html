@@ -723,8 +723,8 @@ if (params.get('uid')) {
   async function loadCategoriesWithCount() {
     try {
       const [catRes, jobRes] = await Promise.all([
-        fetch('/api/categories'),
-        fetch('/api/jobs')
+        fetch(`${API}/categories`, { credentials: 'include' }),
+        fetch(`${API}/jobs`, { credentials: 'include' })
       ]);
       const catData = await catRes.json();
       const jobData = await jobRes.json();
@@ -796,7 +796,7 @@ if (params.get('uid')) {
   }
 
   async function loadApplications() {
-    const res  = await fetch('/api/applications/my');
+    const res = await fetch(`${API}/applications/my`, { credentials: 'include' });
     const data = await res.json();
     const el   = document.getElementById('applicationsList');
 
@@ -834,7 +834,7 @@ if (params.get('uid')) {
   }
 
   async function loadActiveJobs() {
-    const res  = await fetch('/api/applications/active');
+    const res = await fetch(`${API}/applications/active`, { credentials: 'include' });
     const data = await res.json();
     const el   = document.getElementById('activeJobsList');
 
@@ -891,7 +891,7 @@ if (params.get('uid')) {
   }
 
   async function loadProfile() {
-    const res  = await fetch('/api/users/profile');
+    const res = await fetch(`${API}/users/profile`, { credentials: 'include' });
     const data = await res.json();
     if (!data.success) return;
     const p  = data.profile;

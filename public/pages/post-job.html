@@ -438,7 +438,7 @@ ol{padding:0;list-style:none}
     });
     if (data.success) {
       document.getElementById('alertBox').innerHTML = `<div class="alert alert-success">Job posted! Redirecting...</div>`;
-      setTimeout(() => window.location.href = '/customer-dashboard', 1500);
+      setTimeout(() => window.location.href = '/pages/customer-dashboard.html', 1500);
     } else {
       document.getElementById('alertBox').innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
       btn.disabled = false; btn.innerHTML = '<i class="ph-bold ph-paper-plane-right" aria-hidden="true"></i>Post Job';

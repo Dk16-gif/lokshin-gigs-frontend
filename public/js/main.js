@@ -78,18 +78,30 @@ function statusBadge(s) {
     return `<span class="${m[s] || 'badge bg-secondary'}">${s}</span>`;
 }
 async function apiPost(url, body) {
+    const local = localStorage.getItem('lg_user');
+    let userId = null;
+    if (local) { try { userId = JSON.parse(local).id; } catch {} }
     const r = await fetch(`${API}${url}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            ...(userId && { 'x-user-id': String(userId) })
+        },
         credentials: 'include',
         body: JSON.stringify(body)
     });
     return r.json();
 }
 async function apiPut(url, body) {
+    const local = localStorage.getItem('lg_user');
+    let userId = null;
+    if (local) { try { userId = JSON.parse(local).id; } catch {} }
     const r = await fetch(`${API}${url}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            ...(userId && { 'x-user-id': String(userId) })
+        },
         credentials: 'include',
         body: JSON.stringify(body)
     });

@@ -979,7 +979,7 @@ if (params.get('uid')) {
   }
 
   async function loadJobs() {
-    const res  = await fetch('/api/jobs/my');
+    const res = await fetch(`${API}/jobs/my`, { credentials: 'include' });
     const data = await res.json();
     const tbody = document.getElementById('jobsBody');
 
@@ -1047,7 +1047,7 @@ if (params.get('uid')) {
     document.getElementById('appModalBody').innerHTML = '<div class="lk-modal-loading">Loading applications…</div>';
     new bootstrap.Modal(document.getElementById('appModal')).show();
 
-    const res  = await fetch(`/api/jobs/${jobId}/applications`);
+    const res = await fetch(`${API}/jobs/${jobId}/applications`, { credentials: 'include' });
     const data = await res.json();
 
     if (!data.success || !data.applications.length) {
@@ -1197,7 +1197,7 @@ if (params.get('uid')) {
   function pendingFor(job) {
     var hit = appCache.get(job.JobID);
     if (hit && Date.now() - hit.t < 60000) return Promise.resolve(hit);
-    return fetch('/api/jobs/' + job.JobID + '/applications')
+    return fetch(`${API}/jobs/` + job.JobID + '/applications', { credentials: 'include' })
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var list = d && d.success ? d.applications : [];

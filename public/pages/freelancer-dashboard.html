@@ -753,11 +753,17 @@ if (params.get('uid')) {
   async function loadJobs() {
     const cat = document.getElementById('filterCat').value;
     const q   = document.getElementById('searchQ').value;
-    let url   = '/api/jobs?';
-    if (cat) url += `category=${cat}&`;
-    if (q)   url += `search=${encodeURIComponent(q)}`;
+    let url = `${API}/jobs?`;
+if (cat) url += `category=${cat}&`;
+if (q)   url += `search=${encodeURIComponent(q)}`;
 
-    const res  = await fetch(url);
+const local = localStorage.getItem('lg_user');
+let userId = null;
+if (local) { try { userId = JSON.parse(local).id; } catch {} }
+const res = await fetch(url, {
+    credentials: 'include',
+    headers: userId ? { 'x-user-id': String(userId) } : {}
+});
     const data = await res.json();
     const el   = document.getElementById('jobsList');
 

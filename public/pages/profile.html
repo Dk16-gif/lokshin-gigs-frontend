@@ -517,12 +517,18 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
     userId   = user.id;
 
     // Set back link based on role
-    const backLink = userRole === 'Freelancer' ? '/freelancer-dashboard' : '/customer-dashboard';
+    const backLink = userRole === 'Freelancer' ? '/pages/freelancer-dashboard.html' : '/pages/customer-dashboard.html';
     document.getElementById('backLink').innerHTML =
       `<a href="${backLink}" class="lk-nav" aria-label="Dashboard"><i class="ph ph-arrow-left" aria-hidden="true"></i><span>Dashboard</span></a>`;
 
     // Load profile data
-    const res  = await fetch('/api/users/profile');
+    const local = localStorage.getItem('lg_user');
+let userId = null;
+if (local) { try { userId = JSON.parse(local).id; } catch {} }
+const res = await fetch(`${API}/users/profile`, {
+    credentials: 'include',
+    headers: userId ? { 'x-user-id': String(userId) } : {}
+});
     const data = await res.json();
     if (!data.success) return;
     const p = data.profile;
@@ -554,7 +560,9 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
   }
 
   async function loadReviews() {
-    const res  = await fetch(`/api/reviews/freelancer/${userId}`);
+    const res = await fetch(`${API}/reviews/freelancer/${userId}`, {
+    credentials: 'include'
+});
     const data = await res.json();
     const el   = document.getElementById('reviewsList');
 
@@ -581,17 +589,24 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
     const btn = e.target.querySelector('button[type="submit"]');
     btn.disabled = true; btn.textContent = 'Saving...';
 
-    const res  = await fetch('/api/users/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    const local2 = localStorage.getItem('lg_user');
+let saveUserId = null;
+if (local2) { try { saveUserId = JSON.parse(local2).id; } catch {} }
+const res = await fetch(`${API}/users/profile`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+        ...(saveUserId && { 'x-user-id': String(saveUserId) })
+    },
+    credentials: 'include',
+    body: JSON.stringify({
         fullName:      document.getElementById('fullName').value,
         phone:         document.getElementById('phone').value,
         skillCategory: document.getElementById('skillCategory')?.value || '',
         experience:    document.getElementById('experience')?.value    || '',
         bio:           document.getElementById('bio')?.value           || ''
-      })
-    });
+    })
+});
     const data = await res.json();
     document.getElementById('alertBox').innerHTML =
       `<div class="alert alert-${data.success ? 'success' : 'danger'}">${data.message}</div>`;

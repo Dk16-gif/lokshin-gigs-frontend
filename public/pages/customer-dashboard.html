@@ -970,16 +970,19 @@ if (params.get('uid')) {
 
   async function init() {
     const user = await requireLogin();
-    if (!user || user.role !== 'Customer') {
-  document.body.innerHTML = '<pre style="padding:20px">AUTH FAILED - user: ' + JSON.stringify(user) + ' - API_BASE: ' + window.API_BASE + '</pre>';
-  return;
-}
+    if (!user || user.role !== 'Customer') return window.location.href = '/pages/login.html';
     document.getElementById('welcomeUser').textContent = `Hello, ${user.name}`;
     loadJobs();
   }
 
   async function loadJobs() {
-    const res = await fetch(`${API}/jobs/my`, { credentials: 'include' });
+    const local = localStorage.getItem('lg_user');
+    let userId = null;
+    if (local) { try { userId = JSON.parse(local).id; } catch {} }
+    const res = await fetch(`${API}/jobs/my`, {
+    credentials: 'include',
+    headers: userId ? { 'x-user-id': String(userId) } : {}
+});
     const data = await res.json();
     const tbody = document.getElementById('jobsBody');
 
@@ -1047,7 +1050,13 @@ if (params.get('uid')) {
     document.getElementById('appModalBody').innerHTML = '<div class="lk-modal-loading">Loading applications…</div>';
     new bootstrap.Modal(document.getElementById('appModal')).show();
 
-    const res = await fetch(`${API}/jobs/${jobId}/applications`, { credentials: 'include' });
+    const local = localStorage.getItem('lg_user');
+let userId = null;
+if (local) { try { userId = JSON.parse(local).id; } catch {} }
+const res = await fetch(`${API}/jobs/${jobId}/applications`, {
+    credentials: 'include',
+    headers: userId ? { 'x-user-id': String(userId) } : {}
+});
     const data = await res.json();
 
     if (!data.success || !data.applications.length) {
@@ -1197,7 +1206,13 @@ if (params.get('uid')) {
   function pendingFor(job) {
     var hit = appCache.get(job.JobID);
     if (hit && Date.now() - hit.t < 60000) return Promise.resolve(hit);
-    return fetch(`${API}/jobs/` + job.JobID + '/applications', { credentials: 'include' })
+    const local = localStorage.getItem('lg_user');
+let userId = null;
+if (local) { try { userId = JSON.parse(local).id; } catch {} }
+return fetch(`${API}/jobs/` + job.JobID + '/applications', {
+    credentials: 'include',
+    headers: userId ? { 'x-user-id': String(userId) } : {}
+})
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var list = d && d.success ? d.applications : [];

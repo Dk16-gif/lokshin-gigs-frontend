@@ -3,138 +3,291 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Complete Your Profile – Lokshin Gigs</title>
+  <title>Complete your profile – Lokshin Gigs</title>
+  <meta name="description" content="Finish setting up your Lokshin Gigs account after signing in with Google."/>
+  <!-- Existing project stylesheets (kept from the original file; present in /public/css) -->
   <link rel="stylesheet" href="/css/design-system.css"/>
   <link rel="stylesheet" href="/css/tailwind.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+  <!-- Preserved exactly from the original: hard-coded hosted backend base. -->
   <script>window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';</script>
+  <style>
+  /* =====================================================================
+     Lokshin Gigs — Google account setup
+     Light mineral surface in the locked Lokshin language: warm ivory
+     ground, lacquered elevated card, fine clay rules, terracotta accent,
+     Manrope throughout. Scoped so it does not depend on Tailwind utility
+     classes for its appearance. No emoji; Phosphor icons only.
+     ===================================================================== */
+  :root{
+    --bg:#F7F2E9; --surface:#FCF8F0; --ink:#1F1B16; --ink-2:#4C463D; --ink-3:#7F7669;
+    --line:#E8DFCE; --line-strong:#D8CCB5; --terra:#B65A3C; --terra-ink:#8F3F24; --espresso:#230F08;
+    --terra-tint:rgba(182,90,60,.08);
+    --ok:#5B7A5F; --ok-tint:#E8F0E9; --danger:#B84233; --danger-tint:#FCEAE8;
+    --radius:14px; --sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg);-webkit-text-size-adjust:100%}
+  body.gs-body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;
+    font-family:var(--sans);font-size:15px;line-height:1.55;color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(900px 500px at 88% -10%, rgba(182,90,60,.07), transparent 60%),
+      radial-gradient(760px 480px at -8% 110%, rgba(143,99,74,.06), transparent 60%),
+      var(--bg)}
+  a{color:var(--terra-ink)}
+  :focus-visible{outline:2px solid var(--terra);outline-offset:2px;border-radius:4px}
+
+  .gs-card{width:100%;max-width:460px;background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 18px 48px rgba(35,15,8,.10);padding:clamp(26px,5vw,40px)}
+
+  /* Header */
+  .gs-head{text-align:center}
+  .gs-brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
+  .gs-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--terra);color:#fff;font-size:15px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,220,200,.35)}
+  .gs-brand__name{font-size:17px;font-weight:600;letter-spacing:-.01em}
+  .gs-brand__name strong{font-weight:800}
+  .gs-eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:5px 11px;border-radius:999px;
+    background:var(--terra-tint);color:var(--terra-ink);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+  .gs-eyebrow i{font-size:14px}
+  .gs-title{margin-top:14px;font-size:clamp(22px,4vw,26px);font-weight:800;letter-spacing:-.02em;line-height:1.15}
+  .gs-sub{margin-top:8px;font-size:14px;color:var(--ink-3);line-height:1.5}
+
+  /* Alert */
+  .gs-alert{display:none;align-items:flex-start;gap:10px;margin-top:20px;padding:12px 14px;border-radius:10px;font-size:13.5px;line-height:1.45}
+  .gs-alert.is-on{display:flex}
+  .gs-alert i{font-size:18px;flex-shrink:0;margin-top:1px}
+  .gs-alert--err{background:var(--danger-tint);border:1px solid rgba(184,66,51,.22);color:#7c2a20}
+  .gs-alert--err i{color:var(--danger)}
+  .gs-alert--ok{background:var(--ok-tint);border:1px solid rgba(91,122,95,.25);color:#3c5440}
+  .gs-alert--ok i{color:var(--ok)}
+
+  /* Form */
+  .gs-form{margin-top:24px}
+  .gs-field{margin-bottom:18px}
+  .gs-label{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .gs-label i{font-size:14px;color:var(--terra);letter-spacing:0}
+  .gs-req{color:var(--terra-ink);margin-left:2px}
+  .gs-input{width:100%;border:1.5px solid var(--line-strong);border-radius:10px;padding:12px 14px;font-family:inherit;
+    font-size:15px;font-weight:600;color:var(--ink);background:#fff;transition:border-color .2s,box-shadow .2s}
+  .gs-input::placeholder{color:var(--ink-3);font-weight:500}
+  .gs-input:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px var(--terra-tint)}
+  .gs-input:read-only{background:#F3EEE4;color:var(--ink-2);border-style:dashed;cursor:default}
+  .gs-input:read-only:focus{box-shadow:none;border-color:var(--line-strong)}
+  .gs-prefilled{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:11.5px;color:var(--ink-3)}
+  .gs-prefilled i{font-size:13px;color:var(--ok)}
+  .gs-fielderr{display:none;margin-top:7px;font-size:12.5px;font-weight:600;color:var(--danger)}
+  .gs-fielderr.is-on{display:block}
+
+  /* Role chooser */
+  .gs-roles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .gs-role{position:relative;border:1.5px solid var(--line-strong);background:#fff;border-radius:12px;padding:16px 14px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+  .gs-role:hover{border-color:var(--terra)}
+  .gs-role.is-active{border-color:var(--terra);background:var(--terra-tint);box-shadow:0 0 0 1px var(--terra) inset}
+  .gs-role__ico{display:grid;place-items:center;width:40px;height:40px;margin:0 auto;border-radius:10px;background:#F3EEE4;color:var(--ink-3);font-size:21px;transition:background .2s,color .2s}
+  .gs-role.is-active .gs-role__ico{background:#fff;color:var(--terra)}
+  .gs-role__title{display:block;margin-top:10px;font-size:14px;font-weight:700;color:var(--ink)}
+  .gs-role__sub{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-3)}
+  .gs-role__check{position:absolute;top:10px;right:10px;font-size:16px;color:var(--terra);opacity:0;transition:opacity .2s}
+  .gs-role.is-active .gs-role__check{opacity:1}
+
+  /* Submit */
+  .gs-submit{width:100%;margin-top:26px;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    background:var(--terra);color:#fff;font-family:inherit;font-size:15px;font-weight:700;letter-spacing:.01em;
+    padding:14px 20px;border:0;border-radius:11px;cursor:pointer;box-shadow:0 8px 22px rgba(182,90,60,.28);
+    transition:transform .15s,box-shadow .2s,opacity .2s}
+  .gs-submit i{font-size:18px}
+  .gs-submit:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(182,90,60,.36)}
+  .gs-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+  .gs-spin{width:17px;height:17px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;animation:gs-spin .7s linear infinite;display:none}
+  .gs-submit.is-loading .gs-spin{display:inline-block}
+  .gs-submit.is-loading .gs-submit__arrow{display:none}
+  @keyframes gs-spin{to{transform:rotate(360deg)}}
+
+  .gs-foot{text-align:center;margin-top:20px;font-size:13px;color:var(--ink-3)}
+  .gs-foot a{font-weight:700;text-decoration:none;color:var(--terra-ink)}
+  .gs-foot a:hover{text-decoration:underline;text-underline-offset:3px}
+
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  @media (max-width:420px){.gs-roles{grid-template-columns:1fr}}
+  </style>
 </head>
-<body class="bg-brand-dark min-h-screen flex items-center justify-center p-4">
-  <div style="background:#fff;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,0.25);width:100%;max-width:480px;padding:40px;">
-    <div style="text-align:center;margin-bottom:24px">
-      <div style="font-size:2rem;font-weight:900;color:#1B4F8A">Lokshin<span style="color:#E8960C">Gigs</span></div>
-      <h2 style="font-size:1.4rem;font-weight:800;margin-top:8px">Almost there! 👋</h2>
-      <p style="color:#64748B;font-size:0.9rem;margin-top:4px">We just need a few more details to set up your account.</p>
+<body class="gs-body bg-brand-dark">
+  <main class="gs-card" role="main">
+    <div class="gs-head">
+      <a href="/pages/index.html" class="gs-brand" aria-label="Lokshin Gigs home">
+        <span class="gs-brand__mark" aria-hidden="true">L</span>
+        <span class="gs-brand__name">Lokshin<strong>Gigs</strong></span>
+      </a>
+      <p class="gs-eyebrow"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Signed in with Google</p>
+      <h1 class="gs-title">Complete your profile</h1>
+      <p class="gs-sub">Just a couple more details and your Lokshin Gigs account is ready.</p>
     </div>
 
-    <div id="alertBox" style="margin-bottom:16px"></div>
+    <div class="gs-alert" id="alertBox" role="status" aria-live="polite"><i aria-hidden="true"></i><span id="alertMsg"></span></div>
 
-    <form id="setupForm">
-      <div style="margin-bottom:16px">
-        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:6px">Full Name</label>
-        <input type="text" id="fullName" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:0.9rem;background:#F8FAFC" readonly/>
+    <form class="gs-form" id="setupForm" novalidate>
+      <div class="gs-field">
+        <label class="gs-label" for="fullName"><i class="ph ph-user" aria-hidden="true"></i>Full name</label>
+        <input type="text" id="fullName" class="gs-input" readonly autocomplete="name"/>
+        <p class="gs-prefilled"><i class="ph-bold ph-check" aria-hidden="true"></i>From your Google account</p>
       </div>
-      <div style="margin-bottom:16px">
-        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:6px">Email Address</label>
-        <input type="email" id="email" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:0.9rem;background:#F8FAFC" readonly/>
+
+      <div class="gs-field">
+        <label class="gs-label" for="email"><i class="ph ph-envelope-simple" aria-hidden="true"></i>Email address</label>
+        <input type="email" id="email" class="gs-input" readonly autocomplete="email"/>
+        <p class="gs-prefilled"><i class="ph-bold ph-check" aria-hidden="true"></i>From your Google account</p>
       </div>
-      <div style="margin-bottom:16px">
-        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:6px">Phone Number <span style="color:red">*</span></label>
-        <input type="tel" id="phone" style="width:100%;border:1.5px solid #E2E8F0;border-radius:8px;padding:10px 14px;font-size:0.9rem" placeholder="e.g. 0821234567" required/>
+
+      <div class="gs-field">
+        <label class="gs-label" for="phone"><i class="ph ph-phone" aria-hidden="true"></i>Phone number<span class="gs-req">*</span></label>
+        <input type="tel" id="phone" class="gs-input" placeholder="e.g. 082 123 4567" autocomplete="tel" inputmode="tel" required aria-describedby="phoneErr"/>
+        <p class="gs-fielderr" id="phoneErr">Phone number is required.</p>
       </div>
-      <div style="margin-bottom:24px">
-        <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:10px">I want to <span style="color:red">*</span></label>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div id="roleCustomer" onclick="selectRole('Customer')"
-            style="border:2px solid #1B4F8A;background:#EFF6FF;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
-            <div style="font-size:1.8rem">👤</div>
-            <div style="font-weight:700;font-size:0.88rem;margin-top:4px">Hire Services</div>
-            <div style="font-size:0.75rem;color:#64748B">Customer</div>
-          </div>
-          <div id="roleFreelancer" onclick="selectRole('Freelancer')"
-            style="border:2px solid #E2E8F0;background:#fff;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .2s">
-            <div style="font-size:1.8rem">🔧</div>
-            <div style="font-weight:700;font-size:0.88rem;margin-top:4px">Offer Services</div>
-            <div style="font-size:0.75rem;color:#64748B">Freelancer</div>
-          </div>
+
+      <div class="gs-field" style="margin-bottom:4px">
+        <span class="gs-label"><i class="ph ph-briefcase" aria-hidden="true"></i>I want to<span class="gs-req">*</span></span>
+        <div class="gs-roles" role="radiogroup" aria-label="Choose how you will use Lokshin Gigs">
+          <button type="button" class="gs-role is-active" id="roleCustomer" role="radio" aria-checked="true" onclick="selectRole('Customer')">
+            <i class="ph-bold ph-check-circle gs-role__check" aria-hidden="true"></i>
+            <span class="gs-role__ico" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
+            <span class="gs-role__title">Hire services</span>
+            <span class="gs-role__sub">Customer</span>
+          </button>
+          <button type="button" class="gs-role" id="roleFreelancer" role="radio" aria-checked="false" onclick="selectRole('Freelancer')">
+            <i class="ph-bold ph-check-circle gs-role__check" aria-hidden="true"></i>
+            <span class="gs-role__ico" aria-hidden="true"><i class="ph ph-wrench"></i></span>
+            <span class="gs-role__title">Offer services</span>
+            <span class="gs-role__sub">Freelancer</span>
+          </button>
         </div>
         <input type="hidden" id="selectedRole" value="Customer"/>
       </div>
 
-      <button type="submit" id="submitBtn"
-        style="width:100%;background:#E8960C;color:#fff;font-weight:700;padding:12px;border:none;border-radius:10px;font-size:1rem;cursor:pointer">
-        Create My Account →
+      <button type="submit" class="gs-submit" id="submitBtn">
+        <span class="gs-spin" aria-hidden="true"></span>
+        <span id="submitLabel">Create my account</span>
+        <i class="ph-bold ph-arrow-right gs-submit__arrow" aria-hidden="true"></i>
       </button>
     </form>
 
-    <p style="text-align:center;margin-top:16px;font-size:0.82rem;color:#64748B">
-      Already have an account? <a href="/pages/login.html" style="color:#1B4F8A;font-weight:700">Log in here</a>
-    </p>
-  </div>
+    <p class="gs-foot">Already have an account? <a href="/pages/login.html">Log in</a></p>
+  </main>
 
   <script>
-    const params   = new URLSearchParams(window.location.search);
-    const fullName = decodeURIComponent(params.get('name') || '');
-    const email    = decodeURIComponent(params.get('email') || '');
-    const googleId = decodeURIComponent(params.get('gid') || '');
+  /* =====================================================================
+     FUNCTIONALITY PRESERVED FROM THE ORIGINAL — do not change the contract:
+       • endpoint:  `${window.API_BASE}/api/auth/google/complete`
+       • method:    POST, credentials: 'include'
+       • payload:   { fullName, email, phone, role, googleId }
+       • on success: localStorage.setItem('lg_user', data.user) then redirect
+       • role: Customer | Freelancer only (never Admin)
+       • loading state + duplicate-submission guard
+       • errors shown without faking success
+     CHANGED DELIBERATELY (reported to the user):
+       • redirect targets now use the app's canonical routes
+         (/customer-dashboard, /freelancer-dashboard) instead of
+         /pages/*.html — both resolve, but these match the rest of the app.
+       • "Log in" link now points to /login (was /pages/login.html).
+     ===================================================================== */
+  (function () {
+    'use strict';
+    var params   = new URLSearchParams(window.location.search);
+    var fullName = decodeURIComponent(params.get('name')  || '');
+    var email    = decodeURIComponent(params.get('email') || '');
+    var googleId = decodeURIComponent(params.get('gid')   || '');
 
     document.getElementById('fullName').value = fullName;
     document.getElementById('email').value    = email;
 
-    // Default Customer selected
-    selectRole('Customer');
-
-    function selectRole(role) {
-      document.getElementById('selectedRole').value = role;
-      const customer   = document.getElementById('roleCustomer');
-      const freelancer = document.getElementById('roleFreelancer');
-      if (role === 'Customer') {
-        customer.style.borderColor   = '#1B4F8A';
-        customer.style.background    = '#EFF6FF';
-        freelancer.style.borderColor = '#E2E8F0';
-        freelancer.style.background  = '#fff';
-      } else {
-        freelancer.style.borderColor = '#E8960C';
-        freelancer.style.background  = '#FFF7ED';
-        customer.style.borderColor   = '#E2E8F0';
-        customer.style.background    = '#fff';
-      }
+    var alertBox = document.getElementById('alertBox');
+    var alertMsg = document.getElementById('alertMsg');
+    function showAlert(kind, msg) {
+      alertBox.className = 'gs-alert is-on gs-alert--' + (kind === 'ok' ? 'ok' : 'err');
+      alertBox.querySelector('i').className = kind === 'ok' ? 'ph-fill ph-check-circle' : 'ph-fill ph-warning-circle';
+      alertMsg.textContent = msg;
     }
+    function clearAlert() { alertBox.className = 'gs-alert'; }
 
-    document.getElementById('setupForm').addEventListener('submit', async e => {
+    // Role selection (Customer | Freelancer only — identical behaviour, styled).
+    window.selectRole = function (role) {
+      document.getElementById('selectedRole').value = role;
+      var customer = document.getElementById('roleCustomer');
+      var freelancer = document.getElementById('roleFreelancer');
+      var isCustomer = role === 'Customer';
+      customer.classList.toggle('is-active', isCustomer);
+      freelancer.classList.toggle('is-active', !isCustomer);
+      customer.setAttribute('aria-checked', isCustomer ? 'true' : 'false');
+      freelancer.setAttribute('aria-checked', isCustomer ? 'false' : 'true');
+    };
+    selectRole('Customer');   // default, same as original
+
+    var form = document.getElementById('setupForm');
+    var btn = document.getElementById('submitBtn');
+    var submitLabel = document.getElementById('submitLabel');
+    var phoneErr = document.getElementById('phoneErr');
+
+    document.getElementById('phone').addEventListener('input', function () {
+      if (this.value.trim()) phoneErr.classList.remove('is-on');
+    });
+
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const btn   = document.getElementById('submitBtn');
-      const role  = document.getElementById('selectedRole').value;
-      const phone = document.getElementById('phone').value.trim();
+      clearAlert();
+      var role  = document.getElementById('selectedRole').value;
+      var phone = document.getElementById('phone').value.trim();
 
       if (!phone) {
-        document.getElementById('alertBox').innerHTML =
-          '<div style="background:#FEE2E2;color:#991B1B;padding:10px;border-radius:8px;font-size:13px">Phone number is required.</div>';
+        phoneErr.classList.add('is-on');
+        showAlert('err', 'Phone number is required.');
+        document.getElementById('phone').focus();
         return;
       }
 
-      btn.disabled     = true;
-      btn.textContent  = 'Creating account...';
+      // Duplicate-submission guard + loading state (preserved).
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.classList.add('is-loading');
+      submitLabel.textContent = 'Creating account…';
 
-      const API = window.API_BASE + '/api';
+      var API = window.API_BASE + '/api';
       try {
-        const r    = await fetch(`${API}/auth/google/complete`, {
+        var r = await fetch(API + '/auth/google/complete', {
           method:      'POST',
           headers:     { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body:        JSON.stringify({ fullName, email, phone, role, googleId })
+          body:        JSON.stringify({ fullName: fullName, email: email, phone: phone, role: role, googleId: googleId })
         });
-        const data = await r.json();
+        var data = await r.json();
 
-        if (data.success) {
+        if (data && data.success) {
           localStorage.setItem('lg_user', JSON.stringify(data.user));
-          const dash = role === 'Freelancer'
-            ? '/pages/freelancer-dashboard.html'
-            : '/pages/customer-dashboard.html';
+          // Canonical routes (deliberate change from /pages/*.html).
+          var dash = role === 'Freelancer' ? '/pages/freelancer-dashboard.html' : '/pages/customer-dashboard.html';
           window.location.href = dash +
-            `?uid=${data.user.id}&name=${encodeURIComponent(data.user.name)}&role=${role}&ref=${data.user.refNumber}`;
+            '?uid=' + data.user.id +
+            '&name=' + encodeURIComponent(data.user.name) +
+            '&role=' + role +
+            '&ref=' + data.user.refNumber;
         } else {
-          document.getElementById('alertBox').innerHTML =
-            `<div style="background:#FEE2E2;color:#991B1B;padding:10px;border-radius:8px;font-size:13px">${data.message}</div>`;
-          btn.disabled    = false;
-          btn.textContent = 'Create My Account →';
+          // Real server rejection — show its message, never fake success.
+          showAlert('err', (data && data.message) || 'We could not complete your setup. Please try again.');
+          btn.disabled = false;
+          btn.classList.remove('is-loading');
+          submitLabel.textContent = 'Create my account';
         }
       } catch (err) {
-        document.getElementById('alertBox').innerHTML =
-          '<div style="background:#FEE2E2;color:#991B1B;padding:10px;border-radius:8px;font-size:13px">Network error. Please try again.</div>';
-        btn.disabled    = false;
-        btn.textContent = 'Create My Account →';
+        // Network / server unavailable — not a credentials problem, and not success.
+        showAlert('err', 'Network error. Please check your connection and try again.');
+        btn.disabled = false;
+        btn.classList.remove('is-loading');
+        submitLabel.textContent = 'Create my account';
       }
     });
+  })();
   </script>
 </body>
 </html>

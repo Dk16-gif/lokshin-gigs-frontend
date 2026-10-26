@@ -13,7 +13,7 @@
   <style>
 /* =====================================================================
    LOKSHIN GIGS — PROFILE
-   An identity dossier: a near-black room lit by slow copper light, the
+   An identity dossier: a near black room lit by slow copper light, the
    person's name set in a serif, and their record on dark lacquered
    surfaces ruled with fine ivory lines. Manrope carries every control;
    Instrument Serif is kept for the identity moments only.
@@ -143,6 +143,17 @@ h1,h2,p,dl,dd{margin:0}
   transition:width .7s var(--ease)}
 .lk-complete__fill::after{content:'';position:absolute;right:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--terra-light);box-shadow:0 0 10px rgba(208,120,85,.8)}
 .lk-complete__hint{margin-top:10px;font-size:12.5px;color:var(--ivory-muted)}
+.lk-verify{display:flex;align-items:center;gap:14px;margin-top:26px;padding:14px 16px;border:1px solid var(--line-strong);border-radius:12px;text-decoration:none;color:var(--ivory);background:rgba(247,242,233,.02);transition:border-color .2s,background .2s;animation:lkRise .7s var(--ease) .76s both}
+.lk-verify:hover{border-color:var(--terra);background:var(--terra-glow)}
+.lk-verify__ico{display:grid;place-items:center;width:38px;height:38px;border-radius:9px;background:rgba(247,242,233,.05);color:var(--ivory-muted);font-size:19px;flex-shrink:0;transition:color .2s,background .2s}
+.lk-verify.is-approved .lk-verify__ico{color:#8FB98A;background:rgba(143,185,138,.14)}
+.lk-verify.is-pending .lk-verify__ico{color:#E0B257;background:rgba(224,178,87,.14)}
+.lk-verify.is-rejected .lk-verify__ico{color:#D9735E;background:rgba(217,115,94,.14)}
+.lk-verify__body{flex:1;min-width:0}
+.lk-verify__lbl{display:block;font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-verify__val{display:block;margin-top:3px;font-size:14px;font-weight:700;color:var(--ivory)}
+.lk-verify__go{font-size:16px;color:var(--ivory-muted);transition:transform .2s,color .2s}
+.lk-verify:hover .lk-verify__go{color:var(--terra-light);transform:translateX(2px)}
 
 /* ---- Workspace: dark lacquered surface ---- */
 .lk-work{min-width:0;display:grid;gap:28px}
@@ -336,6 +347,7 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
     <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
     <nav class="lk-top__end" aria-label="Account">
       <span id="backLink"></span>
+      <a href="/pages/verification.html" class="lk-nav" id="verifyNav"><i class="ph ph-shield-check" aria-hidden="true"></i><span>Verify</span></a>
       <button type="button" class="lk-nav lk-nav--out" onclick="logout()" aria-label="Logout"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Logout</span></button>
     </nav>
   </div>
@@ -360,6 +372,16 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
         <div class="lk-complete__track" aria-hidden="true"><span class="lk-complete__fill" id="idCompleteFill"></span></div>
         <p class="lk-complete__hint" id="idCompleteHint"></p>
       </div>
+
+      <!-- Verification status (entry point to /verification). Status is loaded live. -->
+      <a class="lk-verify" id="idVerify" href="/pages/verification.html" aria-live="polite">
+        <span class="lk-verify__ico" id="idVerifyIco" aria-hidden="true"><i class="ph ph-shield"></i></span>
+        <span class="lk-verify__body">
+          <span class="lk-verify__lbl">Verification</span>
+          <span class="lk-verify__val" id="idVerifyVal">Checking…</span>
+        </span>
+        <i class="ph ph-arrow-right lk-verify__go" aria-hidden="true"></i>
+      </a>
     </div>
   </section>
 
@@ -481,7 +503,11 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
   window.logout = function () { showAlert('Logging out is turned off in preview mode.', 'warning'); };
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, opts) {
-    var url = String(input), method = ((opts && opts.method) || 'GET').toUpperCase();
+    var rawUrl = String(input), method = ((opts && opts.method) || 'GET').toUpperCase();
+    // Normalise away any API_BASE prefix so preview matches whether the page
+    // calls '/api/...' (local) or 'https://…onrender.com/api/...' (Vercel).
+    var apiBase = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE : '';
+    var url = (apiBase && rawUrl.indexOf(apiBase) === 0) ? rawUrl.slice(apiBase.length) : rawUrl;
     var body = {}; try { body = JSON.parse((opts && opts.body) || '{}'); } catch (e) {}
     if (url === '/api/users/profile' && method === 'GET') return reply({ success: true, profile: JSON.parse(JSON.stringify(me)) });
     if (url === '/api/users/profile' && method === 'PUT') {
@@ -492,6 +518,12 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
     }
     if (url === '/api/categories') return reply({ success: true, categories: cats });
     if (/^\/api\/reviews\/freelancer\/\d+$/.test(url)) return reply({ success: true, reviews: reviews });
+    if (url === '/api/verifications/me') {
+      var vs = (qs && qs.get('vstate')) || 'Not Submitted';
+      vs = ({ notsubmitted: 'Not Submitted', pending: 'Pending', approved: 'Approved', rejected: 'Rejected' })[vs.toLowerCase().replace(/[\s-]/g, '')] || 'Not Submitted';
+      if (vs === 'Not Submitted') return reply({ success: true, verification: null });
+      return reply({ success: true, verification: { Status: vs, SubmittedAt: Date.now() - 2 * 864e5 } });
+    }
     return realFetch(input, opts);
   };
   document.addEventListener('DOMContentLoaded', function () {
@@ -522,13 +554,7 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
       `<a href="${backLink}" class="lk-nav" aria-label="Dashboard"><i class="ph ph-arrow-left" aria-hidden="true"></i><span>Dashboard</span></a>`;
 
     // Load profile data
-    const local = localStorage.getItem('lg_user');
-let userId = null;
-if (local) { try { userId = JSON.parse(local).id; } catch {} }
-const res = await fetch(`${API}/users/profile`, {
-    credentials: 'include',
-    headers: userId ? { 'x-user-id': String(userId) } : {}
-});
+    const res  = await fetch('/api/users/profile');
     const data = await res.json();
     if (!data.success) return;
     const p = data.profile;
@@ -560,9 +586,7 @@ const res = await fetch(`${API}/users/profile`, {
   }
 
   async function loadReviews() {
-    const res = await fetch(`${API}/reviews/freelancer/${userId}`, {
-    credentials: 'include'
-});
+    const res  = await fetch(`/api/reviews/freelancer/${userId}`);
     const data = await res.json();
     const el   = document.getElementById('reviewsList');
 
@@ -589,24 +613,17 @@ const res = await fetch(`${API}/users/profile`, {
     const btn = e.target.querySelector('button[type="submit"]');
     btn.disabled = true; btn.textContent = 'Saving...';
 
-    const local2 = localStorage.getItem('lg_user');
-let saveUserId = null;
-if (local2) { try { saveUserId = JSON.parse(local2).id; } catch {} }
-const res = await fetch(`${API}/users/profile`, {
-    method: 'PUT',
-    headers: {
-        'Content-Type': 'application/json',
-        ...(saveUserId && { 'x-user-id': String(saveUserId) })
-    },
-    credentials: 'include',
-    body: JSON.stringify({
+    const res  = await fetch('/api/users/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         fullName:      document.getElementById('fullName').value,
         phone:         document.getElementById('phone').value,
         skillCategory: document.getElementById('skillCategory')?.value || '',
         experience:    document.getElementById('experience')?.value    || '',
         bio:           document.getElementById('bio')?.value           || ''
-    })
-});
+      })
+    });
     const data = await res.json();
     document.getElementById('alertBox').innerHTML =
       `<div class="alert alert-${data.success ? 'success' : 'danger'}">${data.message}</div>`;
@@ -705,6 +722,45 @@ const res = await fetch(`${API}/users/profile`, {
       if (!raf) raf = requestAnimationFrame(step);
     }, { passive: true });
   }
+})();
+</script>
+<!-- Verification status chip updater. Reads GET /api/verifications/me and
+     reflects the state on the Profile entry point. Degrades to "Not verified
+     yet" if the endpoint is not connected. Does not alter any profile logic. -->
+<script>
+(function () {
+  var el = document.getElementById('idVerify');
+  if (!el) return;
+  var valEl = document.getElementById('idVerifyVal');
+  var icoEl = document.getElementById('idVerifyIco') && document.getElementById('idVerifyIco').querySelector('i');
+  var MAP = {
+    'Not Submitted': { cls: '', icon: 'ph ph-shield', text: 'Not verified yet — verify now' },
+    'Pending':       { cls: 'is-pending',  icon: 'ph-fill ph-clock',     text: 'Pending review' },
+    'Approved':      { cls: 'is-approved', icon: 'ph-fill ph-seal-check', text: 'Verified' },
+    'Rejected':      { cls: 'is-rejected', icon: 'ph-fill ph-x-circle',  text: 'Action needed — resubmit' }
+  };
+  function paint(status) {
+    var m = MAP[status] || MAP['Not Submitted'];
+    el.classList.remove('is-pending', 'is-approved', 'is-rejected');
+    if (m.cls) el.classList.add(m.cls);
+    if (icoEl) icoEl.className = m.icon;
+    if (valEl) valEl.textContent = m.text;
+  }
+  (async function () {
+    try {
+      var API_V = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
+      var r = await fetch(API_V + '/verifications/me', { credentials: 'include' });
+      if (r.ok) {
+        var d = await r.json();
+        var st = (d && d.success && d.verification && d.verification.Status) ? d.verification.Status : 'Not Submitted';
+        paint(st);
+      } else {
+        paint('Not Submitted');   // 404 / not connected → clean entry point
+      }
+    } catch (e) {
+      paint('Not Submitted');
+    }
+  })();
 })();
 </script>
 </body>

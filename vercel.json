@@ -1,6 +1,18 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/public/index.html" },
+
+    { "source": "/login", "destination": "/public/pages/login.html" },
+    { "source": "/register", "destination": "/public/pages/register.html" },
+    { "source": "/customer-dashboard", "destination": "/public/pages/customer-dashboard.html" },
+    { "source": "/freelancer-dashboard", "destination": "/public/pages/freelancer-dashboard.html" },
+    { "source": "/admin-dashboard", "destination": "/public/pages/admin-dashboard.html" },
+    { "source": "/profile", "destination": "/public/pages/profile.html" },
+    { "source": "/post-job", "destination": "/public/pages/post-job.html" },
+    { "source": "/terms", "destination": "/public/pages/terms.html" },
+    { "source": "/verification", "destination": "/public/pages/verification.html" },
+    { "source": "/google-setup", "destination": "/public/pages/google-setup.html" },
+
     { "source": "/pages/:page*", "destination": "/public/pages/:page*" },
     { "source": "/css/:file*", "destination": "/public/css/:file*" },
     { "source": "/js/:file*", "destination": "/public/js/:file*" },

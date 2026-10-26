@@ -19,16 +19,16 @@ const DEMO_STATS = {
 };
 
 const DEMO_USERS = [
-  { UserID: 1, FullName: 'Thabo Mokoena', Email: 'thabo.m@email.co.za', PhoneNumber: '072 345 6789', Role: 'Freelancer', Area: 'Soweto', CreatedAt: '2024-08-15T00:00:00', IsActive: true, Services: 'Plumbing, Electrical', CompletedJobs: 23, ActiveJobs: 2, Reviews: 18, Rating: 4.7, Verified: true },
-  { UserID: 2, FullName: 'Lerato Ndlovu', Email: 'lerato.n@email.co.za', PhoneNumber: '083 456 7890', Role: 'Customer', Area: 'Kensington', CreatedAt: '2024-09-01T00:00:00', IsActive: true, Services: null, CompletedJobs: 8, ActiveJobs: 1, Reviews: 6, Rating: null, Verified: true },
-  { UserID: 3, FullName: 'Sipho Dlamini', Email: 'sipho.d@email.co.za', PhoneNumber: '071 567 8901', Role: 'Freelancer', Area: 'Tembisa', CreatedAt: '2024-07-20T00:00:00', IsActive: true, Services: 'Gardening, Landscaping', CompletedJobs: 45, ActiveJobs: 3, Reviews: 32, Rating: 4.9, Verified: true },
-  { UserID: 4, FullName: 'Nomsa Khumalo', Email: 'nomsa.k@email.co.za', PhoneNumber: '084 678 9012', Role: 'Customer', Area: 'Midrand', CreatedAt: '2024-10-05T00:00:00', IsActive: true, Services: null, CompletedJobs: 5, ActiveJobs: 0, Reviews: 4, Rating: null, Verified: true },
-  { UserID: 5, FullName: 'Bongani Zulu', Email: 'bongani.z@email.co.za', PhoneNumber: '076 789 0123', Role: 'Freelancer', Area: 'Alexandra', CreatedAt: '2024-06-10T00:00:00', IsActive: false, Services: 'Painting, Tiling', CompletedJobs: 12, ActiveJobs: 0, Reviews: 8, Rating: 3.8, Verified: false },
-  { UserID: 6, FullName: 'Ayanda Mthembu', Email: 'ayanda.m@email.co.za', PhoneNumber: '082 890 1234', Role: 'Freelancer', Area: 'Diepsloot', CreatedAt: '2024-11-12T00:00:00', IsActive: true, Services: 'Cleaning, Laundry', CompletedJobs: 67, ActiveJobs: 4, Reviews: 51, Rating: 4.8, Verified: true },
-  { UserID: 7, FullName: 'Zanele Nkosi', Email: 'zanele.n@email.co.za', PhoneNumber: '079 901 2345', Role: 'Customer', Area: 'Randburg', CreatedAt: '2024-08-28T00:00:00', IsActive: true, Services: null, CompletedJobs: 12, ActiveJobs: 2, Reviews: 10, Rating: null, Verified: true },
-  { UserID: 8, FullName: 'Mandla Sithole', Email: 'mandla@lokshin.co.za', PhoneNumber: '073 012 3456', Role: 'Admin', Area: 'Johannesburg CBD', CreatedAt: '2024-01-01T00:00:00', IsActive: true, Services: null, CompletedJobs: 0, ActiveJobs: 0, Reviews: 0, Rating: null, Verified: true },
-  { UserID: 9, FullName: 'Palesa Molefe', Email: 'palesa.m@email.co.za', PhoneNumber: '081 123 4567', Role: 'Freelancer', Area: 'Roodepoort', CreatedAt: '2024-09-18T00:00:00', IsActive: true, Services: 'Cooking, Catering', CompletedJobs: 31, ActiveJobs: 1, Reviews: 24, Rating: 4.6, Verified: true },
-  { UserID: 10, FullName: 'Tshepo Mahlangu', Email: 'tshepo.m@email.co.za', PhoneNumber: '085 234 5678', Role: 'Customer', Area: 'Centurion', CreatedAt: '2024-10-22T00:00:00', IsActive: true, Services: null, CompletedJobs: 3, ActiveJobs: 1, Reviews: 2, Rating: null, Verified: false }
+  { UserID: 1, FullName: 'Thabo Mokoena', Email: 'thabo.m@email.co.za', PhoneNumber: '072 345 6789', Role: 'Freelancer', Area: 'Soweto', CreatedAt: '2024-08-15T00:00:00', IsActive: true, Services: 'Plumbing, Electrical', CompletedJobs: 23, ActiveJobs: 2, Reviews: 18, Rating: 4.7, Verified: true, VerificationStatus: 'Approved' },
+  { UserID: 2, FullName: 'Lerato Ndlovu', Email: 'lerato.n@email.co.za', PhoneNumber: '083 456 7890', Role: 'Customer', Area: 'Kensington', CreatedAt: '2024-09-01T00:00:00', IsActive: true, Services: null, CompletedJobs: 8, ActiveJobs: 1, Reviews: 6, Rating: null, Verified: true, VerificationStatus: null },
+  { UserID: 3, FullName: 'Sipho Dlamini', Email: 'sipho.d@email.co.za', PhoneNumber: '071 567 8901', Role: 'Freelancer', Area: 'Tembisa', CreatedAt: '2024-07-20T00:00:00', IsActive: true, Services: 'Gardening, Landscaping', CompletedJobs: 45, ActiveJobs: 3, Reviews: 32, Rating: 4.9, Verified: true, VerificationStatus: 'Approved' },
+  { UserID: 4, FullName: 'Nomsa Khumalo', Email: 'nomsa.k@email.co.za', PhoneNumber: '084 678 9012', Role: 'Customer', Area: 'Midrand', CreatedAt: '2024-10-05T00:00:00', IsActive: true, Services: null, CompletedJobs: 5, ActiveJobs: 0, Reviews: 4, Rating: null, Verified: true, VerificationStatus: null },
+  { UserID: 5, FullName: 'Bongani Zulu', Email: 'bongani.z@email.co.za', PhoneNumber: '076 789 0123', Role: 'Freelancer', Area: 'Alexandra', CreatedAt: '2024-06-10T00:00:00', IsActive: false, Services: 'Painting, Tiling', CompletedJobs: 12, ActiveJobs: 0, Reviews: 8, Rating: 3.8, Verified: false, VerificationStatus: 'Approved' },
+  { UserID: 6, FullName: 'Ayanda Mthembu', Email: 'ayanda.m@email.co.za', PhoneNumber: '082 890 1234', Role: 'Freelancer', Area: 'Diepsloot', CreatedAt: '2024-11-12T00:00:00', IsActive: true, Services: 'Cleaning, Laundry', CompletedJobs: 67, ActiveJobs: 4, Reviews: 51, Rating: 4.8, Verified: true, VerificationStatus: 'Pending' },
+  { UserID: 7, FullName: 'Zanele Nkosi', Email: 'zanele.n@email.co.za', PhoneNumber: '079 901 2345', Role: 'Customer', Area: 'Randburg', CreatedAt: '2024-08-28T00:00:00', IsActive: true, Services: null, CompletedJobs: 12, ActiveJobs: 2, Reviews: 10, Rating: null, Verified: true, VerificationStatus: null },
+  { UserID: 8, FullName: 'Mandla Sithole', Email: 'mandla@lokshin.co.za', PhoneNumber: '073 012 3456', Role: 'Admin', Area: 'Johannesburg CBD', CreatedAt: '2024-01-01T00:00:00', IsActive: true, Services: null, CompletedJobs: 0, ActiveJobs: 0, Reviews: 0, Rating: null, Verified: true, VerificationStatus: null },
+  { UserID: 9, FullName: 'Palesa Molefe', Email: 'palesa.m@email.co.za', PhoneNumber: '081 123 4567', Role: 'Freelancer', Area: 'Roodepoort', CreatedAt: '2024-09-18T00:00:00', IsActive: true, Services: 'Cooking, Catering', CompletedJobs: 31, ActiveJobs: 1, Reviews: 24, Rating: 4.6, Verified: true, VerificationStatus: 'Rejected' },
+  { UserID: 10, FullName: 'Tshepo Mahlangu', Email: 'tshepo.m@email.co.za', PhoneNumber: '085 234 5678', Role: 'Customer', Area: 'Centurion', CreatedAt: '2024-10-22T00:00:00', IsActive: true, Services: null, CompletedJobs: 3, ActiveJobs: 1, Reviews: 2, Rating: null, Verified: false, VerificationStatus: null }
 ];
 
 const DEMO_JOBS = [
@@ -66,6 +66,22 @@ let currentJobViewMode = 'list';
 let isDemo = false;
 let jobControlsReady = false;
 
+// Cross-origin backend base (Vercel target → Render) with same-origin fallback,
+// matching main.js. Admin GET loaders below go through this; writes use the
+// apiPut/apiDelete helpers from main.js (which already add API_BASE,
+// credentials:'include' and the x-user-id header).
+var ADMIN_API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
+function adminFetch(path) {
+  return fetch(ADMIN_API + path, { credentials: 'include' });
+}
+
+// SAFETY FLAG — "Deactivate account" in LIVE mode is disabled until the backend
+// replaces the existing hard-delete (DELETE /api/admin/users/:id, which cascades
+// and destroys Jobs/Applications/Reviews) with a genuine soft delete that
+// preserves marketplace history. While this is false, a live deactivation must
+// NEVER call that endpoint. Flip to true only once the backend is soft-delete.
+var DEACTIVATE_BACKEND_READY = false;
+
 // Preview mode — active on file:// or when URL contains ?preview=1
 var isPreview = (function() {
   if (window.location.protocol === 'file:') return true;
@@ -99,24 +115,60 @@ window.showAlert = function(msg, type) {
 // INIT
 // =====================================================
 
+// Dashboard routes by role, in the Vercel target's /pages/*.html convention
+// (canonical routes also resolve via vercel.json rewrites).
+var ROLE_DASHBOARD = {
+  Customer:   '/pages/customer-dashboard.html',
+  Freelancer: '/pages/freelancer-dashboard.html',
+  Admin:      '/pages/admin-dashboard.html'
+};
+var LOGIN_PAGE = '/pages/login.html';
+
+// Admin access check (frontend navigation guard only — NOT security; the server
+// must enforce Admin authorization on every /api/admin/* route).
+// Resolves identity through getCurrentUser() from main.js, so it inherits the
+// target's production auth model (window.API_BASE, credentials:'include', and
+// the localStorage fallback used because cross-domain cookies are blocked).
+// Fails SAFE: when identity cannot be confirmed it goes to login, and an auth
+// failure NEVER sets demo mode or grants Admin access.
+async function ensureAdminAccess() {
+  var user = null;
+  try {
+    // getCurrentUser() returns the user (from backend or localStorage) or null;
+    // it never throws. null means "could not confirm" → fail safe.
+    user = (typeof getCurrentUser === 'function') ? await getCurrentUser() : null;
+  } catch (e) {
+    user = null;
+  }
+
+  if (!user || !user.role) {           // not authenticated / cannot confirm
+    window.location.replace(LOGIN_PAGE);
+    return false;
+  }
+
+  if (user.role === 'Admin') return true;   // the only path that stays here
+
+  // Authenticated but NOT an admin → send to their own dashboard (not login,
+  // which would bounce an already-logged-in user and risk a loop).
+  var dest = ROLE_DASHBOARD[user.role] || LOGIN_PAGE;
+  if (dest === window.location.pathname) dest = LOGIN_PAGE;   // loop guard
+  window.location.replace(dest);
+  return false;
+}
+
 async function init() {
-  // Preview mode — skip authentication entirely
+  // Preview mode — a development aid only. It shows sample data and a visible
+  // badge; it NEVER represents a real admin session and cannot reach live data
+  // through the admin API (the server still rejects unauthenticated requests).
   if (isPreview) {
-    console.log('Preview mode active — authentication bypassed');
+    console.log('Preview mode active — sample data only, not a real session');
     isDemo = true;
     injectPreviewBadge();
   } else {
-    // Live mode — require admin authentication
-    try {
-      var user = await requireLogin();
-      if (!user || user.role !== 'Admin') {
-        window.location.href = '/pages/login.html';
-        return;
-      }
-    } catch (e) {
-      console.log('Auth unavailable, running in demo mode');
-      isDemo = true;
-    }
+    // Live mode — require a confirmed Admin session before rendering anything.
+    var allowed = await ensureAdminAccess();
+    if (!allowed) return;               // a redirect is already underway
+    // Reaching here means a real Admin session; isDemo stays false.
   }
 
   setupNavigation();
@@ -197,6 +249,7 @@ function switchView(viewName) {
   // Load data when entering views
   if (viewName === 'users') loadUsers();
   if (viewName === 'jobs') loadAdminJobs();
+  if (viewName === 'verification') loadVerifications();
 }
 
 
@@ -237,7 +290,7 @@ async function loadStats() {
   var stats = null;
 
   try {
-    var res = await fetch('/api/admin/stats');
+    var res = await adminFetch('/admin/stats');
     var data = await res.json();
     if (data.success) {
       stats = data.stats;
@@ -590,7 +643,7 @@ async function loadUsers() {
   if (!tbody) return;
 
   try {
-    var res = await fetch('/api/admin/users');
+    var res = await adminFetch('/admin/users');
     var data = await res.json();
     if (data.success) {
       allUsers = data.users.map(function(u) {
@@ -600,8 +653,11 @@ async function loadUsers() {
           CompletedJobs: u.CompletedJobs || 0,
           ActiveJobs: u.ActiveJobs || 0,
           Reviews: u.Reviews || 0,
-          Rating: u.Rating || null,
-          Verified: u.Verified !== undefined ? u.Verified : true
+          Rating: u.Rating || null
+          // NOTE: do NOT default a verification/Verified value here. Verification
+          // is a separate concept owned by the Verification Pipeline; inventing
+          // "verified: true" would be a false trust signal. The panel shows
+          // "Not available yet" until the backend supplies a real status.
         });
       });
       renderUsers(allUsers);
@@ -636,23 +692,20 @@ function renderUsers(users) {
     var statusLabel = u.IsActive ? 'Active' : 'Suspended';
     var completedCount = u.CompletedJobs || 0;
     var joined = typeof formatDate === 'function' ? formatDate(u.CreatedAt) : new Date(u.CreatedAt).toLocaleDateString('en-ZA');
-    var toggleLabel = u.IsActive ? 'Suspend' : 'Activate';
-    var toggleClass = u.IsActive ? 'lk-act-warn' : 'lk-act-success';
 
     return '<tr data-user="' + u.UserID + '">' +
       '<td><div class="lk-user-cell">' +
         '<div class="lk-avatar" style="background:' + avatarColor + '">' + initials + '</div>' +
-        '<div><div class="lk-user-name">' + u.FullName + '</div>' +
-        '<div class="lk-user-email">' + u.Email + '</div></div>' +
+        '<div><div class="lk-user-name">' + escAdmin(u.FullName) + '</div>' +
+        '<div class="lk-user-email">' + escAdmin(u.Email) + '</div></div>' +
       '</div></td>' +
-      '<td><span class="lk-role-tag lk-role-tag--' + roleLower + '">' + u.Role + '</span></td>' +
-      '<td>' + u.Area + '</td>' +
+      '<td><span class="lk-role-tag lk-role-tag--' + roleLower + '">' + escAdmin(u.Role) + '</span></td>' +
+      '<td>' + escAdmin(u.Area) + '</td>' +
       '<td><span class="lk-status-dot lk-status-dot--' + statusClass + '">' + statusLabel + '</span></td>' +
       '<td>' + joined + '</td>' +
       '<td>' + completedCount + ' job' + (completedCount !== 1 ? 's' : '') + '</td>' +
       '<td><div class="lk-row-actions">' +
-        '<button class="' + toggleClass + '" onclick="event.stopPropagation();toggleUser(' + u.UserID + ')">' + toggleLabel + '</button>' +
-        '<button class="lk-act-danger" onclick="event.stopPropagation();deleteUser(' + u.UserID + ')">Delete</button>' +
+        '<button class="lk-act-manage" onclick="event.stopPropagation();openUserById(' + u.UserID + ')">Manage</button>' +
       '</div></td>' +
     '</tr>';
   }).join('');
@@ -692,6 +745,109 @@ function filterUsers() {
 // RECORD PANEL
 // =====================================================
 
+// Escape user-supplied text before inserting into innerHTML (defensive; the
+// admin table historically concatenated raw values).
+function escAdmin(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+// Normalise a user's verification status into one of the four states, or null
+// when verification doesn't apply / isn't known.
+//  - Only Freelancers carry verification (identity/speciality/documents).
+//  - In LIVE mode there is no verification field on /api/admin/users yet, so we
+//    report it as "Not available yet" rather than inventing a value.
+function userVerificationStatus(user) {
+  if (user.Role !== 'Freelancer') return null;
+  if (user.VerificationStatus) return user.VerificationStatus;           // preview / future backend
+  if (typeof user.Verified === 'boolean') return user.Verified ? 'Approved' : 'Not submitted';
+  return isPreview ? 'Not submitted' : 'unknown';
+}
+
+function verificationSectionHtml(user) {
+  if (user.Role !== 'Freelancer') return '';   // verification is freelancer-scoped
+  var vs = userVerificationStatus(user);
+  var valueHtml;
+  if (vs === 'unknown') {
+    valueHtml = '<span class="lk-panel__row-value" style="color:var(--lk-ink-muted)">Not available yet</span>';
+  } else {
+    var map = {
+      'Approved':      'lk-tag--active',
+      'Pending':       'lk-tag--pending',
+      'Rejected':      'lk-tag--danger',
+      'Not submitted': 'lk-tag--pending'
+    };
+    valueHtml = '<span class="lk-tag ' + (map[vs] || 'lk-tag--pending') + '">' + escAdmin(vs) + '</span>';
+  }
+  return '<div class="lk-panel__section">' +
+      '<div class="lk-panel__section-title">Verification <span class="lkv-sep">— separate from account status</span></div>' +
+      '<div class="lk-panel__row"><span class="lk-panel__row-label">Identity / credentials</span><span class="lk-panel__row-value">' + valueHtml + '</span></div>' +
+      '<div class="lk-panel__row"><span class="lk-panel__row-label" style="font-size:11px;color:var(--lk-ink-muted);font-weight:500">Managed in the Verification Pipeline</span>' +
+        '<span class="lk-panel__row-value"><button type="button" class="lkv-link" onclick="switchView(\'verification\');closeRecordPanel();"><i class="ph ph-arrow-right"></i>Open pipeline</button></span></div>' +
+    '</div>';
+}
+
+// Footer actions. Admins are not manageable from here by default (an admin
+// should not suspend or delete themselves or other admins without an explicit
+// product decision) — the backend must enforce this regardless.
+function renderPanelActions(user) {
+  var footEl = document.getElementById('panelFoot');
+  if (!footEl) return;
+  if (user.Role === 'Admin') {
+    footEl.innerHTML = '<p class="lkv-foot-note">Admin accounts are not managed from this panel.</p>';
+    return;
+  }
+  var toggleLabel = user.IsActive ? 'Suspend account' : 'Activate account';
+  var toggleClass = user.IsActive ? 'lk-btn-warn' : 'lk-btn-success';
+
+  // Deactivation is available in preview (as a clearly-labelled simulation) and
+  // in live mode ONLY when the backend soft delete is ready. Otherwise it renders
+  // disabled with an inline explanation, and cannot call the hard-delete endpoint.
+  var deactivateEnabled = isPreview || DEACTIVATE_BACKEND_READY;
+  var deactivateBtn = deactivateEnabled
+    ? '<button class="lk-btn-danger" onclick="confirmUserAction(' + user.UserID + ',\'deactivate\')">Deactivate account</button>'
+    : '<button class="lk-btn-danger" type="button" disabled aria-disabled="true" title="Unavailable until backend soft delete is implemented">Deactivate account</button>';
+
+  footEl.innerHTML =
+    '<div class="lkv-actions">' +
+      '<div class="lkv-actions__row">' +
+        '<button class="' + toggleClass + '" onclick="confirmUserAction(' + user.UserID + ',\'' + (user.IsActive ? 'suspend' : 'activate') + '\')">' + toggleLabel + '</button>' +
+        deactivateBtn +
+      '</div>' +
+      (deactivateEnabled ? '' : '<p class="lkv-foot-note lkv-foot-note--left"><i class="ph ph-info"></i>Deactivation is disabled until backend soft deletion is added, so marketplace history is never destroyed. Use <strong>Suspend</strong> to block access now.</p>') +
+    '</div>';
+}
+
+// Styled in-panel confirmation (no native confirm()). Replaces the footer with
+// a confirm/cancel step whose copy and strength match the action.
+function confirmUserAction(id, action) {
+  var footEl = document.getElementById('panelFoot');
+  var user = allUsers.find(function (u) { return u.UserID === id; });
+  if (!footEl || !user) return;
+
+  var copy = {
+    suspend:    { q: 'Suspend this account? The user will no longer be able to use protected marketplace features until reactivated.', btn: 'Suspend account', cls: 'lk-btn-warn' },
+    activate:   { q: 'Reactivate this account? The user will regain access to marketplace features.', btn: 'Activate account', cls: 'lk-btn-success' },
+    deactivate: { q: (isPreview
+        ? 'Simulate deactivating this account? (Preview only — nothing is saved and no server call is made.) In production this will remove the user’s access while preserving their marketplace history (jobs, applications, reviews).'
+        : 'Deactivate this account? This removes the user’s access but should not destroy their related marketplace history (jobs, applications, reviews).'),
+      btn: isPreview ? 'Simulate deactivate' : 'Yes, deactivate', cls: 'lk-btn-danger' }
+  }[action];
+  if (!copy) return;
+
+  footEl.innerHTML =
+    '<div class="lkv-confirm">' +
+      '<p class="lkv-confirm__q">' + copy.q + '</p>' +
+      '<div class="lkv-confirm__row">' +
+        '<button class="lk-btn-ghost2" onclick="renderPanelActions(allUsers.find(function(u){return u.UserID===' + id + '}))">Cancel</button>' +
+        '<button class="' + copy.cls + '" id="verActConfirm">' + copy.btn + '</button>' +
+      '</div>' +
+    '</div>';
+  var btn = document.getElementById('verActConfirm');
+  if (btn) btn.onclick = function () { performUserAction(id, action); };
+}
+
 function openRecordPanel(user) {
   var overlay = document.getElementById('panelOverlay');
   var panel = document.getElementById('recordPanel');
@@ -714,17 +870,22 @@ function openRecordPanel(user) {
       '<div class="lk-panel__section">' +
         '<div class="lk-panel__section-title">Services</div>' +
         '<div class="lk-panel__tags">' +
-          skills.map(function(s) { return '<span class="lk-panel__tag">' + s + '</span>'; }).join('') +
+          skills.map(function(s) { return '<span class="lk-panel__tag">' + escAdmin(s) + '</span>'; }).join('') +
         '</div>' +
       '</div>';
   }
+
+  // Verification is a SEPARATE concept from account status, and only applies to
+  // Freelancers (identity/speciality/documents live in the Verification Pipeline).
+  // This panel shows it read-only; approvals happen in that pipeline, not here.
+  var verificationHtml = verificationSectionHtml(user);
 
   bodyEl.innerHTML =
     '<div class="lk-panel__section">' +
       '<div class="lk-panel__section-title">Details</div>' +
       '<div class="lk-panel__row"><span class="lk-panel__row-label">Role</span><span class="lk-panel__row-value"><span class="lk-role-tag lk-role-tag--' + roleLower + '">' + user.Role + '</span></span></div>' +
       '<div class="lk-panel__row"><span class="lk-panel__row-label">Area</span><span class="lk-panel__row-value">' + (user.Area || '--') + '</span></div>' +
-      '<div class="lk-panel__row"><span class="lk-panel__row-label">Status</span><span class="lk-panel__row-value"><span class="lk-status-dot lk-status-dot--' + statusClass + '">' + statusLabel + '</span></span></div>' +
+      '<div class="lk-panel__row"><span class="lk-panel__row-label">Account status</span><span class="lk-panel__row-value"><span class="lk-status-dot lk-status-dot--' + statusClass + '">' + statusLabel + '</span></span></div>' +
       '<div class="lk-panel__row"><span class="lk-panel__row-label">Joined</span><span class="lk-panel__row-value">' + joined + '</span></div>' +
     '</div>' +
 
@@ -736,11 +897,7 @@ function openRecordPanel(user) {
 
     servicesHtml +
 
-    '<div class="lk-panel__section">' +
-      '<div class="lk-panel__section-title">Trust</div>' +
-      '<div class="lk-panel__row"><span class="lk-panel__row-label">Identity verified</span><span class="lk-panel__row-value">' + (user.Verified ? 'Yes' : 'Pending') + '</span></div>' +
-      '<div class="lk-panel__row"><span class="lk-panel__row-label">Credential status</span><span class="lk-panel__row-value">' + (user.Verified ? 'Confirmed' : 'Unverified') + '</span></div>' +
-    '</div>' +
+    verificationHtml +
 
     '<div class="lk-panel__section">' +
       '<div class="lk-panel__section-title">Activity</div>' +
@@ -750,13 +907,7 @@ function openRecordPanel(user) {
       (user.Rating ? '<div class="lk-panel__row"><span class="lk-panel__row-label">Rating</span><span class="lk-panel__row-value">' + user.Rating.toFixed(1) + '</span></div>' : '') +
     '</div>';
 
-  if (footEl) {
-    var toggleLabel = user.IsActive ? 'Suspend account' : 'Activate account';
-    var toggleClass = user.IsActive ? 'lk-btn-warn' : 'lk-btn-success';
-    footEl.innerHTML =
-      '<button class="' + toggleClass + '" onclick="toggleUser(' + user.UserID + ')">' + toggleLabel + '</button>' +
-      '<button class="lk-btn-danger" onclick="deleteUser(' + user.UserID + ')">Delete account</button>';
-  }
+  renderPanelActions(user);
 
   if (overlay) overlay.classList.add('open');
   panel.classList.add('open');
@@ -779,49 +930,69 @@ function closeRecordPanel() {
 // TOGGLE & DELETE USER
 // =====================================================
 
-async function toggleUser(id) {
-  try {
-    var data = await apiPut('/admin/users/' + id + '/toggle', {});
-    showAlert(data.message, data.success ? 'success' : 'danger');
-    if (data.success) {
-      closeRecordPanel();
-      loadUsers();
-      return;
-    }
-  } catch (e) {
-    // Demo mode
-  }
-
-  // Demo fallback
-  var user = allUsers.find(function(u) { return u.UserID === id; });
-  if (user) {
-    user.IsActive = !user.IsActive;
-    showAlert('User ' + user.FullName + ' ' + (user.IsActive ? 'activated' : 'suspended') + ' (demo)', 'success');
-    closeRecordPanel();
-    filterUsers();
-  }
+function openUserById(id) {
+  var user = allUsers.find(function (u) { return u.UserID === id; });
+  if (user) openRecordPanel(user);
 }
 
-async function deleteUser(id) {
-  if (!confirm('Are you sure you want to delete this user? This cannot be undone.')) return;
+// Performs the account action after the styled confirmation.
+//  - PREVIEW: mutates the sample data locally and says so (clearly demo).
+//  - LIVE: calls the real endpoint. On success it reloads; on failure it shows a
+//    GENUINE error and does NOT mutate anything — no fake success, ever.
+//    'suspend' and 'activate' both use the existing toggle endpoint
+//    (PUT /api/admin/users/:id/toggle, which flips IsActive).
+//    'deactivate' uses DELETE /api/admin/users/:id — the backend SHOULD make
+//    this a soft delete (set IsActive = 0 / Deleted flag) rather than a hard
+//    delete, so marketplace history (jobs, applications, reviews) is preserved.
+async function performUserAction(id, action) {
+  var user = allUsers.find(function (u) { return u.UserID === id; });
+  if (!user) return;
+  var confirmBtn = document.getElementById('verActConfirm');
+  if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.textContent = 'Working…'; }
 
-  try {
-    var data = await apiDelete('/admin/users/' + id);
-    showAlert(data.message, data.success ? 'success' : 'danger');
-    if (data.success) {
-      closeRecordPanel();
-      loadUsers();
-      return;
+  // -------- PREVIEW (isolated sample behaviour) --------
+  if (isPreview) {
+    if (action === 'deactivate') {
+      allUsers = allUsers.filter(function (u) { return u.UserID !== id; });
+      showAlert('Preview simulation — ' + user.FullName + ' would be deactivated. No server call was made and nothing was saved.', 'success');
+    } else {
+      user.IsActive = (action === 'activate');
+      showAlert('Preview only — ' + user.FullName + ' marked ' + (user.IsActive ? 'Active' : 'Suspended') + '. Nothing was saved.', 'success');
     }
-  } catch (e) {
-    // Demo mode
+    closeRecordPanel();
+    filterUsers();
+    return;
   }
 
-  // Demo fallback
-  allUsers = allUsers.filter(function(u) { return u.UserID !== id; });
-  showAlert('User deleted (demo)', 'success');
-  closeRecordPanel();
-  filterUsers();
+  // -------- LIVE (honest; never fakes success) --------
+  // Deactivation is blocked in live mode until the backend supports soft delete.
+  // We must NOT call DELETE /api/admin/users/:id, which currently hard-deletes
+  // and cascades. Suspend/Activate are unaffected.
+  if (action === 'deactivate' && !DEACTIVATE_BACKEND_READY) {
+    showAlert('Deactivation is not available yet. It is disabled until the backend supports soft deletion that preserves the user’s jobs, applications and reviews. Use Suspend to immediately block access in the meantime.', 'warning');
+    renderPanelActions(user);
+    return;
+  }
+  try {
+    var data, res;
+    if (action === 'deactivate') {
+      data = await apiDelete('/admin/users/' + id);
+    } else {
+      data = await apiPut('/admin/users/' + id + '/toggle', {});
+    }
+    if (data && data.success) {
+      showAlert(data.message || ('Account ' + (action === 'deactivate' ? 'deactivated' : (action === 'suspend' ? 'suspended' : 'activated')) + '.'), 'success');
+      closeRecordPanel();
+      loadUsers();
+    } else {
+      // endpoint reachable but refused (e.g. 404/403/500 returning JSON)
+      showAlert((data && data.message) || 'The server could not complete this action. Nothing was changed.', 'danger');
+      renderPanelActions(user);
+    }
+  } catch (e) {
+    showAlert('Could not reach the server — the action was not applied.', 'danger');
+    renderPanelActions(user);
+  }
 }
 
 
@@ -834,7 +1005,7 @@ async function loadAdminJobs() {
   if (!tbody) return;
 
   try {
-    var res = await fetch('/api/admin/jobs');
+    var res = await adminFetch('/admin/jobs');
     var data = await res.json();
     if (data.success) {
       allJobs = data.jobs;
@@ -1098,6 +1269,313 @@ window.addEventListener('resize', function() {
     if (currentView === 'overview') renderWorkspace();
   }, 250);
 });
+
+
+// =====================================================
+// VERIFICATION PIPELINE
+// Lists real backend submissions; falls back to a polished empty state when
+// the endpoint is not connected. Preview mode (?preview=1) shows clearly
+// labelled sample submissions and never represents real verification data.
+// =====================================================
+
+var allVerifications = [];
+var verFilter = 'all';
+var verWired = false;
+var verLoadedOnce = false;
+
+// Sample records — ONLY used in preview mode. Clearly fictional.
+var DEMO_VERIFICATIONS = [
+  { VerificationID: 'demo-1', UserID: 101, FullName: 'Thabo Mokoena', Role: 'Freelancer',
+    Speciality: 'Electrical', CustomSpeciality: null,
+    IdentityDocument: { name: 'thabo-id.pdf', available: true },
+    QualificationDocument: { name: 'wireman-licence.pdf', available: true },
+    Status: 'Pending', RejectionReason: null,
+    SubmittedAt: Date.now() - 1 * 864e5, ReviewedAt: null },
+  { VerificationID: 'demo-2', UserID: 102, FullName: 'Lerato Nkosi', Role: 'Freelancer',
+    Speciality: 'Hair / Beauty (Other)', CustomSpeciality: 'Mobile braiding & nails',
+    IdentityDocument: { name: 'lerato-id.jpg', available: true },
+    QualificationDocument: null,
+    Status: 'Pending', RejectionReason: null,
+    SubmittedAt: Date.now() - 2 * 864e5, ReviewedAt: null },
+  { VerificationID: 'demo-3', UserID: 103, FullName: 'Sipho Dlamini', Role: 'Customer',
+    Speciality: null, CustomSpeciality: null,
+    IdentityDocument: { name: 'sipho-passport.png', available: true },
+    QualificationDocument: null,
+    Status: 'Approved', RejectionReason: null,
+    SubmittedAt: Date.now() - 6 * 864e5, ReviewedAt: Date.now() - 4 * 864e5 },
+  { VerificationID: 'demo-4', UserID: 104, FullName: 'Nomsa Khumalo', Role: 'Freelancer',
+    Speciality: 'Plumbing', CustomSpeciality: null,
+    IdentityDocument: { name: 'nomsa-id.jpg', available: true },
+    QualificationDocument: { name: 'plumbing-cert.jpg', available: true },
+    Status: 'Rejected', RejectionReason: 'The identity document photo was too dark to read the ID number. Please upload a clearer copy.',
+    SubmittedAt: Date.now() - 3 * 864e5, ReviewedAt: Date.now() - 1 * 864e5 }
+];
+
+function escV(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function verFmtDate(d) {
+  if (!d) return '—';
+  if (typeof formatDate === 'function') { try { return formatDate(d); } catch (e) {} }
+  try { return new Date(d).toLocaleDateString('en-ZA', { year: 'numeric', month: 'short', day: 'numeric' }); }
+  catch (e) { return '—'; }
+}
+function verSpeciality(v) {
+  if (v.Role !== 'Freelancer') return '—';
+  return v.CustomSpeciality ? v.CustomSpeciality : (v.Speciality || '—');
+}
+
+function wireVerification() {
+  if (verWired) return;
+  verWired = true;
+  document.querySelectorAll('#verFilters .lk-filter-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('#verFilters .lk-filter-tab').forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      verFilter = tab.dataset.vfilter;
+      renderVerifications();
+    });
+  });
+}
+
+async function loadVerifications() {
+  wireVerification();
+
+  if (isPreview) {
+    allVerifications = DEMO_VERIFICATIONS.slice();
+    verLoadedOnce = true;
+    renderVerifications();
+    return;
+  }
+
+  // Live: pull from the admin endpoint. If it isn't built yet, show the
+  // integration empty state rather than any fabricated data.
+  try {
+    var res = await adminFetch('/admin/verifications');
+    if (res.ok) {
+      var data = await res.json();
+      allVerifications = (data && data.success && Array.isArray(data.verifications)) ? data.verifications : [];
+      verLoadedOnce = true;
+      renderVerifications();
+      return;
+    }
+    // 404 (route not built) or other error → integration state
+    allVerifications = [];
+    verLoadedOnce = true;
+    renderVerifications(res.status === 404);
+  } catch (e) {
+    allVerifications = [];
+    verLoadedOnce = true;
+    renderVerifications(true);
+  }
+}
+
+function renderVerifications(backendMissing) {
+  var summary = document.getElementById('verSummary');
+  var tableWrap = document.getElementById('verTableWrap');
+  var empty = document.getElementById('verEmpty');
+  var body = document.getElementById('verBody');
+  var countEl = document.getElementById('verCount');
+  if (!body) return;
+
+  // Summary counts (from the full set, not the filtered view)
+  var counts = { Pending: 0, Approved: 0, Rejected: 0 };
+  allVerifications.forEach(function (v) { if (counts[v.Status] != null) counts[v.Status]++; });
+  document.getElementById('verSumPending').textContent = counts.Pending;
+  document.getElementById('verSumApproved').textContent = counts.Approved;
+  document.getElementById('verSumRejected').textContent = counts.Rejected;
+  document.getElementById('verSumTotal').textContent = allVerifications.length;
+
+  var rows = allVerifications.filter(function (v) { return verFilter === 'all' || v.Status === verFilter; });
+
+  if (!allVerifications.length) {
+    summary.hidden = true;
+    tableWrap.hidden = true;
+    empty.style.display = '';
+    document.getElementById('verEmptyTitle').textContent =
+      backendMissing ? 'Verification pipeline ready' : 'No verification submissions yet';
+    document.getElementById('verEmptyMsg').textContent =
+      backendMissing
+        ? 'The interface is ready. Connect the GET /api/admin/verifications endpoint to list real submissions here.'
+        : 'When users submit identity documents for review, they will appear here for approval or rejection.';
+    document.getElementById('verEmptyTag').hidden = !backendMissing;
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+
+  summary.hidden = false;
+  empty.style.display = 'none';
+  tableWrap.hidden = false;
+  if (countEl) countEl.textContent = rows.length + ' submission' + (rows.length !== 1 ? 's' : '');
+
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="6" class="lk-table__empty">No ' + escV(verFilter.toLowerCase()) + ' submissions</td></tr>';
+    return;
+  }
+
+  body.innerHTML = rows.map(function (v) {
+    var tagCls = v.Status === 'Approved' ? 'lk-tag--active' : v.Status === 'Rejected' ? 'lk-tag--danger' : 'lk-tag--pending';
+    var roleIcon = v.Role === 'Freelancer' ? 'ph-wrench' : 'ph-user';
+    return '<tr data-verid="' + escV(v.VerificationID) + '" style="cursor:pointer">' +
+      '<td>' + escV(v.FullName || 'Unknown user') + '</td>' +
+      '<td><span class="lkv-role"><i class="ph ' + roleIcon + '"></i>' + escV(v.Role || '—') + '</span></td>' +
+      '<td>' + escV(verSpeciality(v)) + '</td>' +
+      '<td>' + escV(verFmtDate(v.SubmittedAt)) + '</td>' +
+      '<td><span class="lk-tag ' + tagCls + '">' + escV(v.Status) + '</span></td>' +
+      '<td><button class="lkv-link" type="button"><i class="ph ph-eye"></i>View</button></td>' +
+    '</tr>';
+  }).join('');
+
+  body.querySelectorAll('tr[data-verid]').forEach(function (tr) {
+    tr.addEventListener('click', function () { openVerificationPanel(tr.dataset.verid); });
+  });
+}
+
+function findVerification(id) {
+  return allVerifications.filter(function (v) { return String(v.VerificationID) === String(id); })[0];
+}
+
+function docRow(label, doc, optional) {
+  if (!doc) {
+    return '<div class="lkv-doc"><div class="lkv-doc__ico"><i class="ph ph-file-dashed"></i></div>' +
+      '<div class="lkv-doc__body"><div class="lkv-doc__lbl">' + escV(label) + '</div>' +
+      '<div class="lkv-doc__meta lkv-doc--empty">' + (optional ? 'No qualification submitted — optional' : 'Not provided') + '</div></div></div>';
+  }
+  var name = doc.name || 'document';
+  // View document: the backend returns an authenticated/short-lived URL at
+  // GET /api/admin/verifications/:id/documents/:kind — never a public path.
+  return '<div class="lkv-doc"><div class="lkv-doc__ico"><i class="ph ph-file-text"></i></div>' +
+    '<div class="lkv-doc__body"><div class="lkv-doc__lbl">' + escV(label) + '</div>' +
+    '<div class="lkv-doc__meta">' + escV(name) + '</div></div>' +
+    '<button class="lkv-link" type="button" data-doc="' + escV(label) + '"><i class="ph ph-eye"></i>View document</button></div>';
+}
+
+function openVerificationPanel(id) {
+  var v = findVerification(id);
+  if (!v) return;
+  var overlay = document.getElementById('panelOverlay');
+  var panel = document.getElementById('recordPanel');
+  var nameEl = document.getElementById('panelName');
+  var bodyEl = document.getElementById('panelBody');
+  var footEl = document.getElementById('panelFoot');
+
+  nameEl.textContent = v.FullName || 'Verification';
+
+  var tagCls = v.Status === 'Approved' ? 'lk-tag--active' : v.Status === 'Rejected' ? 'lk-tag--danger' : 'lk-tag--pending';
+  var html = '';
+  html += '<div class="lkv-field"><div class="lkv-field__lbl">Status</div><div class="lkv-field__val"><span class="lk-tag ' + tagCls + '">' + escV(v.Status) + '</span></div></div>';
+  html += '<div class="lkv-field"><div class="lkv-field__lbl">Role</div><div class="lkv-field__val">' + escV(v.Role || '—') + '</div></div>';
+  if (v.Role === 'Freelancer') {
+    html += '<div class="lkv-field"><div class="lkv-field__lbl">Speciality</div><div class="lkv-field__val">' + escV(verSpeciality(v)) + '</div></div>';
+  }
+  html += '<div class="lkv-field"><div class="lkv-field__lbl">Submitted</div><div class="lkv-field__val">' + escV(verFmtDate(v.SubmittedAt)) + '</div></div>';
+  if (v.ReviewedAt) html += '<div class="lkv-field"><div class="lkv-field__lbl">Reviewed</div><div class="lkv-field__val">' + escV(verFmtDate(v.ReviewedAt)) + '</div></div>';
+
+  html += '<div class="lkv-field"><div class="lkv-field__lbl">Documents</div>';
+  html += docRow('Identity document', v.IdentityDocument, false);
+  if (v.Role === 'Freelancer') html += docRow('Qualification / proof of skill', v.QualificationDocument, true);
+  html += '</div>';
+
+  if (v.Status === 'Rejected' && v.RejectionReason) {
+    html += '<div class="lkv-reason"><div class="lkv-reason__lbl">Reason for rejection</div><div class="lkv-reason__txt">' + escV(v.RejectionReason) + '</div></div>';
+  }
+
+  // Reject reason box (Pending only)
+  html += '<div class="lkv-rejectbox" id="verRejectBox">' +
+    '<label class="lkv-field__lbl" for="verRejectReason">Reason for rejection (shown to the user)</label>' +
+    '<textarea id="verRejectReason" maxlength="500" placeholder="e.g. The identity document could not be clearly read."></textarea>' +
+    '<div class="lkv-btnrow">' +
+    '<button class="lkv-btn lkv-btn--reject" id="verRejectConfirm"><i class="ph ph-x-circle"></i>Confirm rejection</button>' +
+    '<button class="lkv-btn lkv-btn--ghost" id="verRejectCancel">Cancel</button>' +
+    '</div></div>';
+
+  bodyEl.innerHTML = html;
+
+  // Footer actions for Pending submissions
+  if (v.Status === 'Pending') {
+    footEl.innerHTML =
+      '<button class="lkv-btn lkv-btn--approve" id="verApprove"><i class="ph ph-check-circle"></i>Approve</button>' +
+      '<button class="lkv-btn lkv-btn--reject" id="verRejectOpen"><i class="ph ph-x-circle"></i>Reject</button>';
+    footEl.style.display = '';
+  } else {
+    footEl.innerHTML = '';
+    footEl.style.display = 'none';
+  }
+
+  // Wire document view buttons
+  bodyEl.querySelectorAll('[data-doc]').forEach(function (btn) {
+    btn.addEventListener('click', function () { viewDocument(v, btn.dataset.doc); });
+  });
+
+  // Wire approve / reject
+  var approveBtn = document.getElementById('verApprove');
+  if (approveBtn) approveBtn.addEventListener('click', function () { decideVerification(v, 'Approved'); });
+  var rejectOpen = document.getElementById('verRejectOpen');
+  if (rejectOpen) rejectOpen.addEventListener('click', function () {
+    document.getElementById('verRejectBox').classList.add('is-open');
+    var ta = document.getElementById('verRejectReason'); if (ta) ta.focus();
+  });
+  var rejectCancel = document.getElementById('verRejectCancel');
+  if (rejectCancel) rejectCancel.addEventListener('click', function () {
+    document.getElementById('verRejectBox').classList.remove('is-open');
+  });
+  var rejectConfirm = document.getElementById('verRejectConfirm');
+  if (rejectConfirm) rejectConfirm.addEventListener('click', function () {
+    var reason = (document.getElementById('verRejectReason').value || '').trim();
+    if (!reason) { document.getElementById('verRejectReason').focus(); return; }
+    decideVerification(v, 'Rejected', reason);
+  });
+
+  if (overlay) overlay.classList.add('open');
+  if (panel) panel.classList.add('open');
+}
+
+function viewDocument(v, which) {
+  // In preview there is no real file. In live mode, the backend must return an
+  // authenticated or short-lived URL; documents are never public.
+  if (isPreview) {
+    if (typeof showAlert === 'function') showAlert('Preview mode — documents are not available with sample data.', 'warning');
+    return;
+  }
+  var kind = /identity/i.test(which) ? 'identity' : 'qualification';
+  window.open(ADMIN_API + '/admin/verifications/' + encodeURIComponent(v.VerificationID) + '/documents/' + kind, '_blank', 'noopener');
+}
+
+async function decideVerification(v, status, reason) {
+  if (isPreview) {
+    v.Status = status; v.ReviewedAt = Date.now();
+    if (status === 'Rejected') v.RejectionReason = reason || '';
+    renderVerifications();
+    closeRecordPanel();
+    if (typeof showAlert === 'function') showAlert('Preview only — in the live app this would be saved. Marked as ' + status + '.', 'success');
+    return;
+  }
+  try {
+    var payload = { status: status };
+    if (status === 'Rejected') payload.reason = reason;
+    var res = await fetch(ADMIN_API + '/admin/verifications/' + encodeURIComponent(v.VerificationID) + '/status', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(payload)
+    });
+    var data = {};
+    try { data = await res.json(); } catch (e) {}
+    if (res.ok && data.success) {
+      closeRecordPanel();
+      if (typeof showAlert === 'function') showAlert(data.message || ('Submission ' + status.toLowerCase() + '.'), 'success');
+      loadVerifications();
+    } else if (res.status === 404) {
+      if (typeof showAlert === 'function') showAlert('The verification endpoint is not connected yet — nothing was saved.', 'danger');
+    } else {
+      if (typeof showAlert === 'function') showAlert((data && data.message) || 'Could not update the submission.', 'danger');
+    }
+  } catch (e) {
+    if (typeof showAlert === 'function') showAlert('Network error — please try again.', 'danger');
+  }
+}
 
 
 // =====================================================

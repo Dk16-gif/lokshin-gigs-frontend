@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Verification – Lokshin Gigs</title>
+  <meta name="description" content="Verify your Lokshin Gigs account by submitting your identity document."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css" rel="stylesheet">
+  <style>
+/* =====================================================================
+   Lokshin Gigs — Account Verification
+   Same visual language as the Profile dossier: deep espresso environment,
+   ivory ink, fine ivory rules, terracotta accent. Manrope for controls,
+   Instrument Serif for the identity moments only. No new design system.
+   ===================================================================== */
+:root{
+  --bg:#0D0907; --bg-2:#160D09;
+  --surface:#17100B; --surface-2:#1E1510;
+  --terra:#B65A3C; --terra-light:#D07855; --copper:#8F634A;
+  --ivory:#F7F2E9; --ivory-soft:rgba(247,242,233,.68); --ivory-muted:rgba(247,242,233,.42); --ivory-faint:rgba(247,242,233,.22);
+  --line:rgba(247,242,233,.10); --line-strong:rgba(247,242,233,.16);
+  --terra-glow:rgba(182,90,60,.16);
+  /* status hues chosen to read on the dark ground, consistent with the warm palette */
+  --ok:#8FB98A; --ok-soft:rgba(143,185,138,.14);
+  --wait:#E0B257; --wait-soft:rgba(224,178,87,.14);
+  --no:#D9735E; --no-soft:rgba(217,115,94,.14);
+  --sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif','Cormorant Garamond',Georgia,serif;
+  --ease:cubic-bezier(.22,.61,.24,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg);color-scheme:dark}
+body{margin:0;min-height:100vh;font-family:var(--sans);font-size:15px;line-height:1.55;font-weight:500;color:var(--ivory);
+  background:
+    radial-gradient(1100px 620px at 82% -8%, rgba(182,90,60,.16), transparent 60%),
+    radial-gradient(900px 560px at -6% 108%, rgba(143,99,74,.14), transparent 60%),
+    linear-gradient(180deg,var(--bg-2),var(--bg));
+  background-attachment:fixed}
+a{color:inherit}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:1px solid var(--terra-light);outline-offset:3px;border-radius:4px}
+.lk-skip{position:absolute;left:16px;top:-48px;z-index:300;padding:10px 14px;border-radius:6px;background:var(--ivory);color:var(--bg);font-weight:700;text-decoration:none}
+.lk-skip:focus{top:12px}
+.lk-wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+.lk-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ---- Header (mirrors Profile) ---- */
+.lk-top{border-bottom:1px solid var(--line);background:rgba(13,9,7,.6);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+.lk-top__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:62px}
+.lk-brand{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:500;letter-spacing:-.01em;text-decoration:none;color:var(--ivory-soft)}
+.lk-brand strong{font-weight:800;color:var(--ivory)}
+.lk-brand__mark{display:grid;place-items:center;width:26px;height:26px;border-radius:6px;background:var(--terra);color:#fff;font-size:13px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,220,200,.3)}
+.lk-top__end{display:flex;align-items:center;gap:4px}
+.lk-nav{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:7px;font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ivory-soft);text-decoration:none;background:none;border:0;cursor:pointer;font-family:inherit;transition:color .2s,background-color .2s}
+.lk-nav i{font-size:16px}
+.lk-nav:hover{color:var(--ivory);background:rgba(247,242,233,.05)}
+.lk-nav--out i{color:var(--terra-light)}
+
+/* ---- Layout ---- */
+.lk-main{padding:clamp(28px,5vw,64px) 0 96px}
+.lk-head{max-width:760px}
+.lk-kicker{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-kicker b{font-weight:800;color:var(--terra-light)}
+.lk-title{margin:18px 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(42px,6vw,76px);line-height:.96;letter-spacing:-.012em;color:var(--ivory)}
+.lk-lede{margin:18px 0 0;font-size:16px;line-height:1.6;color:var(--ivory-soft);max-width:62ch}
+
+.lk-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:clamp(24px,3.5vw,48px);margin-top:clamp(32px,4vw,52px);align-items:start}
+@media (max-width:900px){.lk-grid{grid-template-columns:1fr}}
+
+/* ---- Status rail (right) ---- */
+.lk-rail{position:sticky;top:94px;display:flex;flex-direction:column;gap:18px}
+@media (max-width:900px){.lk-rail{position:static;order:-1}}
+.lk-statecard{border:1px solid var(--line);border-radius:14px;padding:22px;background:linear-gradient(180deg,var(--surface),rgba(23,16,11,.4));box-shadow:0 1px 0 rgba(247,242,233,.04) inset}
+.lk-statecard__eyebrow{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-badge{display:inline-flex;align-items:center;gap:9px;margin-top:14px;padding:9px 14px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:.01em;border:1px solid var(--line-strong)}
+.lk-badge i{font-size:16px}
+.lk-badge--none{color:var(--ivory-soft);background:rgba(247,242,233,.04)}
+.lk-badge--none i{color:var(--ivory-muted)}
+.lk-badge--pending{color:var(--wait);background:var(--wait-soft);border-color:rgba(224,178,87,.3)}
+.lk-badge--approved{color:var(--ok);background:var(--ok-soft);border-color:rgba(143,185,138,.3)}
+.lk-badge--rejected{color:var(--no);background:var(--no-soft);border-color:rgba(217,115,94,.3)}
+.lk-statecard__msg{margin-top:14px;font-size:13.5px;line-height:1.55;color:var(--ivory-soft)}
+.lk-statecard__meta{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);display:grid;gap:10px}
+.lk-statecard__meta div{display:flex;justify-content:space-between;gap:12px;font-size:12.5px}
+.lk-statecard__meta dt{color:var(--ivory-muted);font-weight:600}
+.lk-statecard__meta dd{margin:0;color:var(--ivory);font-weight:600;text-align:right}
+.lk-reason{margin-top:16px;padding:14px;border-radius:10px;border:1px solid rgba(217,115,94,.3);background:var(--no-soft)}
+.lk-reason__lbl{font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--no)}
+.lk-reason__txt{margin-top:7px;font-size:13.5px;line-height:1.5;color:var(--ivory)}
+.lk-note{font-size:12.5px;color:var(--ivory-muted);line-height:1.5}
+.lk-note i{color:var(--terra-light);margin-right:5px}
+
+/* ---- Form (left) ---- */
+.lk-panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(30,21,16,.55),rgba(23,16,11,.35));padding:clamp(22px,3vw,36px)}
+.lk-sec{border:0;padding:0;margin:0}
+.lk-sec + .lk-sec{margin-top:34px;padding-top:34px;border-top:1px solid var(--line)}
+.lk-sec__head{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ivory-soft)}
+.lk-sec__head b{font-weight:800;color:var(--terra-light);font-variant-numeric:tabular-nums}
+.lk-sec__head i.sl{font-style:normal;color:var(--ivory-faint)}
+.lk-sec__intro{font-size:13.5px;color:var(--ivory-muted);line-height:1.55;max-width:60ch;margin:0 0 20px}
+.lk-field{margin-top:18px}
+.lk-label{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:10.5px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ivory-muted)}
+.lk-label i{font-size:14px;letter-spacing:0;color:var(--terra-light)}
+.lk-req{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.14em;color:var(--terra-light);background:var(--terra-glow);padding:3px 8px;border-radius:5px}
+.lk-opt{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.14em;color:var(--ivory-muted);background:rgba(247,242,233,.05);padding:3px 8px;border-radius:5px}
+.lk-input,.lk-select select{width:100%;border:1px solid var(--line-strong);border-radius:9px;background:rgba(13,9,7,.4);padding:13px 15px;
+  font-family:inherit;font-size:15px;font-weight:600;color:var(--ivory);caret-color:var(--terra-light);transition:border-color .2s,box-shadow .2s}
+.lk-input::placeholder{color:var(--ivory-faint);font-weight:500}
+.lk-input:focus,.lk-select select:focus{outline:none;border-color:var(--terra);box-shadow:0 0 0 3px var(--terra-glow)}
+.lk-select{position:relative}
+.lk-select select{appearance:none;cursor:pointer;padding-right:42px}
+.lk-select select option{background:#1A100C;color:var(--ivory)}
+.lk-select > i{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--ivory-muted);pointer-events:none;transition:transform .3s var(--ease),color .2s}
+.lk-select:focus-within > i{color:var(--terra-light);transform:translateY(-50%) rotate(180deg)}
+.lk-hint{display:block;margin-top:9px;font-size:12.5px;color:var(--ivory-muted);line-height:1.5}
+
+/* ---- Dropzone ---- */
+.lk-drop{display:block;position:relative;margin-top:2px;border:1.5px dashed var(--line-strong);border-radius:12px;background:rgba(13,9,7,.3);
+  padding:26px 22px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.lk-drop:hover,.lk-drop.is-drag{border-color:var(--terra);background:var(--terra-glow)}
+.lk-drop:focus-within{border-color:var(--terra);box-shadow:0 0 0 3px var(--terra-glow)}
+.lk-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.lk-drop__ico{font-size:30px;color:var(--terra-light)}
+.lk-drop__main{margin-top:10px;font-size:14.5px;font-weight:700;color:var(--ivory)}
+.lk-drop__sub{margin-top:5px;font-size:12px;color:var(--ivory-muted)}
+.lk-file{display:none;margin-top:14px;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line-strong);border-radius:10px;background:rgba(23,16,11,.6);text-align:left}
+.lk-file.is-set{display:flex}
+.lk-file__ico{display:grid;place-items:center;width:38px;height:38px;border-radius:8px;background:var(--terra-glow);color:var(--terra-light);font-size:19px;flex-shrink:0}
+.lk-file__body{min-width:0;flex:1}
+.lk-file__name{font-size:13.5px;font-weight:700;color:var(--ivory);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lk-file__size{font-size:11.5px;color:var(--ivory-muted);margin-top:2px}
+.lk-file__x{background:none;border:0;color:var(--ivory-muted);font-size:18px;cursor:pointer;padding:4px;border-radius:6px;flex-shrink:0}
+.lk-file__x:hover{color:var(--no);background:rgba(217,115,94,.1)}
+.lk-fielderr{display:none;margin-top:9px;font-size:12.5px;font-weight:600;color:var(--no)}
+.lk-fielderr.is-on{display:block}
+
+/* custom speciality reveal */
+.lk-reveal{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .35s var(--ease),opacity .25s}
+.lk-reveal.is-open{grid-template-rows:1fr;opacity:1;margin-top:18px}
+.lk-reveal > div{overflow:hidden}
+
+/* ---- Submit ---- */
+.lk-actions{margin-top:30px;padding-top:26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between}
+.lk-consent{font-size:12.5px;color:var(--ivory-muted);max-width:40ch;line-height:1.5}
+.lk-consent a{color:var(--terra-light);text-decoration:underline;text-underline-offset:3px}
+.lk-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:10px;border:0;cursor:pointer;
+  font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:.01em;background:var(--terra);color:#fff;
+  box-shadow:0 6px 20px rgba(182,90,60,.3);transition:transform .15s var(--ease),box-shadow .2s,opacity .2s}
+.lk-btn i{font-size:17px}
+.lk-btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(182,90,60,.4)}
+.lk-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.lk-btn--ghost{background:transparent;color:var(--ivory-soft);border:1px solid var(--line-strong);box-shadow:none}
+.lk-btn--ghost:hover{color:var(--ivory);border-color:var(--terra);box-shadow:none}
+
+/* ---- Alert ---- */
+.lk-alert{display:none;align-items:flex-start;gap:12px;margin-bottom:22px;padding:14px 16px;border-radius:11px;font-size:13.5px;line-height:1.5}
+.lk-alert.is-on{display:flex}
+.lk-alert i{font-size:19px;flex-shrink:0;margin-top:1px}
+.lk-alert--ok{background:var(--ok-soft);border:1px solid rgba(143,185,138,.3);color:var(--ivory)}
+.lk-alert--ok i{color:var(--ok)}
+.lk-alert--err{background:var(--no-soft);border:1px solid rgba(217,115,94,.3);color:var(--ivory)}
+.lk-alert--err i{color:var(--no)}
+
+/* approved / pending resting states (hide the form, show a calm panel) */
+.lk-resting{display:none;text-align:center;padding:48px 24px}
+.lk-resting.is-on{display:block}
+.lk-resting__ico{display:inline-grid;place-items:center;width:72px;height:72px;border-radius:50%;font-size:34px;margin-bottom:20px}
+.lk-resting__ico--approved{background:var(--ok-soft);color:var(--ok);border:1px solid rgba(143,185,138,.3)}
+.lk-resting__ico--pending{background:var(--wait-soft);color:var(--wait);border:1px solid rgba(224,178,87,.3)}
+.lk-resting h2{font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:-.01em;margin:0 0 10px}
+.lk-resting p{font-size:14.5px;color:var(--ivory-soft);max-width:44ch;margin:0 auto;line-height:1.6}
+
+/* loading skeleton */
+.lk-loading{display:flex;align-items:center;gap:12px;padding:60px 0;justify-content:center;color:var(--ivory-muted);font-size:14px}
+.lk-spin{width:18px;height:18px;border:2px solid var(--line-strong);border-top-color:var(--terra-light);border-radius:50%;animation:lk-spin .7s linear infinite}
+@keyframes lk-spin{to{transform:rotate(360deg)}}
+
+/* preview chip */
+.lk-preview{position:fixed;right:16px;bottom:16px;z-index:200;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;
+  background:rgba(23,16,11,.92);border:1px solid var(--line-strong);color:var(--ivory-soft);font-size:11.5px;font-weight:700;letter-spacing:.04em;backdrop-filter:blur(6px)}
+.lk-preview i{color:var(--terra-light);font-size:14px}
+
+/* footer */
+.lk-foot{border-top:1px solid var(--line);margin-top:40px}
+.lk-foot__inner{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding:22px 0;font-size:12.5px;color:var(--ivory-muted)}
+.lk-foot__inner strong{color:var(--ivory-soft);font-weight:700}
+.lk-foot a{color:var(--ivory-soft);text-decoration:none}
+.lk-foot a:hover{color:var(--ivory)}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+@media (max-width:560px){
+  .lk-actions{flex-direction:column;align-items:stretch}
+  .lk-btn{justify-content:center}
+  .lk-consent{max-width:none}
+}
+  </style>
+  <!-- API Base URL: empty = local dev, set to Render URL for production -->
+  <script>
+    window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
+  </script>
+</head>
+<body>
+<a class="lk-skip" href="#vMain">Skip to verification</a>
+
+<header class="lk-top">
+  <div class="lk-wrap lk-top__inner">
+    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <nav class="lk-top__end" aria-label="Account">
+      <span id="backLink"></span>
+      <button type="button" class="lk-nav lk-nav--out" onclick="logout()" aria-label="Logout"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Logout</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="lk-wrap lk-main" id="vMain">
+  <div class="lk-head">
+    <p class="lk-kicker"><span>Account</span><b>/ Verification</b></p>
+    <h1 class="lk-title">Verify your account</h1>
+    <p class="lk-lede" id="vLede">Submitting your identity document helps build trust across Lokshin Gigs. An administrator reviews every submission before it is approved.</p>
+  </div>
+
+  <!-- Loading state until we know the user's role + current verification status -->
+  <div class="lk-loading" id="vLoading"><span class="lk-spin" aria-hidden="true"></span><span>Loading your verification status…</span></div>
+
+  <div class="lk-grid" id="vGrid" hidden>
+    <!-- LEFT: form / resting state -->
+    <div>
+      <div class="lk-alert" id="vAlert" role="status" aria-live="polite"><i aria-hidden="true"></i><span id="vAlertMsg"></span></div>
+
+      <!-- Resting state shown for Pending / Approved instead of the form -->
+      <div class="lk-resting" id="vResting">
+        <div class="lk-resting__ico" id="vRestingIco" aria-hidden="true"><i class="ph-fill ph-seal-check"></i></div>
+        <h2 id="vRestingTitle">Verification submitted</h2>
+        <p id="vRestingMsg"></p>
+      </div>
+
+      <!-- Submission form (Not Submitted / Rejected → resubmit) -->
+      <form class="lk-panel" id="vForm" novalidate>
+        <!-- Identity (all roles) -->
+        <fieldset class="lk-sec">
+          <legend class="lk-sec__head"><b>01</b><i class="sl">/</i>Identity document</legend>
+          <p class="lk-sec__intro">Upload a clear photo or scan of an official identity document — for example a South African ID card, ID book or passport. This is used only to verify who you are and is never shown to other users.</p>
+          <div class="lk-field">
+            <span class="lk-label"><i class="ph ph-identification-card" aria-hidden="true"></i>Identity document<span class="lk-req">Required</span></span>
+            <label class="lk-drop" id="idDrop">
+              <input type="file" id="idFile" name="identityDocument" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="idHint"/>
+              <i class="ph ph-upload-simple lk-drop__ico" aria-hidden="true"></i>
+              <div class="lk-drop__main">Upload document</div>
+              <div class="lk-drop__sub">PDF, JPG or PNG · up to 10&nbsp;MB</div>
+            </label>
+            <div class="lk-file" id="idFileChip">
+              <div class="lk-file__ico" aria-hidden="true"><i class="ph ph-file-text"></i></div>
+              <div class="lk-file__body"><div class="lk-file__name" id="idFileName"></div><div class="lk-file__size" id="idFileSize"></div></div>
+              <button type="button" class="lk-file__x" id="idFileClear" aria-label="Remove file"><i class="ph ph-x" aria-hidden="true"></i></button>
+            </div>
+            <small class="lk-hint" id="idHint">We accept common document formats. Make sure the name and photo are readable.</small>
+            <p class="lk-fielderr" id="idErr"></p>
+          </div>
+        </fieldset>
+
+        <!-- Freelancer-only: speciality + optional qualification -->
+        <div id="freelancerBlock" hidden>
+          <fieldset class="lk-sec">
+            <legend class="lk-sec__head"><b>02</b><i class="sl">/</i>Your speciality</legend>
+            <p class="lk-sec__intro">Tell us the main service you offer. This helps customers find the right person for the job.</p>
+            <div class="lk-field">
+              <label class="lk-label" for="speciality"><i class="ph ph-wrench" aria-hidden="true"></i>Primary service</label>
+              <div class="lk-select">
+                <select id="speciality" name="categoryId" aria-describedby="specHint">
+                  <option value="">Select your speciality…</option>
+                </select>
+                <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
+              </div>
+              <small class="lk-hint" id="specHint">Choose the closest match, or “Other” to write your own.</small>
+              <div class="lk-reveal" id="otherReveal">
+                <div>
+                  <div class="lk-field" style="margin-top:0">
+                    <label class="lk-label" for="customSpeciality"><i class="ph ph-pencil-simple" aria-hidden="true"></i>Describe your speciality</label>
+                    <input class="lk-input" type="text" id="customSpeciality" name="customSpeciality" maxlength="80" placeholder="e.g. Solar geyser installation" autocomplete="off"/>
+                    <p class="lk-fielderr" id="customErr">Please describe your speciality.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="lk-sec">
+            <legend class="lk-sec__head"><b>03</b><i class="sl">/</i>Proof of skill</legend>
+            <p class="lk-sec__intro">Qualifications are optional. If you have a certificate, licence or other proof of your skill, you may submit it to support your profile. Many experienced providers work from practical experience alone — not uploading a certificate does not count against you.</p>
+            <div class="lk-field">
+              <span class="lk-label"><i class="ph ph-certificate" aria-hidden="true"></i>Qualification / proof of skill<span class="lk-opt">Optional</span></span>
+              <label class="lk-drop" id="qualDrop">
+                <input type="file" id="qualFile" name="qualificationDocument" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="qualHint"/>
+                <i class="ph ph-upload-simple lk-drop__ico" aria-hidden="true"></i>
+                <div class="lk-drop__main">Upload supporting document</div>
+                <div class="lk-drop__sub">PDF, JPG or PNG · up to 10&nbsp;MB · optional</div>
+              </label>
+              <div class="lk-file" id="qualFileChip">
+                <div class="lk-file__ico" aria-hidden="true"><i class="ph ph-file-text"></i></div>
+                <div class="lk-file__body"><div class="lk-file__name" id="qualFileName"></div><div class="lk-file__size" id="qualFileSize"></div></div>
+                <button type="button" class="lk-file__x" id="qualFileClear" aria-label="Remove file"><i class="ph ph-x" aria-hidden="true"></i></button>
+              </div>
+              <small class="lk-hint" id="qualHint">A certificate or licence can support your profile, but it is not required and Lokshin Gigs does not guarantee a provider’s ability based on an uploaded document.</small>
+              <p class="lk-fielderr" id="qualErr"></p>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="lk-actions">
+          <p class="lk-consent">Your document is sent securely for admin review and is not shared with other users. See our <a href="/pages/terms.html">Terms &amp; Conditions</a>.</p>
+          <button type="submit" class="lk-btn" id="vSubmit"><i class="ph-bold ph-shield-check" aria-hidden="true"></i><span id="vSubmitLabel">Submit for verification</span></button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT: live status rail -->
+    <aside class="lk-rail" aria-label="Verification status">
+      <div class="lk-statecard">
+        <div class="lk-statecard__eyebrow">Current status</div>
+        <span class="lk-badge lk-badge--none" id="vBadge"><i class="ph ph-circle-dashed" aria-hidden="true"></i><span id="vBadgeText">Not submitted</span></span>
+        <p class="lk-statecard__msg" id="vStateMsg">You have not submitted verification yet. Upload your identity document to get started.</p>
+        <div class="lk-reason" id="vReason" hidden>
+          <div class="lk-reason__lbl">Reason for rejection</div>
+          <p class="lk-reason__txt" id="vReasonTxt"></p>
+        </div>
+        <dl class="lk-statecard__meta" id="vMeta" hidden>
+          <div><dt>Submitted</dt><dd id="vMetaSubmitted">—</dd></div>
+          <div><dt>Reviewed</dt><dd id="vMetaReviewed">—</dd></div>
+        </dl>
+      </div>
+      <p class="lk-note"><i class="ph ph-lock-simple" aria-hidden="true"></i>Documents are reviewed only by Lokshin Gigs administrators and are stored securely. They are never visible to customers or other freelancers.</p>
+    </aside>
+  </div>
+</main>
+
+<footer class="lk-foot">
+  <div class="lk-wrap lk-foot__inner">
+    <span><strong>LokshinGigs</strong> · Trust &amp; verification</span>
+    <span><a href="/pages/terms.html">Terms &amp; Conditions</a></span>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+/* =====================================================================
+   VERIFICATION — frontend workflow only.
+   Real storage + review happen on the backend (see BACKEND CONTRACT in
+   the handoff). This page:
+     • reads the user's role + current status from GET /api/verifications/me
+     • renders the four states (Not Submitted / Pending / Approved / Rejected)
+     • prepares and submits multipart/form-data to POST /api/verifications
+   Nothing here is treated as real verification unless it comes from the API.
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  // Respect the Vercel target's cross-origin backend (window.API_BASE → Render),
+  // falling back to same-origin for local dev. Matches main.js / dashboards.
+  var API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
+  var MAX_BYTES = 10 * 1024 * 1024;              // mirror of the server limit (server is authoritative)
+  var OK_TYPES  = ['application/pdf', 'image/jpeg', 'image/png'];
+  var OK_EXT    = ['pdf', 'jpg', 'jpeg', 'png'];
+
+  var qs = new URLSearchParams(location.search);
+  // Preview is strictly a dev aid: file:// or ?preview=1[&role=customer|freelancer][&state=...]
+  var isPreview = location.protocol === 'file:' || qs.get('preview') === '1';
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function fmtDate(d) {
+    if (!d) return '—';
+    try { return new Date(d).toLocaleDateString('en-ZA', { year: 'numeric', month: 'short', day: 'numeric' }); }
+    catch (e) { return '—'; }
+  }
+  function fmtSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1024 * 1024) return (b / 1024).toFixed(0) + ' KB';
+    return (b / 1024 / 1024).toFixed(1) + ' MB';
+  }
+
+  var state = { role: 'Customer', status: 'Not Submitted', record: null };
+
+  // ---------- File input wiring ----------
+  function wireDrop(inputId, chipId, nameId, sizeId, clearId, errId) {
+    var input = $(inputId), chip = $(chipId), drop = input.closest('.lk-drop');
+    function show() {
+      var f = input.files && input.files[0];
+      if (f) { $(nameId).textContent = f.name; $(sizeId).textContent = fmtSize(f.size); chip.classList.add('is-set'); }
+      else { chip.classList.remove('is-set'); }
+      clearErr(errId);
+      var err = localFileError(f);
+      if (err) setErr(errId, err);
+    }
+    input.addEventListener('change', show);
+    $(clearId).addEventListener('click', function () { input.value = ''; show(); input.focus(); });
+    // drag feedback only (the native input handles the actual drop because it overlays the zone)
+    ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('is-drag'); }); });
+    ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function () { drop.classList.remove('is-drag'); }); });
+  }
+  function localFileError(f) {
+    if (!f) return '';
+    var ext = (f.name.split('.').pop() || '').toLowerCase();
+    var typeOk = OK_TYPES.indexOf(f.type) !== -1 || OK_EXT.indexOf(ext) !== -1;
+    if (!typeOk) return 'Unsupported file type. Please use PDF, JPG or PNG.';
+    if (f.size > MAX_BYTES) return 'This file is larger than 10 MB. Please upload a smaller file.';
+    return '';
+  }
+  function setErr(id, msg) { var e = $(id); if (e) { e.textContent = msg; e.classList.add('is-on'); } }
+  function clearErr(id) { var e = $(id); if (e) { e.textContent = ''; e.classList.remove('is-on'); } }
+
+  function alert(kind, msg) {
+    var a = $('vAlert');
+    a.className = 'lk-alert is-on lk-alert--' + (kind === 'ok' ? 'ok' : 'err');
+    a.querySelector('i').className = (kind === 'ok' ? 'ph-fill ph-check-circle' : 'ph-fill ph-warning-circle');
+    $('vAlertMsg').textContent = msg;
+    if (kind === 'ok') a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function clearAlert() { $('vAlert').className = 'lk-alert'; }
+
+  // ---------- State rendering ----------
+  var STATES = {
+    'Not Submitted': { cls: 'none', icon: 'ph ph-circle-dashed', label: 'Not submitted',
+      msg: 'You have not submitted verification yet. Upload your identity document to get started.' },
+    'Pending': { cls: 'pending', icon: 'ph-fill ph-clock', label: 'Pending review',
+      msg: 'Your documents have been submitted and are awaiting review by a Lokshin Gigs administrator.' },
+    'Approved': { cls: 'approved', icon: 'ph-fill ph-seal-check', label: 'Approved',
+      msg: 'Your account has been verified. Thank you — this helps build trust across Lokshin Gigs.' },
+    'Rejected': { cls: 'rejected', icon: 'ph-fill ph-x-circle', label: 'Changes needed',
+      msg: 'Your submission was not approved. Please review the reason below and submit again.' }
+  };
+
+  function render() {
+    var meta = STATES[state.status] || STATES['Not Submitted'];
+    // Badge
+    $('vBadge').className = 'lk-badge lk-badge--' + meta.cls;
+    $('vBadge').querySelector('i').className = meta.icon;
+    $('vBadgeText').textContent = meta.label;
+    $('vStateMsg').textContent = meta.msg;
+
+    // Rejection reason
+    var rec = state.record || {};
+    if (state.status === 'Rejected' && rec.RejectionReason) {
+      $('vReason').hidden = false; $('vReasonTxt').textContent = rec.RejectionReason;
+    } else { $('vReason').hidden = true; }
+
+    // Meta dates
+    if (rec.SubmittedAt || rec.ReviewedAt) {
+      $('vMeta').hidden = false;
+      $('vMetaSubmitted').textContent = fmtDate(rec.SubmittedAt);
+      $('vMetaReviewed').textContent = rec.ReviewedAt ? fmtDate(rec.ReviewedAt) : 'Awaiting review';
+    } else { $('vMeta').hidden = true; }
+
+    // Form vs resting
+    var form = $('vForm'), resting = $('vResting');
+    if (state.status === 'Pending' || state.status === 'Approved') {
+      form.style.display = 'none';
+      resting.classList.add('is-on');
+      var approved = state.status === 'Approved';
+      $('vRestingIco').className = 'lk-resting__ico lk-resting__ico--' + (approved ? 'approved' : 'pending');
+      $('vRestingIco').querySelector('i').className = approved ? 'ph-fill ph-seal-check' : 'ph-fill ph-clock';
+      $('vRestingTitle').textContent = approved ? 'Your account is verified' : 'Submitted — under review';
+      $('vRestingMsg').textContent = approved
+        ? 'An administrator has approved your verification. There is nothing more to do.'
+        : 'An administrator will review your documents shortly. You will see the result here.';
+    } else {
+      form.style.display = '';
+      resting.classList.remove('is-on');
+      // Rejected → let them resubmit; relabel the button
+      $('vSubmitLabel').textContent = state.status === 'Rejected' ? 'Resubmit for verification' : 'Submit for verification';
+    }
+  }
+
+  // ---------- Load role + categories + status ----------
+  function setBackLink(role) {
+    var dash = role === 'Freelancer' ? '/pages/freelancer-dashboard.html' : role === 'Admin' ? '/pages/admin-dashboard.html' : '/pages/customer-dashboard.html';
+    $('backLink').innerHTML = '<a href="' + dash + '" class="lk-nav"><i class="ph ph-arrow-left" aria-hidden="true"></i><span>Back</span></a>';
+  }
+
+  function applyRoleUI() {
+    var isFreelancer = state.role === 'Freelancer';
+    $('freelancerBlock').hidden = !isFreelancer;
+    $('vLede').textContent = isFreelancer
+      ? 'Verifying your identity builds trust with customers. You can also add your speciality and, if you have one, a certificate — though qualifications are always optional.'
+      : 'Submitting your identity document helps build trust across Lokshin Gigs. An administrator reviews every submission before it is approved.';
+    setBackLink(state.role);
+  }
+
+  async function loadCategoriesInto() {
+    var sel = $('speciality');
+    try {
+      var r = await fetch(API + '/categories', { credentials: 'include' });
+      var d = await r.json();
+      if (d && d.success && Array.isArray(d.categories)) {
+        d.categories.forEach(function (c) {
+          var o = document.createElement('option');
+          o.value = String(c.CategoryID); o.textContent = c.CategoryName;
+          sel.appendChild(o);
+        });
+      }
+    } catch (e) { /* non-fatal: the field still works with Other */ }
+    var other = document.createElement('option');
+    other.value = 'other'; other.textContent = 'Other (specify)';
+    sel.appendChild(other);
+  }
+
+  // Preview-only sample records, clearly fictional, never from the API.
+  function previewRecord(status, role) {
+    var base = { Status: status };
+    if (status === 'Pending') { base.SubmittedAt = Date.now() - 2 * 864e5; }
+    if (status === 'Approved') { base.SubmittedAt = Date.now() - 6 * 864e5; base.ReviewedAt = Date.now() - 4 * 864e5; }
+    if (status === 'Rejected') { base.SubmittedAt = Date.now() - 3 * 864e5; base.ReviewedAt = Date.now() - 1 * 864e5;
+      base.RejectionReason = 'The identity document photo was blurry and the ID number could not be read. Please upload a clearer copy.'; }
+    return base;
+  }
+
+  async function boot() {
+    if (isPreview) {
+      state.role = qs.get('role') === 'freelancer' ? 'Freelancer' : qs.get('role') === 'admin' ? 'Admin' : 'Customer';
+      var st = qs.get('state') || 'Not Submitted';
+      // normalise ?state=pending etc.
+      st = ({ 'notsubmitted': 'Not Submitted', 'not-submitted': 'Not Submitted', 'pending': 'Pending', 'approved': 'Approved', 'rejected': 'Rejected' })[st.toLowerCase().replace(/\s/g, '')] || st;
+      state.status = STATES[st] ? st : 'Not Submitted';
+      state.record = (state.status === 'Not Submitted') ? null : previewRecord(state.status, state.role);
+      applyRoleUI();
+      await loadCategoriesInto();
+      render();
+      $('vLoading').style.display = 'none';
+      $('vGrid').hidden = false;
+      showPreviewChip();
+      return;
+    }
+
+    // LIVE
+    var user = await requireLogin();                 // redirects to /login if not signed in
+    if (!user) return;
+    state.role = user.role || 'Customer';
+    if (state.role === 'Admin') {
+      // Admins don't verify themselves; send them to the pipeline.
+      location.href = '/pages/admin-dashboard.html';
+      return;
+    }
+    applyRoleUI();
+    await loadCategoriesInto();
+
+    // Fetch current verification status. If the endpoint doesn't exist yet,
+    // fall back to a clean "Not Submitted" so the page is usable pre-backend.
+    try {
+      var r = await fetch(API + '/verifications/me', { credentials: 'include' });
+      if (r.ok) {
+        var d = await r.json();
+        if (d && d.success) {
+          state.record = d.verification || null;
+          state.status = (state.record && state.record.Status) ? state.record.Status : 'Not Submitted';
+        }
+      } else if (r.status === 404) {
+        state.status = 'Not Submitted';     // no submission yet (or route not built) → clean start
+      }
+    } catch (e) { /* backend not reachable: show Not Submitted, submission will surface errors */ }
+
+    render();
+    $('vLoading').style.display = 'none';
+    $('vGrid').hidden = false;
+  }
+
+  function showPreviewChip() {
+    var c = document.createElement('div');
+    c.className = 'lk-preview';
+    c.innerHTML = '<i class="ph-fill ph-eye"></i>Preview · sample data';
+    document.body.appendChild(c);
+  }
+
+  // ---------- Submit ----------
+  function validate() {
+    var ok = true;
+    clearErr('idErr'); clearErr('qualErr'); clearErr('customErr');
+    var idf = $('idFile').files[0];
+    if (!idf) { setErr('idErr', 'An identity document is required to submit.'); ok = false; }
+    else { var e1 = localFileError(idf); if (e1) { setErr('idErr', e1); ok = false; } }
+
+    if (state.role === 'Freelancer') {
+      var spec = $('speciality').value;
+      if (spec === 'other') {
+        if (!$('customSpeciality').value.trim()) { setErr('customErr', 'Please describe your speciality.'); ok = false; }
+      }
+      var qf = $('qualFile').files[0];
+      if (qf) { var e2 = localFileError(qf); if (e2) { setErr('qualErr', e2); ok = false; } }   // optional, but if present must be valid
+    }
+    return ok;
+  }
+
+  async function submit(e) {
+    e.preventDefault();
+    clearAlert();
+    if (!validate()) { alert('err', 'Please fix the highlighted fields and try again.'); return; }
+
+    var btn = $('vSubmit'); btn.disabled = true;
+    var prevLabel = $('vSubmitLabel').textContent;
+    $('vSubmitLabel').textContent = 'Submitting…';
+
+    if (isPreview) {
+      setTimeout(function () {
+        state.status = 'Pending';
+        state.record = previewRecord('Pending', state.role);
+        render(); clearAlert();
+        alert('ok', 'Preview only — in the live app this would be submitted for admin review.');
+        btn.disabled = false; $('vSubmitLabel').textContent = prevLabel;
+      }, 700);
+      return;
+    }
+
+    // Real submission: multipart/form-data (documents included).
+    // Identity is derived from the session on the server — we never send UserID/role.
+    var fd = new FormData();
+    fd.append('identityDocument', $('idFile').files[0]);
+    if (state.role === 'Freelancer') {
+      var spec = $('speciality').value;
+      if (spec && spec !== 'other') fd.append('categoryId', spec);
+      if (spec === 'other') fd.append('customSpeciality', $('customSpeciality').value.trim());
+      if ($('qualFile').files[0]) fd.append('qualificationDocument', $('qualFile').files[0]);
+    }
+
+    try {
+      var r = await fetch(API + '/verifications', { method: 'POST', body: fd, credentials: 'include' });
+      var d = {};
+      try { d = await r.json(); } catch (_) {}
+      if (r.ok && d.success) {
+        state.record = d.verification || { Status: 'Pending', SubmittedAt: Date.now() };
+        state.status = state.record.Status || 'Pending';
+        render();
+        alert('ok', d.message || 'Your verification was submitted and is now awaiting review.');
+      } else if (r.status === 404) {
+        alert('err', 'Verification is not yet available — the backend endpoint has not been connected. Your details were not submitted.');
+        btn.disabled = false; $('vSubmitLabel').textContent = prevLabel;
+      } else {
+        alert('err', (d && d.message) || 'Could not submit your verification. Please try again.');
+        btn.disabled = false; $('vSubmitLabel').textContent = prevLabel;
+      }
+    } catch (err) {
+      alert('err', 'Network error — please check your connection and try again.');
+      btn.disabled = false; $('vSubmitLabel').textContent = prevLabel;
+    }
+  }
+
+  // ---------- Init ----------
+  document.addEventListener('DOMContentLoaded', function () {
+    wireDrop('idFile', 'idFileChip', 'idFileName', 'idFileSize', 'idFileClear', 'idErr');
+    wireDrop('qualFile', 'qualFileChip', 'qualFileName', 'qualFileSize', 'qualFileClear', 'qualErr');
+    $('speciality').addEventListener('change', function () {
+      $('otherReveal').classList.toggle('is-open', this.value === 'other');
+      if (this.value !== 'other') clearErr('customErr');
+    });
+    $('vForm').addEventListener('submit', submit);
+    boot();
+  });
+})();
+</script>
+</body>
+</html>

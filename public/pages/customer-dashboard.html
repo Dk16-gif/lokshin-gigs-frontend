@@ -134,6 +134,10 @@ h1,h2,h3,p{margin:0}
 .lk-brand{display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:500;letter-spacing:-.02em;text-decoration:none;color:var(--ink-soft)}
 .lk-brand strong{font-weight:800;color:var(--ink)}
 .lk-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--terra);color:#fff;font-size:15px;font-weight:800}
+/* ---- Brand emblem (logo) ---- */
+.lk-brand__mark{background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible}
+.lk-brand__logo{display:block;width:100%;height:100%;object-fit:contain}
+
 .lk-nav__links{display:flex;align-items:center;gap:2px;margin:0;padding:0;list-style:none}
 .lk-nav__link{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 13px;border-radius:10px;font-size:14px;font-weight:600;color:var(--ink-soft);text-decoration:none;transition:background-color .18s,color .18s}
 .lk-nav__link:hover{background:rgba(232,223,206,.6);color:var(--ink)}
@@ -589,6 +593,9 @@ if (params.get('uid')) {
     window.history.replaceState({}, '', '/pages/customer-dashboard.html');
 }
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 <body>
 <a class="lk-skip" href="#jobs">Skip to my jobs</a>
@@ -596,7 +603,7 @@ if (params.get('uid')) {
 <!-- ============ NAVIGATION ============ -->
 <header class="lk-nav">
   <div class="lk-wrap lk-nav__inner">
-    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-brand__logo"/></picture></span><span>Lokshin<strong>Gigs</strong></span></a>
     <nav aria-label="Main">
       <ul class="lk-nav__links">
         <li><a class="lk-nav__link" href="#services">Browse services</a></li>

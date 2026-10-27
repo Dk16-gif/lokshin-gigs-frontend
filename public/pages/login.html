@@ -100,11 +100,15 @@
       text-underline-offset: 3px;
       transform: translateX(2px);
     }
-  </style>
+  .lk-login-logo{display:block;width:26px;height:26px;object-fit:contain}
+</style>
   <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 
 <body class="min-h-screen bg-brand-dark font-sans text-ink antialiased">
@@ -113,11 +117,11 @@
     <header class="flex items-start justify-between px-6 pt-5 pb-4 text-bg-elevated
                    sm:px-10 sm:pt-6 sm:pb-5 lg:px-20 lg:pt-8 lg:pb-6 xl:px-24">
       <div>
-        <a href="/pages/index.html" class="inline-flex items-center gap-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark">
-          <span class="inline-block h-2 w-2 rounded-full bg-accent" aria-hidden="true"></span>
+        <a href="/pages/index.html" aria-label="Lokshin Gigs home" class="inline-flex items-center gap-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark">
+          <picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-login-logo" aria-hidden="true"/></picture>
           <span class="text-[15px] font-semibold tracking-tight">Lokshin Gigs</span>
         </a>
-        <p class="mt-1 pl-4 text-[12.5px] leading-normal text-bg-elevated/65">Find someone local to get it done.</p>
+        <p class="mt-1 pl-[34px] text-[12.5px] leading-normal text-bg-elevated/65">Made Here. For Here.</p>
       </div>
       <div class="pt-[3px] text-[13.5px] text-bg-elevated/70">
         <span class="hidden sm:inline">New here?</span>

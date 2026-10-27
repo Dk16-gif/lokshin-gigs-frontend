@@ -54,6 +54,7 @@ a{color:inherit}
 .lk-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0 10px;flex-wrap:wrap}
 .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:2px}
 .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--terra);flex-shrink:0}
+.brand-logo{display:block;width:30px;height:30px;object-fit:contain;flex-shrink:0}
 .brand-name{font-size:15px;font-weight:600;color:var(--on-dark);white-space:nowrap}
 .brand-tag{margin-top:4px;padding-left:16px;font-size:12.5px;color:var(--on-dark-3)}
 .lk-back{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border:1px solid var(--line-dark);border-radius:var(--radius);color:var(--on-dark);font-size:13.5px;font-weight:600;text-decoration:none;transition:border-color .18s,background .18s}
@@ -175,6 +176,9 @@ a{color:inherit}
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 <body>
 <a class="skip" href="#terms">Skip to the Terms</a>
@@ -183,7 +187,7 @@ a{color:inherit}
 <div class="lk-wrap">
   <header class="lk-top">
     <div>
-      <a href="/pages/index.html" class="brand" aria-label="Lokshin Gigs home"><span class="brand-dot" aria-hidden="true"></span><span class="brand-name">Lokshin Gigs</span></a>
+      <a href="/pages/index.html" class="brand" aria-label="Lokshin Gigs home"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="brand-logo"/></picture><span class="brand-name">Lokshin Gigs</span></a>
       <p class="brand-tag">Find someone local to get it done.</p>
     </div>
     <a href="/pages/index.html" class="lk-back" id="backLink"><i class="ph-bold ph-arrow-left" aria-hidden="true"></i><span id="backLabel">Back to Lokshin Gigs</span></a>

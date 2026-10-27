@@ -92,6 +92,10 @@ h1,h2,p,dl,dd{margin:0}
 .lk-brand{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:500;letter-spacing:-.01em;text-decoration:none;color:var(--ivory-soft)}
 .lk-brand strong{font-weight:800;color:var(--ivory)}
 .lk-brand__mark{display:grid;place-items:center;width:26px;height:26px;border-radius:6px;background:var(--terra);color:#fff;font-size:13px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,220,200,.3)}
+/* ---- Brand emblem (logo) ---- */
+.lk-brand__mark{background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible}
+.lk-brand__logo{display:block;width:100%;height:100%;object-fit:contain}
+
 .lk-top__end{display:flex;align-items:center;gap:4px}
 .lk-nav{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:0;border-radius:6px;background:transparent;
   font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ivory-soft);text-decoration:none;transition:color .2s,background-color .2s}
@@ -337,6 +341,9 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 <body>
 <div class="lk-env" aria-hidden="true"><span class="lk-env__a"></span><span class="lk-env__b"></span><span class="lk-env__follow"></span></div>
@@ -344,7 +351,7 @@ textarea.lk-input{height:auto;padding:13px 15px;line-height:1.6;font-weight:500;
 
 <header class="lk-top">
   <div class="lk-wrap lk-top__inner">
-    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-brand__logo"/></picture></span><span>Lokshin<strong>Gigs</strong></span></a>
     <nav class="lk-top__end" aria-label="Account">
       <span id="backLink"></span>
       <a href="/pages/verification.html" class="lk-nav" id="verifyNav"><i class="ph ph-shield-check" aria-hidden="true"></i><span>Verify</span></a>

@@ -68,6 +68,10 @@ ol{padding:0;list-style:none}
 .lk-brand strong{font-weight:800;color:var(--on-dark)}
 .lk-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--terra);color:#fff;font-size:15px;font-weight:800;
   box-shadow:inset 0 1px 0 rgba(255,226,206,.35),inset 0 -2px 0 rgba(70,26,12,.3)}
+/* ---- Brand emblem (logo) ---- */
+.lk-brand__mark{background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible}
+.lk-brand__logo{display:block;width:100%;height:100%;object-fit:contain}
+
 .lk-top__end{display:flex;align-items:center;gap:6px}
 .lk-quiet{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:700;color:var(--on-dark-2);text-decoration:none;
   transition:color .18s,background-color .18s}
@@ -327,13 +331,16 @@ ol{padding:0;list-style:none}
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 <body>
 <a class="lk-skip" href="#postJobForm">Skip to the form</a>
 
 <header class="lk-top">
   <div class="lk-wrap lk-top__inner">
-    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true">L</span><span>Lokshin<strong>Gigs</strong></span></a>
+    <a class="lk-brand" href="/pages/index.html" aria-label="Lokshin Gigs home"><span class="lk-brand__mark" aria-hidden="true"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-brand__logo"/></picture></span><span>Lokshin<strong>Gigs</strong></span></a>
     <div class="lk-top__end">
       <a href="/pages/customer-dashboard.html" class="lk-quiet" aria-label="Back to Dashboard"><i class="ph ph-arrow-left" aria-hidden="true"></i><span>Back to Dashboard</span></a>
       <button type="button" class="lk-logout" onclick="logout()" aria-label="Logout"><i class="ph ph-sign-out" aria-hidden="true"></i><span>Logout</span></button>

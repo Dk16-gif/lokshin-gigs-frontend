@@ -79,12 +79,17 @@ body{
   animation:navEnter .6s ease .2s both;
 }
 .lk-float-nav__logo{
-  width:32px;height:32px;border-radius:10px;
-  background:var(--lk-terra);
+  width:34px;height:34px;border-radius:0;
+  background:none;
   display:flex;align-items:center;justify-content:center;
   margin-bottom:20px;
 }
 .lk-float-nav__logo span{font-weight:800;font-size:15px;color:#fff;letter-spacing:-0.5px}
+.lk-admin-logo{display:block;width:100%;height:100%;object-fit:contain}
+.lk-mob-header__brand{display:inline-flex;align-items:center;gap:8px}
+.lk-mob-header__brand .lk-admin-logo,.lk-mob-drawer__brand .lk-admin-logo{width:26px;height:26px}
+.lk-mob-drawer__brand{display:flex;align-items:center;gap:9px}
+
 .lk-float-nav__items{
   display:flex;flex-direction:column;gap:4px;
   padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:16px;
@@ -1070,13 +1075,16 @@ body:has(#view-overview.lk-view--active){background:var(--ws-espresso)}
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 <body>
 <div class="lk-dashboard" id="dashboard">
 
   <!-- ============= FLOATING NAVIGATION ============= -->
   <nav class="lk-float-nav" id="floatNav">
-    <div class="lk-float-nav__logo"><span>L</span></div>
+    <div class="lk-float-nav__logo" aria-label="Lokshin Gigs"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-admin-logo"/></picture></div>
     <div class="lk-float-nav__items">
       <button class="lk-float-nav__item active" data-view="overview" title="Overview"><i class="ph-bold ph-house"></i></button>
       <button class="lk-float-nav__item" data-view="users" title="Users"><i class="ph ph-users"></i></button>
@@ -1094,7 +1102,7 @@ body:has(#view-overview.lk-view--active){background:var(--ws-espresso)}
   <!-- ============= MOBILE HEADER ============= -->
   <header class="lk-mob-header" id="mobHeader">
     <button class="lk-mob-header__menu" id="mobMenuBtn"><i class="ph ph-list"></i></button>
-    <span class="lk-mob-header__brand">Lokshin<strong>Gigs</strong></span>
+    <span class="lk-mob-header__brand"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-admin-logo"/></picture><span>Lokshin<strong>Gigs</strong></span></span>
     <button class="lk-mob-header__profile"><i class="ph ph-user-circle"></i></button>
   </header>
 
@@ -1102,7 +1110,7 @@ body:has(#view-overview.lk-view--active){background:var(--ws-espresso)}
   <div class="lk-mob-drawer" id="mobDrawer">
     <div class="lk-mob-drawer__content">
       <button class="lk-mob-drawer__close" id="mobDrawerClose"><i class="ph ph-x"></i></button>
-      <div class="lk-mob-drawer__brand">Lokshin<strong>Gigs</strong></div>
+      <div class="lk-mob-drawer__brand"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="lk-admin-logo"/></picture><span>Lokshin<strong>Gigs</strong></span></div>
       <nav class="lk-mob-drawer__nav">
         <button data-view="overview" class="active"><i class="ph-bold ph-house"></i> Overview</button>
         <button data-view="users"><i class="ph ph-users"></i> Users</button>

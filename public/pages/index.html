@@ -20,6 +20,24 @@
   <script>
     window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
   </script>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
+  <style>
+    .brand-logo{display:block;width:30px;height:30px;object-fit:contain;flex-shrink:0}
+    .site-footer .brand-logo{width:28px;height:28px}
+    /* Full horizontal lockup (emblem + "LOKSHIN GIGS" + "Made Here. For Here.") on desktop */
+    .brand__full{display:block;flex-shrink:0}
+    .brand__full img{display:block;height:40px;width:auto;object-fit:contain}
+    .site-footer .brand__full img{height:38px}
+    /* Compact emblem + wordmark text for narrow screens */
+    .brand__compact{display:none;align-items:center;gap:var(--s-2)}
+    /* Swap: show compact, hide full below the desktop breakpoint so the tagline never shrinks to unreadable */
+    @media (max-width: 640px){
+      .brand__full{display:none}
+      .brand__compact{display:inline-flex}
+    }
+  </style>
 </head>
 <body>
 
@@ -28,9 +46,15 @@
      ========================================================== -->
 <header class="site-nav" id="siteNav">
   <div class="container site-nav__inner">
-    <a class="brand" href="/pages/index.html">
-      <span class="brand__dot" aria-hidden="true"></span>
-      <span class="brand__mark">Lokshin<span class="brand__mark--accent">Gigs</span></span>
+    <a class="brand" href="/pages/index.html" aria-label="Lokshin Gigs — Made Here. For Here.">
+      <picture class="brand__full">
+        <source srcset="/images/brand/horizontal-light.webp" type="image/webp"/>
+        <img src="/images/brand/horizontal-light.png" alt="Lokshin Gigs — Made Here. For Here."/>
+      </picture>
+      <span class="brand__compact" aria-hidden="true">
+        <picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="brand-logo"/></picture>
+        <span class="brand__mark">Lokshin<span class="brand__mark--accent">Gigs</span></span>
+      </span>
     </a>
 
     <label class="nav-search" for="navSearch">
@@ -629,9 +653,15 @@
   <div class="container">
     <div class="site-footer__grid">
       <div class="site-footer__brand-block">
-        <a class="brand" href="/pages/index.html">
-          <span class="brand__dot" aria-hidden="true"></span>
-          <span class="brand__mark">Lokshin<span class="brand__mark--accent">Gigs</span></span>
+        <a class="brand" href="/pages/index.html" aria-label="Lokshin Gigs — Made Here. For Here.">
+          <picture class="brand__full">
+            <source srcset="/images/brand/horizontal-light.webp" type="image/webp"/>
+            <img src="/images/brand/horizontal-light.png" alt="Lokshin Gigs — Made Here. For Here."/>
+          </picture>
+          <span class="brand__compact" aria-hidden="true">
+            <picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="brand-logo"/></picture>
+            <span class="brand__mark">Lokshin<span class="brand__mark--accent">Gigs</span></span>
+          </span>
         </a>
         <p class="body-sm">
           Empowering township communities through local digital employment.

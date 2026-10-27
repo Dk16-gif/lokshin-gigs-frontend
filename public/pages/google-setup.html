@@ -47,7 +47,8 @@
   /* Header */
   .gs-head{text-align:center}
   .gs-brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
-  .gs-brand__mark{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--terra);color:#fff;font-size:15px;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,220,200,.35)}
+  .gs-brand__mark{display:block;width:34px;height:34px}
+  .gs-brand__logo{display:block;width:100%;height:100%;object-fit:contain}
   .gs-brand__name{font-size:17px;font-weight:600;letter-spacing:-.01em}
   .gs-brand__name strong{font-weight:800}
   .gs-eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:22px;padding:5px 11px;border-radius:999px;
@@ -114,12 +115,15 @@
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
   @media (max-width:420px){.gs-roles{grid-template-columns:1fr}}
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
+  <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
 </head>
 <body class="gs-body bg-brand-dark">
   <main class="gs-card" role="main">
     <div class="gs-head">
       <a href="/pages/index.html" class="gs-brand" aria-label="Lokshin Gigs home">
-        <span class="gs-brand__mark" aria-hidden="true">L</span>
+        <span class="gs-brand__mark" aria-hidden="true"><picture><source srcset="/images/brand/mark.webp" type="image/webp"/><img src="/images/brand/mark.png" alt="" class="gs-brand__logo"/></picture></span>
         <span class="gs-brand__name">Lokshin<strong>Gigs</strong></span>
       </a>
       <p class="gs-eyebrow"><i class="ph-bold ph-check-circle" aria-hidden="true"></i>Signed in with Google</p>

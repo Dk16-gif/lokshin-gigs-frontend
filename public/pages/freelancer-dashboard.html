@@ -224,6 +224,8 @@ ol,ul{padding:0;list-style:none}
 .lk-app__meta span{display:inline-flex;align-items:center;gap:5px}
 .lk-app__meta i{font-size:14px;color:var(--muted)}
 .lk-app__budget{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.lk-app__quote{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--terra);font-variant-numeric:tabular-nums}
+.lk-app__quote i{font-size:14px}
 .lk-app__note{margin-top:12px;padding-left:13px;border-left:2px solid var(--sand-2);max-width:72ch;font-size:14px;line-height:1.6;color:var(--ink-soft)}
 .lk-app__note em{font-style:normal;color:var(--muted)}
 .lk-app__date{display:block;margin-top:10px;font-size:12.5px;color:var(--muted)}
@@ -363,6 +365,18 @@ ol,ul{padding:0;list-style:none}
   box-shadow:inset 2px 2px 5px rgba(120,88,52,.12),inset -2px -2px 5px rgba(255,255,255,.85);transition:border-color .18s,box-shadow .18s}
 .lk-textarea::placeholder{color:#A39B8E}
 .lk-textarea:focus{outline:0;border-color:var(--terra);box-shadow:inset 2px 2px 5px rgba(120,88,52,.12),0 0 0 3px rgba(182,90,60,.15)}
+/* ---- Quote (R) field ---- */
+.lk-money{position:relative;display:block}
+.lk-money__sym{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:800;color:var(--muted);pointer-events:none}
+.lk-money__input{display:block;width:100%;height:50px;padding:0 14px 0 34px;border-radius:14px;border:1px solid #DCCFB8;background:#FAF5EC;
+  font-family:inherit;font-size:16px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+  box-shadow:inset 2px 2px 5px rgba(120,88,52,.12),inset -2px -2px 5px rgba(255,255,255,.85);transition:border-color .18s,box-shadow .18s}
+.lk-money__input::placeholder{color:#A39B8E;font-weight:500}
+.lk-money__input:focus{outline:0;border-color:var(--terra);box-shadow:inset 2px 2px 5px rgba(120,88,52,.12),0 0 0 3px rgba(182,90,60,.15)}
+.lk-money.is-invalid .lk-money__input{border-color:var(--danger,#B84233);box-shadow:0 0 0 3px rgba(184,66,51,.14)}
+.lk-field__hint{display:block;margin-top:7px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.lk-field__err{display:none;margin-top:7px;font-size:12.5px;font-weight:700;color:var(--danger,#B84233)}
+.lk-field__err.is-on{display:block}
 
 /* ---- Toast (showAlert() from main.js) ---- */
 .alert-float{position:fixed;top:90px;right:24px;z-index:9999;min-width:300px;max-width:min(420px,calc(100% - 48px));padding:14px 46px 14px 18px;border-radius:14px;
@@ -585,6 +599,14 @@ if (params.get('uid')) {
       </div>
       <div class="lk-modal__body">
         <div id="applyJobDetails" class="lk-brief"></div>
+        <label class="lk-field__label" for="quotedPrice">Your Quote (R) <span>(required)</span></label>
+        <span class="lk-money" id="quoteWrap">
+          <span class="lk-money__sym" aria-hidden="true">R</span>
+          <input type="text" id="quotedPrice" class="lk-money__input" inputmode="decimal" autocomplete="off"
+                 placeholder="0.00" aria-describedby="quoteHint quoteErr"/>
+        </span>
+        <small class="lk-field__hint" id="quoteHint">Your proposed price to complete this work. This is separate from the customer's expected budget.</small>
+        <p class="lk-field__err" id="quoteErr" role="alert"></p>
         <label class="lk-field__label" for="coverNote">Cover note <span>(optional)</span></label>
         <textarea id="coverNote" class="lk-textarea" rows="4" placeholder="Tell the customer why you are the best person for this job, your experience, and when you can start..."></textarea>
       </div>
@@ -653,7 +675,12 @@ if (params.get('uid')) {
 
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, opts) {
-    var url = String(input), method = ((opts && opts.method) || 'GET').toUpperCase(), m;
+    var rawUrl = String(input);
+    // Normalise away any window.API_BASE prefix so preview matches whether
+    // the page calls '/api/...' (local) or the full Render URL (Vercel).
+    var __base = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE : '';
+    var url = (__base && rawUrl.indexOf(__base) === 0) ? rawUrl.slice(__base.length) : rawUrl;
+    var method = ((opts && opts.method) || 'GET').toUpperCase(), m;
     var body = {}; try { body = JSON.parse((opts && opts.body) || '{}'); } catch (e) {}
     if (method === 'GET' && url === '/api/categories') return reply({ success: true, categories: clone(cats) });
     if (method === 'GET' && /^\/api\/jobs(\?|$)/.test(url)) {
@@ -670,7 +697,7 @@ if (params.get('uid')) {
       if (!j) return reply({ success: false, message: 'Job not found.' }, 404);
       if (j.Status !== 'Open') return reply({ success: false, message: 'This job is no longer accepting applications.' }, 400);
       if (apps.some(function (a) { return a.JobID === j.JobID; })) return reply({ success: false, message: 'You have already applied for this job.' }, 409);
-      apps.unshift({ ApplicationID: 7100 + apps.length, JobID: j.JobID, JobTitle: j.Title, Location: j.Location, Budget: j.Budget, JobStatus: 'Open', Status: 'Pending', DateApplied: new Date().toISOString(), CoverNote: body.coverNote || null });
+      apps.unshift({ ApplicationID: 7100 + apps.length, JobID: j.JobID, JobTitle: j.Title, Location: j.Location, Budget: j.Budget, JobStatus: 'Open', Status: 'Pending', DateApplied: new Date().toISOString(), CoverNote: body.coverNote || null, QuotedPrice: (body.quotedPrice != null ? body.quotedPrice : null) });
       return reply({ success: true, message: 'Application submitted successfully!' }, 201);
     }
     if (method === 'PUT' && (m = url.match(/^\/api\/jobs\/(\d+)\/status$/))) {
@@ -825,7 +852,8 @@ const res = await fetch(url, {
           <h3 class="lk-app__title">${a.JobTitle}</h3>
           <div class="lk-app__meta">
             <span><i class="ph ph-map-pin" aria-hidden="true"></i>${a.Location}</span>
-            <span class="lk-app__budget">${formatZAR(a.Budget)}</span>
+            <span class="lk-app__budget" title="Customer's expected budget">${formatZAR(a.Budget)}</span>
+            ${(a.QuotedPrice ?? a.quotedPrice) != null ? `<span class="lk-app__quote"><i class="ph ph-tag" aria-hidden="true"></i>Your quote ${formatZAR(a.QuotedPrice ?? a.quotedPrice)}</span>` : ''}
           </div>
           <p class="lk-app__note">${a.CoverNote || '<em>No cover note.</em>'}</p>
           <small class="lk-app__date">Applied ${formatDate(a.DateApplied)}</small>
@@ -926,21 +954,67 @@ const res = await fetch(url, {
     document.getElementById('applyJobDetails').innerHTML =
       `<div><strong class="lk-brief__title">${title}</strong><span class="lk-brief__loc"><i class="ph ph-map-pin" aria-hidden="true"></i>${location}</span></div><span class="lk-brief__budget">${budget}</span>`;
     document.getElementById('coverNote').value = '';
+    // reset the quote field + any previous validation state
+    document.getElementById('quotedPrice').value = '';
+    clearQuoteError();
     new bootstrap.Modal(document.getElementById('applyModal')).show();
   }
 
+  // ---- Quote (R) validation helpers ----
+  function clearQuoteError() {
+    document.getElementById('quoteWrap').classList.remove('is-invalid');
+    var err = document.getElementById('quoteErr');
+    err.textContent = ''; err.classList.remove('is-on');
+  }
+  function showQuoteError(msg) {
+    document.getElementById('quoteWrap').classList.add('is-invalid');
+    var err = document.getElementById('quoteErr');
+    err.textContent = msg; err.classList.add('is-on');
+    document.getElementById('quotedPrice').focus();
+  }
+  // Returns a number (ZAR, 2dp) when valid, or null (and shows an error).
+  function validateQuote() {
+    var raw = document.getElementById('quotedPrice').value.trim();
+    if (!raw) { showQuoteError('Please enter your quote.'); return null; }
+    // allow an optional leading "R", thousands separators and spaces, up to 2 decimals
+    var cleaned = raw.replace(/^R/i, '').replace(/[\s,]/g, '');
+    if (!/^\d+(\.\d{1,2})?$/.test(cleaned)) {
+      showQuoteError('Enter a valid amount in rand, up to two decimal places (e.g. 750 or 750.50).');
+      return null;
+    }
+    var amount = parseFloat(cleaned);
+    if (!(amount > 0)) { showQuoteError('Your quote must be greater than zero.'); return null; }
+    clearQuoteError();
+    return Math.round(amount * 100) / 100;
+  }
+  // Clear the error as soon as the freelancer edits the amount.
+  document.getElementById('quotedPrice').addEventListener('input', clearQuoteError);
+
+  var applySubmitting = false;   // duplicate-submission guard
   document.getElementById('submitApply').addEventListener('click', async () => {
+    if (applySubmitting) return;                 // ignore repeat clicks while in flight
+    const quote = validateQuote();
+    if (quote === null) return;                   // invalid → stay open, error shown
+
     const btn = document.getElementById('submitApply');
+    applySubmitting = true;
     btn.disabled = true; btn.textContent = 'Submitting...';
-    const data = await apiPost(`/jobs/${applyJobId}/apply`, {
-      coverNote: document.getElementById('coverNote').value
-    });
-    showAlert(data.message, data.success ? 'success' : 'danger');
-    bootstrap.Modal.getInstance(document.getElementById('applyModal')).hide();
-    btn.disabled = false; btn.textContent = 'Submit Application';
-    if (data.success) {
-      loadApplications();
-      switchTab('applications');
+    try {
+      const data = await apiPost(`/jobs/${applyJobId}/apply`, {
+        coverNote: document.getElementById('coverNote').value,
+        quotedPrice: quote                        // freelancer's proposed price
+      });
+      showAlert(data.message, data.success ? 'success' : 'danger');
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('applyModal')).hide();
+        loadApplications();
+        switchTab('applications');
+      }
+    } catch (e) {
+      showAlert('We could not submit your application. Please try again.', 'danger');
+    } finally {
+      applySubmitting = false;
+      btn.disabled = false; btn.textContent = 'Submit Application';
     }
   });
 

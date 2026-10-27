@@ -451,6 +451,9 @@ h1,h2,h3,p{margin:0}
 .lk-contact:active{box-shadow:var(--n-press);transform:translateY(1px)}
 .lk-contact .ph-whatsapp-logo{color:#25A35A;font-size:15px}
 .lk-applicant__note{margin-top:10px;padding-left:12px;border-left:2px solid var(--sand);font-size:14px;color:var(--ink-soft)}
+.lk-applicant__quote{display:inline-flex;align-items:baseline;gap:8px;margin-top:10px;padding:7px 12px;border-radius:10px;background:var(--terra-tint);border:1px solid rgba(182,90,60,.22)}
+.lk-applicant__quote-label{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--terra-dk)}
+.lk-applicant__quote-amt{font-size:16px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .lk-applicant__date{display:block;margin-top:8px;font-size:12.5px;color:var(--muted)}
 .lk-applicant__actions{display:flex;flex-direction:column;gap:6px;align-items:stretch}
 .lk-decision--accepted{background:rgba(91,122,95,.1);border-color:rgba(91,122,95,.24);color:var(--sage)}
@@ -894,11 +897,11 @@ if (params.get('uid')) {
   ];
   var apps = {
     101: [
-      { ApplicationID: 9001, FreelancerID: 41, FreelancerName: 'Bongani Zulu', SkillCategory: 'Plumbing', Rating: 4.7, PhoneNumber: '0712345678', CoverNote: 'I can come tomorrow morning with a replacement valve. Nine years fixing geysers around Soweto.', DateApplied: ago(0), Status: 'Pending' },
+      { ApplicationID: 9001, FreelancerID: 41, FreelancerName: 'Bongani Zulu', SkillCategory: 'Plumbing', Rating: 4.7, PhoneNumber: '0712345678', CoverNote: 'I can come tomorrow morning with a replacement valve. Nine years fixing geysers around Soweto.', QuotedPrice: 780, DateApplied: ago(0), Status: 'Pending' },
       { ApplicationID: 9002, FreelancerID: 42, FreelancerName: 'Kagiso Molefe', SkillCategory: 'Plumbing', Rating: 4.2, PhoneNumber: '0823456789', CoverNote: 'Available this weekend. I bring my own tools and can check the pressure valve too.', DateApplied: ago(1), Status: 'Pending' }
     ],
     102: [
-      { ApplicationID: 9003, FreelancerID: 43, FreelancerName: 'Nomvula Khumalo', SkillCategory: 'Beauty Services', Rating: 4.9, PhoneNumber: '0734567890', CoverNote: 'Knotless braids are my speciality. I can do a trial on Thursday.', DateApplied: ago(1), Status: 'Pending' },
+      { ApplicationID: 9003, FreelancerID: 43, FreelancerName: 'Nomvula Khumalo', SkillCategory: 'Beauty Services', Rating: 4.9, PhoneNumber: '0734567890', CoverNote: 'Knotless braids are my speciality. I can do a trial on Thursday.', QuotedPrice: 620, DateApplied: ago(1), Status: 'Pending' },
       { ApplicationID: 9004, FreelancerID: 44, FreelancerName: 'Ayanda Mthembu', SkillCategory: 'Beauty Services', Rating: 4.4, PhoneNumber: '', CoverNote: '', DateApplied: ago(2), Status: 'Rejected' }
     ],
     103: [
@@ -923,7 +926,12 @@ if (params.get('uid')) {
 
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, opts) {
-    var url = String(input), method = ((opts && opts.method) || 'GET').toUpperCase(), m;
+    var rawUrl = String(input);
+    // Normalise away any window.API_BASE prefix so preview matches whether
+    // the page calls '/api/...' (local) or the full Render URL (Vercel).
+    var __base = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE : '';
+    var url = (__base && rawUrl.indexOf(__base) === 0) ? rawUrl.slice(__base.length) : rawUrl;
+    var method = ((opts && opts.method) || 'GET').toUpperCase(), m;
     var body = {}; try { body = JSON.parse((opts && opts.body) || '{}'); } catch (e) {}
     if (method === 'GET' && url === '/api/jobs/my') return reply({ success: true, jobs: clone(jobs) });
     if (method === 'GET' && (m = url.match(/^\/api\/jobs\/(\d+)\/applications$/))) return reply({ success: true, applications: clone(apps[m[1]] || []) });
@@ -1080,6 +1088,7 @@ const res = await fetch(`${API}/jobs/${jobId}/applications`, {
             <a class="lk-contact" href="https://wa.me/27${a.PhoneNumber.replace(/^0/,'')}" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp</a>
           </div>` : ''}
           <p class="lk-applicant__note">${a.CoverNote || '<em>No cover note provided.</em>'}</p>
+          ${(a.quotedPrice ?? a.QuotedPrice) != null ? `<div class="lk-applicant__quote"><span class="lk-applicant__quote-label">Freelancer quote</span><span class="lk-applicant__quote-amt">${formatZAR(a.quotedPrice ?? a.QuotedPrice)}</span></div>` : ''}
           <span class="lk-applicant__date">Applied ${formatDate(a.DateApplied)}</span>
         </div>
         <div class="lk-applicant__actions">

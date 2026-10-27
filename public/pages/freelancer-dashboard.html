@@ -465,9 +465,7 @@ ol,ul{padding:0;list-style:none}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
   </style>
-  <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
-    window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
     const params = new URLSearchParams(window.location.search);
 if (params.get('uid')) {
     localStorage.setItem('lg_user', JSON.stringify({
@@ -791,13 +789,7 @@ if (params.get('uid')) {
 if (cat) url += `category=${cat}&`;
 if (q)   url += `search=${encodeURIComponent(q)}`;
 
-const local = localStorage.getItem('lg_user');
-let userId = null;
-if (local) { try { userId = JSON.parse(local).id; } catch {} }
-const res = await fetch(url, {
-    credentials: 'include',
-    headers: userId ? { 'x-user-id': String(userId) } : {}
-});
+const res = await fetch(url, { credentials: 'include' });
     const data = await res.json();
     const el   = document.getElementById('jobsList');
 

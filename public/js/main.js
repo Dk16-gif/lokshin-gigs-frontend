@@ -9,8 +9,8 @@
 // DO NOT introduce `export` or `import` in this file — that would make it an ES
 // module and break every unmigrated page. See tsconfig `"module": "none"`.
 // -----------------------------------------------------------------------------
-// Dynamic API base — empty string means same server (local dev)
-// Set window.API_BASE to your Render URL when deploying to Vercel
+// Same-origin API: '/api' is proxied to the Render backend by vercel.json, so the
+// session cookie belongs to this site. window.API_BASE is an optional override.
 const API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
 function showAlert(msg, type = 'success') {
     document.querySelectorAll('.alert-float').forEach(e => e.remove());
@@ -36,9 +36,7 @@ async function getCurrentUser() {
             localStorage.setItem('lg_user', JSON.stringify(d.user));
             return d.user;
         }
-        // Backend says not logged in but we have localStorage
-        // Trust localStorage since cross-domain cookies are blocked
-        if (localUser) return localUser;
+        // The session cookie is same-origin, so "not logged in" is authoritative
         localStorage.removeItem('lg_user');
         return null;
     } catch {
@@ -78,30 +76,18 @@ function statusBadge(s) {
     return `<span class="${m[s] || 'badge bg-secondary'}">${s}</span>`;
 }
 async function apiPost(url, body) {
-    const local = localStorage.getItem('lg_user');
-    let userId = null;
-    if (local) { try { userId = JSON.parse(local).id; } catch {} }
     const r = await fetch(`${API}${url}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            ...(userId && { 'x-user-id': String(userId) })
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(body)
     });
     return r.json();
 }
 async function apiPut(url, body) {
-    const local = localStorage.getItem('lg_user');
-    let userId = null;
-    if (local) { try { userId = JSON.parse(local).id; } catch {} }
     const r = await fetch(`${API}${url}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            ...(userId && { 'x-user-id': String(userId) })
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(body)
     });

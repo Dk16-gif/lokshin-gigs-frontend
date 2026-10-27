@@ -203,10 +203,6 @@ img,svg{display:block;max-width:100%}
   .lk-consent{max-width:none}
 }
   </style>
-  <!-- API Base URL: empty = local dev, set to Render URL for production -->
-  <script>
-    window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
-  </script>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" href="/images/brand/favicon-64.png" sizes="64x64"/>
   <link rel="apple-touch-icon" href="/images/brand/apple-touch-icon.png"/>
@@ -366,8 +362,8 @@ img,svg{display:block;max-width:100%}
 (function () {
   'use strict';
 
-  // Respect the Vercel target's cross-origin backend (window.API_BASE → Render),
-  // falling back to same-origin for local dev. Matches main.js / dashboards.
+  // Same-origin '/api' (proxied to Render by vercel.json) so the session cookie
+  // is sent. Matches main.js / dashboards.
   var API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
   var MAX_BYTES = 10 * 1024 * 1024;              // mirror of the server limit (server is authoritative)
   var OK_TYPES  = ['application/pdf', 'image/jpeg', 'image/png'];

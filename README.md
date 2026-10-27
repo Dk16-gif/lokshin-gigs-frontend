@@ -4,23 +4,19 @@ Plain HTML/CSS/JS frontend for the Lokshin Gigs community freelance marketplace.
 
 ## Local Development
 
-Serve the `public/` folder with any static server:
-
-```
-npx serve public -p 3001
-```
-
-Open: http://localhost:3001
-
-Make sure the backend is running on http://localhost:3000
+Pages call the API on the same origin (`/api/...`). A plain static server
+(`npx serve public -p 3001`) does not proxy `/api`, so use `npx vercel dev`
+to apply the `vercel.json` rewrites locally.
 
 ## Deployment (Vercel)
 
 1. Push this folder to GitHub
-2. Connect to Vercel
-3. Set Root Directory to `public`
-4. In each HTML page set:
-   window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
+2. Connect to Vercel, with the Root Directory left at the repository root so
+   `vercel.json` is applied
+3. `vercel.json` rewrites `/api/:path*` to
+   `https://lokshin-gigs-backend-1.onrender.com/api/:path*`, so the backend's
+   session cookie is set on the Vercel domain. Do not set `window.API_BASE` in
+   the pages.
 
 ## Pages
 

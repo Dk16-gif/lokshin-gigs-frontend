@@ -13,8 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/regular/style.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/bold/style.css" rel="stylesheet">
-  <!-- Preserved exactly from the original: hard-coded hosted backend base. -->
-  <script>window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';</script>
   <style>
   /* =====================================================================
      Lokshin Gigs — Google account setup
@@ -184,7 +182,7 @@
   <script>
   /* =====================================================================
      FUNCTIONALITY PRESERVED FROM THE ORIGINAL — do not change the contract:
-       • endpoint:  `${window.API_BASE}/api/auth/google/complete`
+       • endpoint:  `/api/auth/google/complete` (same-origin, proxied by vercel.json)
        • method:    POST, credentials: 'include'
        • payload:   { fullName, email, phone, role, googleId }
        • on success: localStorage.setItem('lg_user', data.user) then redirect
@@ -257,7 +255,7 @@
       btn.classList.add('is-loading');
       submitLabel.textContent = 'Creating account…';
 
-      var API = window.API_BASE + '/api';
+      var API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
       try {
         var r = await fetch(API + '/auth/google/complete', {
           method:      'POST',

@@ -66,10 +66,9 @@ let currentJobViewMode = 'list';
 let isDemo = false;
 let jobControlsReady = false;
 
-// Cross-origin backend base (Vercel target → Render) with same-origin fallback,
-// matching main.js. Admin GET loaders below go through this; writes use the
-// apiPut/apiDelete helpers from main.js (which already add API_BASE,
-// credentials:'include' and the x-user-id header).
+// Same-origin API base ('/api', proxied to Render by vercel.json), matching
+// main.js. Admin GET loaders below go through this; writes use the
+// apiPut/apiDelete helpers from main.js. Auth is the session cookie only.
 var ADMIN_API = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE + '/api' : '/api';
 function adminFetch(path) {
   return fetch(ADMIN_API + path, { credentials: 'include' });
@@ -127,8 +126,8 @@ var LOGIN_PAGE = '/pages/login.html';
 // Admin access check (frontend navigation guard only — NOT security; the server
 // must enforce Admin authorization on every /api/admin/* route).
 // Resolves identity through getCurrentUser() from main.js, so it inherits the
-// target's production auth model (window.API_BASE, credentials:'include', and
-// the localStorage fallback used because cross-domain cookies are blocked).
+// production auth model (same-origin session cookie via /auth/me; localStorage
+// is only a display fallback when the API is unreachable).
 // Fails SAFE: when identity cannot be confirmed it goes to login, and an auth
 // failure NEVER sets demo mode or grants Admin access.
 async function ensureAdminAccess() {

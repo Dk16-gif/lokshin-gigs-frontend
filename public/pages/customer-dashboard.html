@@ -579,9 +579,7 @@ h1,h2,h3,p{margin:0}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
   </style>
-  <!-- API Base URL: empty = local dev, set to Render URL for production -->
   <script>
-    window.API_BASE = 'https://lokshin-gigs-backend-1.onrender.com';
     const params = new URLSearchParams(window.location.search);
 if (params.get('uid')) {
     localStorage.setItem('lg_user', JSON.stringify({
@@ -991,13 +989,7 @@ if (params.get('uid')) {
   }
 
   async function loadJobs() {
-    const local = localStorage.getItem('lg_user');
-    let userId = null;
-    if (local) { try { userId = JSON.parse(local).id; } catch {} }
-    const res = await fetch(`${API}/jobs/my`, {
-    credentials: 'include',
-    headers: userId ? { 'x-user-id': String(userId) } : {}
-});
+    const res = await fetch(`${API}/jobs/my`, { credentials: 'include' });
     const data = await res.json();
     const tbody = document.getElementById('jobsBody');
 
@@ -1065,13 +1057,7 @@ if (params.get('uid')) {
     document.getElementById('appModalBody').innerHTML = '<div class="lk-modal-loading">Loading applications…</div>';
     new bootstrap.Modal(document.getElementById('appModal')).show();
 
-    const local = localStorage.getItem('lg_user');
-let userId = null;
-if (local) { try { userId = JSON.parse(local).id; } catch {} }
-const res = await fetch(`${API}/jobs/${jobId}/applications`, {
-    credentials: 'include',
-    headers: userId ? { 'x-user-id': String(userId) } : {}
-});
+    const res = await fetch(`${API}/jobs/${jobId}/applications`, { credentials: 'include' });
     const data = await res.json();
 
     if (!data.success || !data.applications.length) {
@@ -1222,13 +1208,7 @@ const res = await fetch(`${API}/jobs/${jobId}/applications`, {
   function pendingFor(job) {
     var hit = appCache.get(job.JobID);
     if (hit && Date.now() - hit.t < 60000) return Promise.resolve(hit);
-    const local = localStorage.getItem('lg_user');
-let userId = null;
-if (local) { try { userId = JSON.parse(local).id; } catch {} }
-return fetch(`${API}/jobs/` + job.JobID + '/applications', {
-    credentials: 'include',
-    headers: userId ? { 'x-user-id': String(userId) } : {}
-})
+    return fetch(`${API}/jobs/` + job.JobID + '/applications', { credentials: 'include' })
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var list = d && d.success ? d.applications : [];

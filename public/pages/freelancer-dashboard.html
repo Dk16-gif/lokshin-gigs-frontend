@@ -747,8 +747,10 @@ if (params.get('uid')) {
       document.getElementById(`tab-${t}`).style.display = 'none';
     });
     document.getElementById(`tab-${name}`).style.display = 'block';
-    document.querySelectorAll('#mainTabs .nav-link').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    // Mark the tab by panel id, not the global `event`: that is undefined when
+    // switchTab() runs after an await (e.g. once an application is submitted).
+    document.querySelectorAll('#mainTabs .nav-link').forEach(b =>
+      b.classList.toggle('active', b.getAttribute('aria-controls') === `tab-${name}`));
   }
 
   // Load categories WITH job count badges
@@ -998,22 +1000,31 @@ const res = await fetch(url, { credentials: 'include' });
     const btn = document.getElementById('submitApply');
     applySubmitting = true;
     btn.disabled = true; btn.textContent = 'Submitting...';
+    let data = null;
     try {
-      const data = await apiPost(`/jobs/${applyJobId}/apply`, {
+      data = await apiPost(`/jobs/${applyJobId}/apply`, {
         coverNote: document.getElementById('coverNote').value,
         quotedPrice: quote                        // freelancer's proposed price
       });
-      showAlert(data.message, data.success ? 'success' : 'danger');
-      if (data.success) {
-        bootstrap.Modal.getInstance(document.getElementById('applyModal')).hide();
-        loadApplications();
-        switchTab('applications');
-      }
     } catch (e) {
-      showAlert('We could not submit your application. Please try again.', 'danger');
+      // network failure or unreadable response: the server may still have saved it
     } finally {
       applySubmitting = false;
       btn.disabled = false; btn.textContent = 'Submit Application';
+    }
+    if (!data) {
+      showAlert('We could not confirm your application. Please check My Applications before trying again.', 'danger');
+      return;
+    }
+    showAlert(data.message, data.success ? 'success' : 'danger');
+    if (!data.success) return;
+    // The application is saved; a UI refresh problem must not be reported as a failed submission.
+    try {
+      bootstrap.Modal.getInstance(document.getElementById('applyModal')).hide();
+      loadApplications();
+      switchTab('applications');
+    } catch (e) {
+      console.error('Post-submission UI update failed:', e);
     }
   });
 
@@ -1030,9 +1041,7 @@ const res = await fetch(url, { credentials: 'include' });
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var tabs = { browse: 'tab-browse', applications: 'tab-applications', active: 'tab-active' };
 
-  /* 1 · Keep the header tabs in step with the visible panel.
-     switchTab() marks whatever was clicked; after an application is submitted that is the
-     Submit button rather than a tab, so the correct tab is re-marked from the visible panel. */
+  /* 1 · Keep the header tabs (active + aria-current) in step with the visible panel. */
   function syncTabs() {
     var current = null;
     Object.keys(tabs).forEach(function (k) { var p = document.getElementById(tabs[k]); if (p && p.style.display !== 'none') current = k; });
@@ -1102,7 +1111,7 @@ const res = await fetch(url, { credentials: 'include' });
     var prof = document.getElementById('profileCard');
     if (prof && prof.querySelector('[data-state="loading"]')) prof.innerHTML = '<p class="lk-side-wait">Your profile could not be loaded right now.</p>';
   }
-  // only network/response failures count (not, e.g., switchTab() reading a finished event)
+  // only network/response failures count, not unrelated script errors
   window.addEventListener('unhandledrejection', function (e) {
     var m = String((e.reason && e.reason.message) || e.reason || '');
     if (/fetch|network|load failed|json|unexpected token|unexpected end/i.test(m)) failStuck();
